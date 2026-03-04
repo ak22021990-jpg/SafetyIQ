@@ -14,7 +14,7 @@ import ThreatSurface  from './screens/ThreatSurface'
 import RedTeamRoulette from './screens/RedTeamRoulette'
 import GameEnd        from './screens/GameEnd'
 import Leaderboard   from './screens/Leaderboard'
-// import FinalSummary   from './screens/FinalSummary'
+import FinalSummary   from './screens/FinalSummary'
 // import SelfieScreen   from './screens/SelfieScreen'
 import TickerBanner   from './components/layout/TickerBanner'
 
@@ -58,7 +58,7 @@ export default function App() {
             {screen === SCREENS.RED_TEAM  && <RedTeamRoulette key="red"     navigate={navigate} />}
             {screen === SCREENS.GAME_END    && <GameEnd        key="end"         navigate={navigate} game={activeGame} />}
             {screen === SCREENS.LEADERBOARD && <Leaderboard    key="leaderboard" navigate={navigate} />}
-            {/* {screen === SCREENS.SUMMARY   && <FinalSummary    key="summary" navigate={navigate} />} */}
+            {screen === SCREENS.SUMMARY   && <FinalSummary    key="summary" navigate={navigate} />}
             {/* {screen === SCREENS.SELFIE    && <SelfieScreen    key="selfie"  navigate={navigate} />} */}
           </AnimatePresence>
 

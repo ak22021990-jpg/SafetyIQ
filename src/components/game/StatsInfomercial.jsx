@@ -11,7 +11,7 @@ const COUNT_UP_MS     = 1800
 const REVEAL_DELAY_MS = 400   // context line appears after number starts
 
 // Single stat slide
-function StatSlide({ stat, active }) {
+function StatSlide({ stat, active, game }) {
   const shouldReduce = useReducedMotion()
 
   // Parse numeric value from stat
@@ -59,7 +59,7 @@ function StatSlide({ stat, active }) {
             className="font-mono text-text-secondary"
             style={{ fontSize: '11px', lineHeight: '1.65', maxWidth: '280px' }}
           >
-            {SUTHERLAND_VOICE_STATEMENTS.summary}
+            {SUTHERLAND_VOICE_STATEMENTS[game] || SUTHERLAND_VOICE_STATEMENTS.summary}
           </motion.p>
         )}
       </AnimatePresence>
@@ -67,7 +67,7 @@ function StatSlide({ stat, active }) {
   )
 }
 
-export default function StatsInfomercial({ onComplete }) {
+export default function StatsInfomercial({ onComplete, game }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const shouldReduce = useReducedMotion()
   const timerRef     = useRef(null)
@@ -111,7 +111,7 @@ export default function StatsInfomercial({ onComplete }) {
           exit={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 1.04 }}
           transition={{ duration: 0.35 }}
         >
-          <StatSlide stat={stat} active={true} />
+          <StatSlide stat={stat} active={true} game={game} />
         </motion.div>
       </AnimatePresence>
 
