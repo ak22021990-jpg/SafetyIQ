@@ -67,10 +67,10 @@ export default function LeaderboardRow({ entry, rank, isCurrentPlayer, index }) 
             textOverflow:'ellipsis',
           }}
         >
-          {entry.player?.name || 'Anonymous'}
+          {entry.name || entry.player?.name || 'Anonymous'}
         </p>
         <p className="font-mono text-text-muted" style={{ fontSize: '10px' }}>
-          {entry.player?.company || ''} · {entry.gamesCompleted || 0}/4 games
+          {entry.company || entry.player?.company || ''} · {entry.gamesCompleted || 0}/4 games
         </p>
       </div>
 
