@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Signal & Noise — Global Base Styles
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: #07101C;
+  color: #E8EDF5;
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Background grid texture — barely visible cold blue lines */
+  background-image:
+    linear-gradient(rgba(91, 163, 212, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 163, 212, 0.018) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Atmospheric radial gradients — extremely low opacity ambient light */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 15%, rgba(201, 169, 110, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 85% 85%, rgba(74, 127, 165, 0.05) 0%, transparent 60%);
+}
+
+/* Ensure app content sits above atmosphere */
+#root > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Scrollbar — dark themed */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #07101C;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 169, 110, 0.30);
+  border-radius: 2px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(201, 169, 110, 0.20);
+  color: #E8EDF5;
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Prevent user-select on game elements */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
