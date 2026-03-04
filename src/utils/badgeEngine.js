@@ -9,160 +9,160 @@ export const BADGE_DEFINITIONS = [
   {
     id: 'sentinel', category: 'performance', color: '#C9A96E',
     name: 'Sentinel', framing: 'Fewer than 1% reach this. You see what others miss.',
-    icon: '👁', imageFile: 'performance/badge-performance.png',
+    icon: '👁', imageFile: 'performance/sentinel.png',
   },
   {
     id: 'analyst', category: 'performance', color: '#C9A96E',
     name: 'Analyst', framing: 'Top 12%. Sharp instincts, sharper under pressure.',
-    icon: '🔍', imageFile: 'performance/badge-performance.png',
+    icon: '🔍', imageFile: 'performance/analyst.png',
   },
   {
     id: 'practitioner', category: 'performance', color: '#C9A96E',
     name: 'Practitioner', framing: 'Solid across the board.',
-    icon: '📋', imageFile: 'performance/badge-performance.png',
+    icon: '📋', imageFile: 'performance/practitioner.png',
   },
   {
     id: 'investigator', category: 'performance', color: '#C9A96E',
     name: 'Investigator', framing: 'You engaged complexity most never face.',
-    icon: '🧩', imageFile: 'performance/badge-performance.png',
+    icon: '🧩', imageFile: 'performance/investigator.png',
   },
 
   // ── Speed & Precision — #4A7FA5 ─────────────────────────────────────────
   {
     id: 'speed_demon', category: 'speed', color: '#4A7FA5',
     name: 'Speed Demon', framing: 'Decisive under pressure.',
-    icon: '⚡', imageFile: 'speed/badge-speed.png',
+    icon: '⚡', imageFile: 'speed/speed-demon.png',
   },
   {
     id: 'hawk_eye', category: 'speed', color: '#4A7FA5',
     name: 'Hawk Eye', framing: 'Precision over aggression.',
-    icon: '🎯', imageFile: 'speed/badge-speed.png',
+    icon: '🎯', imageFile: 'speed/hawk-eye.png',
   },
   {
     id: 'iron_nerve', category: 'speed', color: '#4A7FA5',
     name: 'Iron Nerve', framing: 'Cool under countdown.',
-    icon: '🧊', imageFile: 'speed/badge-speed.png',
+    icon: '🧊', imageFile: 'speed/iron-nerve.png',
   },
   {
     id: 'first_responder', category: 'speed', color: '#4A7FA5',
     name: 'First Responder', framing: 'When it matters, you move fast.',
-    icon: '🏃', imageFile: 'speed/badge-speed.png',
+    icon: '🏃', imageFile: 'speed/first-responder.png',
   },
   {
     id: 'the_closer', category: 'speed', color: '#4A7FA5',
     name: 'The Closer', framing: 'Pressure is where you sharpen.',
-    icon: '✅', imageFile: 'speed/badge-speed.png',
+    icon: '✅', imageFile: 'speed/the-closer.png',
   },
   {
     id: 'quiet_storm', category: 'speed', color: '#4A7FA5',
     name: 'Quiet Storm', framing: 'Methodical beats reactive.',
-    icon: '🌊', imageFile: 'speed/badge-speed.png',
+    icon: '🌊', imageFile: 'speed/quiet-storm.png',
   },
 
   // ── Domain Mastery — #3A8B7A ─────────────────────────────────────────────
   {
     id: 'policy_architect', category: 'mastery', color: '#3A8B7A',
     name: 'Policy Architect', framing: 'Your rules survive the real world.',
-    icon: '⚖️', imageFile: 'mastery/badge-mastery.png',
+    icon: '⚖️', imageFile: 'mastery/policy-architect.png',
   },
   {
     id: 'threat_hunter', category: 'mastery', color: '#3A8B7A',
     name: 'Threat Hunter', framing: 'You see the attack before it lands.',
-    icon: '🛡', imageFile: 'mastery/badge-mastery.png',
+    icon: '🛡', imageFile: 'mastery/threat-hunter.png',
   },
   {
     id: 'gray_zone_master', category: 'mastery', color: '#3A8B7A',
     name: 'Gray Zone Master', framing: 'You live comfortably in ambiguity.',
-    icon: '🔘', imageFile: 'mastery/badge-mastery.png',
+    icon: '🔘', imageFile: 'mastery/gray-zone-master.png',
   },
   {
     id: 'cultural_navigator', category: 'mastery', color: '#3A8B7A',
     name: 'Cultural Navigator', framing: 'Context is your superpower.',
-    icon: '🌍', imageFile: 'mastery/badge-mastery.png',
+    icon: '🌍', imageFile: 'mastery/cultural-navigator.png',
   },
   {
     id: 'budget_oracle', category: 'mastery', color: '#3A8B7A',
     name: 'Budget Oracle', framing: 'Efficiency is its own defence.',
-    icon: '💡', imageFile: 'mastery/badge-mastery.png',
+    icon: '💡', imageFile: 'mastery/budget-oracle.png',
   },
   {
     id: 'boundary_setter', category: 'mastery', color: '#3A8B7A',
     name: 'Boundary Setter', framing: 'Your policy held. Rare.',
-    icon: '📐', imageFile: 'mastery/badge-mastery.png',
+    icon: '📐', imageFile: 'mastery/boundary-setter.png',
   },
   {
     id: 'escalation_expert', category: 'mastery', color: '#3A8B7A',
     name: 'Escalation Expert', framing: 'You know when to hold, when to hand off.',
-    icon: '↗️', imageFile: 'mastery/badge-mastery.png',
+    icon: '↗️', imageFile: 'mastery/escalation-expert.png',
   },
   {
     id: 'zero_tolerance', category: 'mastery', color: '#3A8B7A',
     name: 'Zero Tolerance', framing: 'No grey. No mercy.',
-    icon: '⛔', imageFile: 'mastery/badge-mastery.png',
+    icon: '⛔', imageFile: 'mastery/zero-tolerance.png',
   },
   {
     id: 'signal_reader', category: 'mastery', color: '#3A8B7A',
     name: 'Signal Reader', framing: 'You see the signal in the noise.',
-    icon: '📡', imageFile: 'mastery/badge-mastery.png',
+    icon: '📡', imageFile: 'mastery/signal-reader.png',
   },
   {
     id: 'multilingual_mind', category: 'mastery', color: '#3A8B7A',
     name: 'Multilingual Mind', framing: 'You think in more than one culture.',
-    icon: '🌐', imageFile: 'mastery/badge-mastery.png',
+    icon: '🌐', imageFile: 'mastery/multilingual-mind.png',
   },
 
   // ── Behaviour & Pattern — #8B6B8A ────────────────────────────────────────
   {
     id: 'contrarian', category: 'behaviour', color: '#8B6B8A',
     name: 'Contrarian', framing: 'You think where others assume.',
-    icon: '↙️', imageFile: 'behaviour/badge-behaviour.png',
+    icon: '↙️', imageFile: 'behaviour/contrarian.png',
   },
   {
     id: 'the_diplomat', category: 'behaviour', color: '#8B6B8A',
     name: 'The Diplomat', framing: 'Firm policy. Human delivery.',
-    icon: '🤝', imageFile: 'behaviour/badge-behaviour.png',
+    icon: '🤝', imageFile: 'behaviour/the-diplomat.png',
   },
   {
     id: 'pattern_breaker', category: 'behaviour', color: '#8B6B8A',
     name: 'Pattern Breaker', framing: 'You learn faster than you think.',
-    icon: '📈', imageFile: 'behaviour/badge-behaviour.png',
+    icon: '📈', imageFile: 'behaviour/pattern-breaker.png',
   },
   {
     id: 'the_outlier', category: 'behaviour', color: '#8B6B8A',
     name: 'The Outlier', framing: "You don't follow consensus. Good.",
-    icon: '✦', imageFile: 'behaviour/badge-behaviour.png',
+    icon: '✦', imageFile: 'behaviour/the-outlier.png',
   },
   {
     id: 'human_override', category: 'behaviour', color: '#8B6B8A',
     name: 'Human Override', framing: 'Machine suggested. You decided better.',
-    icon: '🧠', imageFile: 'behaviour/badge-behaviour.png',
+    icon: '🧠', imageFile: 'behaviour/human-override.png',
   },
 
   // ── Achievement — #E8C84A ────────────────────────────────────────────────
   {
     id: 'clean_sweep', category: 'achievement', color: '#E8C84A',
     name: 'Clean Sweep', framing: 'The full picture. Rare company.',
-    icon: '✨', imageFile: 'achievement/badge-achievement.png',
+    icon: '✨', imageFile: 'achievement/clean-sweep.png',
   },
   {
     id: 'deep_diver', category: 'achievement', color: '#E8C84A',
     name: 'Deep Diver', framing: "Once wasn't enough.",
-    icon: '🔄', imageFile: 'achievement/badge-achievement.png',
+    icon: '🔄', imageFile: 'achievement/deep-diver.png',
   },
   {
     id: 'summit_elite', category: 'achievement', color: '#E8C84A',
     name: 'Summit Elite', framing: 'Best in the room. Literally.',
-    icon: '🏆', imageFile: 'achievement/badge-achievement.png',
+    icon: '🏆', imageFile: 'achievement/summit-elite.png',
   },
   {
     id: 'apex_predator', category: 'achievement', color: '#E8C84A',
     name: 'Apex Predator', framing: 'One person holds this. You earned it.',
-    icon: '👑', imageFile: 'achievement/badge-achievement.png',
+    icon: '👑', imageFile: 'achievement/apex-predator.png',
   },
   {
     id: 'the_veteran', category: 'achievement', color: '#E8C84A',
     name: 'The Veteran', framing: 'You came back. That says everything.',
-    icon: '⭐', imageFile: 'achievement/badge-achievement.png',
+    icon: '⭐', imageFile: 'achievement/the-veteran.png',
   },
 ]
 
