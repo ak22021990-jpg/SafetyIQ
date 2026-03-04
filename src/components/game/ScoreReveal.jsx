@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import useCountUp from '../../hooks/useCountUp'
+import { useSound } from '../../hooks/useSound'
 import Badge from '../ui/Badge'
 import { getBadgesByIds } from '../../utils/badgeEngine'
 
 export default function ScoreReveal({ score, maxScore, game, accentColor, earnedBadgeIds = [], onComplete }) {
   const shouldReduce = useReducedMotion()
   const displayScore = useCountUp(score, 1500, 300)
+  const playSound    = useSound()
 
   const [showLine,   setShowLine]   = useState(false)
   const [showBadges, setShowBadges] = useState(false)
@@ -22,6 +24,11 @@ export default function ScoreReveal({ score, maxScore, game, accentColor, earned
     const t3 = setTimeout(() => onComplete?.(),       shouldReduce ? 1000 : 4500)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
   }, [onComplete, shouldReduce])
+
+  // Badge chime when badges spring in
+  useEffect(() => {
+    if (showBadges && badges.length > 0) playSound('badge')
+  }, [showBadges])
 
   return (
     <motion.div

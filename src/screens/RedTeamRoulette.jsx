@@ -8,6 +8,7 @@ import TimerRing from '../components/ui/TimerRing'
 import OutputCard from '../components/game/OutputCard'
 import { RED_TEAM_OUTPUTS } from '../data/gameContent'
 import { useSession } from '../context/SessionContext'
+import { useSound } from '../hooks/useSound'
 import { getLeaderboard } from '../utils/storageEngine'
 import { SCREENS } from '../App'
 
@@ -115,6 +116,7 @@ function LiveLeaderboardPanel({ sessionId }) {
 export default function RedTeamRoulette({ navigate }) {
   const { updateScore, sessionId } = useSession()
   const shouldReduce               = useReducedMotion()
+  const playSound                  = useSound()
 
   const cards = useMemo(() => buildCardSet(), [])
 
@@ -141,8 +143,14 @@ export default function RedTeamRoulette({ navigate }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase])
 
+  // Tick when ≤ 10s
+  useEffect(() => {
+    if (timeLeft > 0 && timeLeft <= 10 && phase === 'playing') playSound('tick')
+  }, [timeLeft])
+
   const toggleFlag = (cardId) => {
     if (phase !== 'playing') return
+    playSound('pop')
     setFlags(prev => ({ ...prev, [cardId]: !prev[cardId] }))
   }
 
@@ -183,6 +191,7 @@ export default function RedTeamRoulette({ navigate }) {
   const handleContinue = () => {
     const data = computeScore()
     updateScore('redTeam', { ...data, total: cards.length })
+    playSound('complete')
     navigate(SCREENS.GAME_END, 'redTeam')
   }
 

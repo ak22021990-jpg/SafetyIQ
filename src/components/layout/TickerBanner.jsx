@@ -1,58 +1,43 @@
 // src/components/layout/TickerBanner.jsx
-// Fixed bottom ticker — 48px, editorial reveal, reads from localStorage
+// Fixed bottom ticker — 48px, cross-fade rotation, live stats from tickerEngine.
 import { useState, useEffect, useRef } from 'react'
-import { getTickerStats, getAllSessions } from '../../utils/storageEngine'
+import { getAllSessions } from '../../utils/storageEngine'
+import { calculateTickerStats, STATIC_INSIGHTS } from '../../utils/tickerEngine'
 
-// ⚠️ REPLACE BEFORE SUMMIT: Verify these static insights with real Sutherland stats
-const STATIC_INSIGHTS = [
-  'Sutherland reviews over 100M pieces of content per year for trust & safety clients.',
-  'The average Trust & Safety team reviews 14,000+ reports every single day.',
-  'Response time under 24h reduces platform reputation damage by up to 60%.',
-  'Contextual misclassification accounts for 34% of all content moderation errors.',
-  'Sutherland operates across 20+ languages and 5 time zones — 24 hours a day.',
-  '72% of harmful content is removed before a single user reports it.',
-  'False positive rates above 2% erode creator trust within 90 days.',
-]
-
-function buildLiveInsights(stats, sessions) {
-  if (!stats || sessions.length < 3) return null
-  const insights = [
-    `${stats.totalPlayers} players have taken the Signal & Noise challenge today.`,
-    `Average score so far: ${stats.avgScore} points.`,
-    `${stats.completedAll} players have completed all four games.`,
-  ]
-  return insights
+function loadInsights() {
+  const sessions = getAllSessions()
+  return calculateTickerStats(sessions)
 }
 
 export default function TickerBanner() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [visible, setVisible] = useState(true)
-  const [insights, setInsights] = useState(STATIC_INSIGHTS)
-  const timerRef = useRef(null)
+  const [insights,      setInsights]      = useState(STATIC_INSIGHTS)
+  const [currentIndex,  setCurrentIndex]  = useState(0)
+  const [visible,       setVisible]       = useState(true)
+  const rotateRef = useRef(null)
 
-  // Load live stats on mount and every 30s
+  // Refresh insights from localStorage (storage event + once on mount)
   useEffect(() => {
-    const load = () => {
-      const stats    = getTickerStats()
-      const sessions = getAllSessions()
-      const live     = buildLiveInsights(stats, sessions)
-      setInsights(live && live.length > 0 ? live : STATIC_INSIGHTS)
-    }
-    load()
-    const interval = setInterval(load, 30000)
-    return () => clearInterval(interval)
+    const refresh = () => setInsights(loadInsights())
+    refresh()
+    window.addEventListener('storage', refresh)
+    return () => window.removeEventListener('storage', refresh)
   }, [])
 
-  // Rotate insights every 6s with cross-fade
+  // Reset index when insight list changes (avoid out-of-bounds)
   useEffect(() => {
-    timerRef.current = setInterval(() => {
+    setCurrentIndex(0)
+  }, [insights])
+
+  // Rotate every 6s with cross-fade
+  useEffect(() => {
+    rotateRef.current = setInterval(() => {
       setVisible(false)
       setTimeout(() => {
         setCurrentIndex(i => (i + 1) % insights.length)
         setVisible(true)
-      }, 600)
+      }, 500)
     }, 6000)
-    return () => clearInterval(timerRef.current)
+    return () => clearInterval(rotateRef.current)
   }, [insights])
 
   return (
@@ -91,10 +76,13 @@ export default function TickerBanner() {
 
       {/* Insight text */}
       <p
-        className="font-mono text-body-s text-text-secondary flex-1 truncate transition-opacity duration-500"
-        style={{ opacity: visible ? 1 : 0 }}
+        className="font-mono text-body-s text-text-secondary flex-1 truncate"
+        style={{
+          opacity:    visible ? 1 : 0,
+          transition: 'opacity 0.5s ease',
+        }}
       >
-        {insights[currentIndex]}
+        {insights[currentIndex] ?? insights[0]}
       </p>
 
       <style>{`

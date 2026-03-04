@@ -16,7 +16,10 @@ export default function Leaderboard({ navigate }) {
   const [board, setBoard] = useState([])
 
   useEffect(() => {
-    setBoard(getLeaderboard())
+    const load = () => setBoard(getLeaderboard())
+    load()
+    window.addEventListener('storage', load)
+    return () => window.removeEventListener('storage', load)
   }, [])
 
   const currentRank = board.findIndex(e => e.sessionId === sessionId) + 1
@@ -93,13 +96,17 @@ export default function Leaderboard({ navigate }) {
               role="list"
             >
               {board.map((entry, idx) => (
-                <LeaderboardRow
-                  key={entry.sessionId || idx}
-                  entry={entry}
-                  rank={idx + 1}
-                  isCurrentPlayer={entry.sessionId === sessionId}
-                  index={idx}
-                />
+                <div key={entry.sessionId || idx}>
+                  <LeaderboardRow
+                    entry={entry}
+                    rank={idx + 1}
+                    isCurrentPlayer={entry.sessionId === sessionId}
+                    index={idx}
+                  />
+                  {idx === 2 && board.length > 3 && (
+                    <div style={{ height: '1px', background: 'rgba(201,169,110,0.25)', margin: '4px 0' }} />
+                  )}
+                </div>
               ))}
             </motion.div>
           )}

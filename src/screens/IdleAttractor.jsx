@@ -57,7 +57,13 @@ function TeaserPanel({ question }) {
 }
 
 function LeaderboardPanel() {
-  const [board] = useState(() => getLeaderboard().slice(0, 5))
+  const [board, setBoard] = useState(() => getLeaderboard().slice(0, 5))
+
+  useEffect(() => {
+    const load = () => setBoard(getLeaderboard().slice(0, 5))
+    window.addEventListener('storage', load)
+    return () => window.removeEventListener('storage', load)
+  }, [])
 
   if (board.length === 0) {
     return (

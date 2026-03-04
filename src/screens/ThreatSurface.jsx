@@ -9,6 +9,7 @@ import AttackWave from '../components/game/AttackWave'
 import DamageReport from '../components/game/DamageReport'
 import { THREAT_VECTORS } from '../data/gameContent'
 import { useSession } from '../context/SessionContext'
+import { useSound } from '../hooks/useSound'
 import { SCREENS } from '../App'
 
 const ACCENT       = '#E8A830'
@@ -17,6 +18,7 @@ const POINTS_PER_BLOCK = 8
 export default function ThreatSurface({ navigate }) {
   const { updateScore } = useSession()
   const shouldReduce    = useReducedMotion()
+  const playSound       = useSound()
 
   // phase: 'allocate' | 'attack' | 'report'
   const [phase, setPhase] = useState('allocate')
@@ -30,7 +32,7 @@ export default function ThreatSurface({ navigate }) {
     setAllocations(prev => ({ ...prev, [vectorId]: val }))
   }
 
-  const handleLaunchAttack = () => setPhase('attack')
+  const handleLaunchAttack = () => { playSound('pop'); setPhase('attack') }
 
   const handleAttackComplete = () => setPhase('report')
 
@@ -47,6 +49,7 @@ export default function ThreatSurface({ navigate }) {
       blocked: blockedCount,
       total:   THREAT_VECTORS.length,
     })
+    playSound('complete')
     navigate(SCREENS.GAME_END, 'threat')
   }
 

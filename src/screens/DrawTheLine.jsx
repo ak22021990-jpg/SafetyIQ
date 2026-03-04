@@ -9,6 +9,7 @@ import Slider from '../components/ui/Slider'
 import HintBox from '../components/ui/HintBox'
 import { DRAW_THE_LINE_POLICIES } from '../data/gameContent'
 import { useSession } from '../context/SessionContext'
+import { useSound } from '../hooks/useSound'
 import { SCREENS } from '../App'
 
 const ACCENT = '#4A7FA5'
@@ -57,6 +58,7 @@ const POLICY_HINTS = [
 export default function DrawTheLine({ navigate }) {
   const { player, updateScore } = useSession()
   const shouldReduce = useReducedMotion()
+  const playSound    = useSound()
 
   // Pick policy based on session (rotate through 6)
   const policyIndex = useRef(
@@ -110,6 +112,11 @@ export default function DrawTheLine({ navigate }) {
     return () => clearInterval(timerRef.current)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase])
+
+  // Tick when ≤ 10s during configure phase
+  useEffect(() => {
+    if (timeLeft > 0 && timeLeft <= 10 && phase === 'configure') playSound('tick')
+  }, [timeLeft])
 
   // ── Lock configuration & run stress tests ────────────────────────────────
   const handleLockConfig = () => {
@@ -173,6 +180,7 @@ export default function DrawTheLine({ navigate }) {
       hintsUsed,
       policyId:   policy.id,
     })
+    playSound('complete')
     navigate(SCREENS.GAME_END, 'drawLine')
   }
 

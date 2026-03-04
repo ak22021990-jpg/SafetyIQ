@@ -1,5 +1,5 @@
 // src/screens/HomeScreen.jsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Volume2, VolumeX } from 'lucide-react'
 import ScreenWrapper from '../components/layout/ScreenWrapper'
 import SafeZoneWrapper from '../components/layout/SafeZoneWrapper'
@@ -55,7 +55,13 @@ const GAMES = [
 ]
 
 function LeaderboardSidebar({ currentSessionId, navigate }) {
-  const board = getLeaderboard().slice(0, 8)
+  const [board, setBoard] = useState(() => getLeaderboard().slice(0, 8))
+
+  useEffect(() => {
+    const load = () => setBoard(getLeaderboard().slice(0, 8))
+    window.addEventListener('storage', load)
+    return () => window.removeEventListener('storage', load)
+  }, [])
 
   return (
     <div

@@ -9,6 +9,7 @@ import SocialPostCard from '../components/game/SocialPostCard'
 import InsightPopup from '../components/game/InsightPopup'
 import Button from '../components/ui/Button'
 import { useSession } from '../context/SessionContext'
+import { useSound } from '../hooks/useSound'
 import { SCREENS } from '../App'
 import { GRAY_ROOM_CASES } from '../data/gameContent'
 
@@ -16,6 +17,7 @@ const MAX_SECONDS = 90
 
 export default function GrayRoom({ navigate }) {
   const { updateScore } = useSession()
+  const playSound = useSound()
 
   const [caseIndex,    setCaseIndex]    = useState(0)
   const [caseState,    setCaseState]    = useState('active')  // active | locked | revealed | insight
@@ -54,6 +56,11 @@ export default function GrayRoom({ navigate }) {
     return () => clearInterval(timerRef.current)
   }, [caseIndex, caseState])
 
+  // ── Tick sound when timer ≤ 10 ────────────────────────────────────
+  useEffect(() => {
+    if (seconds > 0 && seconds <= 10 && caseState === 'active') playSound('tick')
+  }, [seconds])
+
   // ── Choice selection ───────────────────────────────────────────────
   const handleChoiceSelect = (choiceId) => {
     if (caseState !== 'active') return
@@ -73,6 +80,7 @@ export default function GrayRoom({ navigate }) {
     scoreRef.current.correct += correct ? 1 : 0
     scoreRef.current.cases.push({ caseId: currentCase.id, correct, points, elapsed })
 
+    playSound(correct ? 'correct' : 'wrong')
     setWasCorrect(correct)
     setTimeTaken(elapsed)
 
@@ -86,6 +94,7 @@ export default function GrayRoom({ navigate }) {
   // ── Timer expired ──────────────────────────────────────────────────
   const handleExpire = useCallback(() => {
     if (caseState !== 'active') return
+    playSound('expired')
     setSelectedId(null)
     setCaseState('revealed')
     scoreRef.current.cases.push({ caseId: currentCase.id, correct: false, points: 0, elapsed: MAX_SECONDS })
@@ -119,6 +128,7 @@ export default function GrayRoom({ navigate }) {
         avgTime,
         casesCorrect: score.cases.filter(c => c.correct).map(c => c.caseId),
       })
+      playSound('complete')
       navigate(SCREENS.GAME_END, 'grayRoom')
     }
   }
