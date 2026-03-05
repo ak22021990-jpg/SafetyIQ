@@ -48,7 +48,6 @@ export default function Registration({ navigate }) {
     title:      '',
     titleOther: '',
     email:      '',
-    phone:      '',
     consent:    false,
   })
   const [errors, setErrors] = useState({})
@@ -73,7 +72,6 @@ export default function Registration({ navigate }) {
       company: form.company.trim(),
       title:   form.title === 'Other' ? form.titleOther.trim() : form.title,
       email:   form.email.trim(),
-      phone:   form.phone.trim() || null,
       consent: true,
     }
     registerPlayer(playerData)
@@ -107,15 +105,17 @@ export default function Registration({ navigate }) {
         <div
           className="w-full"
           style={{
-            maxWidth:   '480px',
-            background: '#111F32',
-            border:     '1px solid rgba(201,169,110,0.20)',
-            padding:    '40px',
+            maxWidth:     '480px',
+            background:   '#FFFFFF',
+            border:       '1px solid #E2E8F0',
+            borderRadius: '12px',
+            padding:      '40px',
+            boxShadow:    '0 10px 15px -3px rgba(0,0,0,0.05)',
           }}
         >
           <div className="mb-6">
             <h2 className="font-heading font-bold text-text-primary" style={{ fontSize: '20px' }}>
-              Create Your Safety IQ Profile
+              Hello! Would you like to tell more about you?
             </h2>
             <p className="font-mono text-body-s text-text-muted mt-1">
               Your results will be saved and ranked on the leaderboard.
@@ -125,58 +125,74 @@ export default function Registration({ navigate }) {
           <form onSubmit={handleSubmit} noValidate>
             <div className="flex flex-col gap-4">
 
-              <Input
-                label="Full Name"
-                value={form.name}
-                onChange={set('name')}
-                placeholder="Alexandra Chen"
-                error={errors.name}
-                required
-                autoComplete="name"
-              />
-
-              <Input
-                label="Company"
-                value={form.company}
-                onChange={set('company')}
-                placeholder="Veritas Corp"
-                error={errors.company}
-                required
-                autoComplete="organization"
-              />
-
-              {/* Title dropdown */}
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="title-select"
-                  className="font-mono uppercase tracking-widest text-text-secondary"
-                  style={{ fontSize: '9px', letterSpacing: '2px' }}
-                >
-                  Title<span className="text-gold ml-1">*</span>
-                </label>
-                <select
-                  id="title-select"
-                  value={form.title}
-                  onChange={set('title')}
+              {/* Row 1: Name + Company */}
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  label="Full Name"
+                  value={form.name}
+                  onChange={set('name')}
+                  placeholder="Alexandra Chen"
+                  error={errors.name}
                   required
-                  style={{ background: '#111F32' }}
-                  className="w-full border border-white/10 focus:border-gold font-mono text-body-m text-text-primary px-4 py-3 outline-none transition-all duration-150 rounded-none appearance-none cursor-pointer focus:shadow-[0_0_0_3px_rgba(201,169,110,0.08)]"
-                >
-                  <option value="" className="bg-navy-panel">Select your title</option>
-                  {TITLE_OPTIONS.map(opt => (
-                    <option key={opt} value={opt} className="bg-navy-panel">
-                      {opt}
-                    </option>
-                  ))}
-                </select>
-                {errors.title && (
-                  <p className="font-mono text-red-signal mt-0.5" style={{ fontSize: '9px' }} role="alert">
-                    {errors.title}
-                  </p>
-                )}
+                  autoComplete="name"
+                />
+                <Input
+                  label="Company"
+                  value={form.company}
+                  onChange={set('company')}
+                  placeholder="Veritas Corp"
+                  error={errors.company}
+                  required
+                  autoComplete="organization"
+                />
               </div>
 
-              {/* Conditional "Other" title input */}
+              {/* Row 2: Title + Email */}
+              <div className="grid grid-cols-2 gap-4">
+                {/* Title dropdown */}
+                <div className="flex flex-col gap-1">
+                  <label
+                    htmlFor="title-select"
+                    className="font-mono uppercase tracking-widest text-text-secondary"
+                    style={{ fontSize: '9px', letterSpacing: '2px' }}
+                  >
+                    Title<span className="text-gold ml-1">*</span>
+                  </label>
+                  <select
+                    id="title-select"
+                    value={form.title}
+                    onChange={set('title')}
+                    required
+                    style={{ background: '#FFFFFF' }}
+                    className="w-full border border-surface-border focus:border-midnight font-heading text-body-m text-text-primary px-4 py-3 outline-none transition-all duration-150 rounded-[8px] appearance-none cursor-pointer focus:shadow-[0_0_0_3px_rgba(15,23,42,0.08)]"
+                  >
+                    <option value="" className="bg-white">Select title</option>
+                    {TITLE_OPTIONS.map(opt => (
+                      <option key={opt} value={opt} className="bg-white">
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.title && (
+                    <p className="font-mono text-red-signal mt-0.5" style={{ fontSize: '9px' }} role="alert">
+                      {errors.title}
+                    </p>
+                  )}
+                </div>
+
+                <Input
+                  label="Email Address"
+                  type="email"
+                  value={form.email}
+                  onChange={set('email')}
+                  placeholder="a.chen@veritas.com"
+                  error={errors.email}
+                  required
+                  autoComplete="email"
+                />
+              </div>
+
+              {/* Conditional "Other" title input — spans full width */}
               {form.title === 'Other' && (
                 <Input
                   label="Specify Title"
@@ -187,26 +203,6 @@ export default function Registration({ navigate }) {
                   required
                 />
               )}
-
-              <Input
-                label="Email Address"
-                type="email"
-                value={form.email}
-                onChange={set('email')}
-                placeholder="a.chen@veritas.com"
-                error={errors.email}
-                required
-                autoComplete="email"
-              />
-
-              <Input
-                label="Phone Number (Optional)"
-                type="tel"
-                value={form.phone}
-                onChange={set('phone')}
-                placeholder="+44 7700 000000"
-                autoComplete="tel"
-              />
 
               {/* Consent checkbox */}
               <div className="mt-2">

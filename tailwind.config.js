@@ -4,31 +4,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Background layers
-        abyss:   '#07101C',
-        navy:    { DEFAULT: '#0D1828', panel: '#111F32', elevated: '#172540' },
+        // Background layers — light studio palette
+        studio:  '#FFFFFF',
+        canvas:  '#FBFCFD',
+        surface: { DEFAULT: '#F8FAFC', raised: '#F1F5F9', border: '#E2E8F0' },
 
-        // Brand accent
+        // Legacy aliases kept for backwards compatibility
+        abyss:   '#FFFFFF',
+        navy:    { DEFAULT: '#F8FAFC', panel: '#FFFFFF', elevated: '#F1F5F9' },
+
+        // Primary brand — Midnight Blue
+        midnight: '#0F172A',
+
+        // Human Red — CTAs and urgent elements
+        humanRed: { DEFAULT: '#E11D48', dim: 'rgba(225,29,72,0.08)', border: 'rgba(225,29,72,0.25)' },
+
+        // Gold accent — kept for game scoring UI
         gold: {
           DEFAULT: '#C9A96E',
           signal:  '#E8C84A',
-          dim:     'rgba(201,169,110,0.15)',
-          ghost:   'rgba(201,169,110,0.06)',
+          dim:     'rgba(201,169,110,0.12)',
+          ghost:   'rgba(201,169,110,0.05)',
           border:  'rgba(201,169,110,0.30)',
           strong:  'rgba(201,169,110,0.60)',
         },
 
         // Functional — game states only
-        red:    { signal: '#E8192C', dim: 'rgba(232,25,44,0.12)' },
-        green:  { signal: '#00C896', dim: 'rgba(0,200,150,0.12)' },
-        amber:  { warm:   '#E8A830', dim: 'rgba(232,168,48,0.12)' },
+        red:    { signal: '#E8192C', dim: 'rgba(232,25,44,0.10)' },
+        green:  { signal: '#00C896', dim: 'rgba(0,200,150,0.10)' },
+        amber:  { warm:   '#E8A830', dim: 'rgba(232,168,48,0.10)' },
 
-        // Text
+        // Text — dark on white
         text: {
-          primary:   '#E8EDF5',
-          secondary: '#8899AA',
-          muted:     '#566478',
-          inverse:   '#07101C',
+          primary:   '#0F172A',
+          secondary: '#475569',
+          muted:     '#94A3B8',
+          inverse:   '#FFFFFF',
         },
 
         // Badge categories
@@ -52,9 +63,11 @@ export default {
       },
 
       fontFamily: {
-        display: ['Fraunces', 'Georgia', 'serif'],
-        heading:  ['Syne', 'system-ui', 'sans-serif'],
-        mono:     ['DM Mono', 'Courier New', 'monospace'],
+        display:        ['Playfair Display', 'Georgia', 'serif'],
+        heading:        ['Inter', 'system-ui', 'sans-serif'],
+        'heading-tight': ['Inter Tight', 'Inter', 'system-ui', 'sans-serif'],
+        mono:           ['JetBrains Mono', 'DM Mono', 'Courier New', 'monospace'],
+        pulse:          ['Syne', 'system-ui', 'sans-serif'],
       },
 
       fontSize: {
@@ -64,14 +77,14 @@ export default {
         'display-s':  ['40px',  { lineHeight: '1.00', letterSpacing: '-1px' }],
         'display-xs': ['32px',  { lineHeight: '1.10', letterSpacing: '0px' }],
         'h1': ['44px', { lineHeight: '1.05', letterSpacing: '-0.5px' }],
-        'h2': ['28px', { lineHeight: '1.10', letterSpacing: '0px' }],
-        'h3': ['20px', { lineHeight: '1.15', letterSpacing: '0px' }],
-        'h4': ['14px', { lineHeight: '1.00', letterSpacing: '3px' }],
-        'body-l': ['16px', { lineHeight: '1.75', letterSpacing: '0.2px' }],
-        'body-m': ['13px', { lineHeight: '1.70', letterSpacing: '0.2px' }],
-        'body-s': ['11px', { lineHeight: '1.60', letterSpacing: '0.3px' }],
-        'label':  ['10px', { lineHeight: '1.00', letterSpacing: '2px' }],
-        'micro':  ['9px',  { lineHeight: '1.00', letterSpacing: '3px' }],
+        'h2': ['28px', { lineHeight: '1.10', letterSpacing: '-0.02em' }],
+        'h3': ['20px', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
+        'h4': ['14px', { lineHeight: '1.00', letterSpacing: '0px' }],
+        'body-l': ['16px', { lineHeight: '1.75', letterSpacing: '0.1px' }],
+        'body-m': ['14px', { lineHeight: '1.70', letterSpacing: '0.1px' }],
+        'body-s': ['12px', { lineHeight: '1.60', letterSpacing: '0.1px' }],
+        'label':  ['11px', { lineHeight: '1.00', letterSpacing: '1px' }],
+        'micro':  ['10px', { lineHeight: '1.00', letterSpacing: '1.5px' }],
       },
 
       spacing: {
@@ -81,17 +94,18 @@ export default {
       },
 
       borderRadius: {
-        card:  '0px',
-        badge: '2px',
-        input: '0px',
+        card:  '12px',
+        badge: '4px',
+        input: '8px',
         pill:  '100px',
       },
 
       boxShadow: {
-        subtle: '0 2px 8px rgba(0,0,0,0.30)',
-        medium: '0 8px 24px rgba(0,0,0,0.50)',
-        deep:   '0 24px 60px rgba(0,0,0,0.70)',
-        glow:   '0 0 20px rgba(201,169,110,0.06)',
+        subtle: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04)',
+        medium: '0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.04)',
+        deep:   '0 25px 50px -12px rgba(0,0,0,0.12)',
+        glow:   '0 0 20px rgba(201,169,110,0.15)',
+        card:   '0 10px 15px -3px rgba(0,0,0,0.05)',
       },
 
       // Per-game topbar accent colours

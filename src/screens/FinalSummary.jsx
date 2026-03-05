@@ -86,6 +86,20 @@ export default function FinalSummary({ navigate }) {
       <SafeZoneWrapper hasTopbar>
         <div className="w-full h-full overflow-y-auto" style={{ padding: '24px 20px' }}>
 
+          {/* Back to Home */}
+          <button
+            onClick={() => navigate(SCREENS.HOME)}
+            className="font-mono uppercase text-text-muted hover:text-text-primary transition-colors"
+            style={{
+              fontSize: '9px', letterSpacing: '2px', background: 'none',
+              border: '1px solid #E2E8F0', borderRadius: '8px',
+              padding: '7px 12px', cursor: 'pointer', marginBottom: '20px',
+              display: 'block',
+            }}
+          >
+            ← Back to Home
+          </button>
+
           {!showStats ? (
             <motion.div
               className="flex flex-col items-center text-center"

@@ -18,18 +18,19 @@ export default function GameCard({
 
   return (
     <motion.div
-      className="relative cursor-pointer select-none overflow-hidden"
+      className="relative cursor-pointer select-none"
       style={{
-        background:   hovered && !shouldReduce ? '#131E30' : '#111F32',
-        border:       '1px solid rgba(255,255,255,0.07)',
-        padding:      '28px',
-        transition:   'background 0.2s ease',
+        background:   '#FFFFFF',
+        border:       'none',
+        borderRadius: '16px',
+        overflow:     'hidden',
         boxShadow:    hovered && !shouldReduce
-          ? '0 24px 60px rgba(0,0,0,0.70)'
-          : '0 8px 24px rgba(0,0,0,0.50)',
+          ? '0 20px 40px -8px rgba(15, 23, 42, 0.14), 0 8px 16px -4px rgba(15, 23, 42, 0.08)'
+          : '0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.03)',
+        transition:   'box-shadow 0.28s ease',
       }}
-      animate={shouldReduce ? {} : { y: hovered ? -3 : 0 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      animate={shouldReduce ? {} : { y: hovered ? -8 : 0 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 26 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       onClick={onPlay}
@@ -38,103 +39,216 @@ export default function GameCard({
       aria-label={`${title} — ${completed ? 'Completed, score ' + score + '. Play again' : 'Play now'}`}
       onKeyDown={(e) => e.key === 'Enter' && onPlay?.()}
     >
-      {/* Top accent border — sweeps left→right on hover */}
+      {/* Header gradient + art section */}
       <div
-        className="absolute top-0 left-0 h-[2px]"
         style={{
-          background: accentColor,
-          width:      hovered ? '100%' : '0%',
-          transition: hovered
-            ? 'width 350ms ease-out'
-            : 'width 200ms ease-in',
+          position:   'relative',
+          background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 100%)',
+          padding:    '28px 40px 0 40px',
+          minHeight:  '72px',
         }}
-        aria-hidden="true"
-      />
-
-      {/* Completed badge — top right */}
-      {completed && (
-        <div
-          className="absolute top-4 right-4 flex items-center gap-1 font-mono uppercase"
-          style={{ fontSize: '9px', letterSpacing: '2px', color: accentColor }}
+      >
+        {/* Game tag */}
+        <p
+          style={{
+            fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
+            fontSize:      '10px',
+            fontWeight:    600,
+            letterSpacing: '2.5px',
+            textTransform: 'uppercase',
+            color:         accentColor,
+            margin:        0,
+          }}
         >
-          <span>✓</span>
-          <span>Complete</span>
-        </div>
-      )}
+          Game {String(gameNumber).padStart(2, '0')}
+        </p>
 
-      {/* Game number tag */}
-      <p
-        className="font-heading font-bold uppercase mb-3"
-        style={{ fontSize: '9px', letterSpacing: '3px', color: accentColor }}
-      >
-        GAME {String(gameNumber).padStart(2, '0')}
-      </p>
+        {/* Domain art — absolute, top-right, overlay blend */}
+        {domain && (
+          <div
+            aria-hidden="true"
+            style={{
+              position:  'absolute',
+              top:       '16px',
+              right:     '28px',
+              fontSize:  '52px',
+              lineHeight: 1,
+              mixBlendMode: 'overlay',
+              opacity:   0.85,
+              userSelect: 'none',
+            }}
+          >
+            {domain}
+          </div>
+        )}
+      </div>
 
-      {/* Domain emoji */}
-      <div className="text-3xl mb-3" aria-hidden="true">{domain}</div>
+      {/* Body */}
+      <div style={{ padding: '12px 40px 32px' }}>
 
-      {/* Title */}
-      <h3
-        className="font-heading font-extrabold text-text-primary mb-2"
-        style={{ fontSize: '18px', lineHeight: '1.2' }}
-      >
-        {title}
-      </h3>
+        {/* Completed badge */}
+        {completed && (
+          <div style={{ marginBottom: '8px' }}>
+            <span
+              style={{
+                fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
+                fontSize:      '10px',
+                fontWeight:    600,
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase',
+                color:         accentColor,
+              }}
+            >
+              ✓ Done
+            </span>
+          </div>
+        )}
 
-      {/* Description */}
-      <p
-        className="font-mono text-text-secondary mb-4"
-        style={{ fontSize: '11px', lineHeight: '1.7' }}
-      >
-        {description}
-      </p>
+        {/* Title — Inter Tight, 800, -0.04em tracking */}
+        <h3
+          style={{
+            fontFamily:    '"Inter Tight", Inter, system-ui, sans-serif',
+            fontSize:      '32px',
+            fontWeight:    800,
+            lineHeight:    '1.05',
+            letterSpacing: '-0.04em',
+            color:         '#0F172A',
+            margin:        '0 0 10px 0',
+          }}
+        >
+          {title}
+        </h3>
 
-      {/* Meta pills */}
-      {metaPills?.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          {metaPills.map((pill, i) => (
-            <span key={i} className="flex items-center gap-1.5">
-              {i > 0 && (
-                <span
-                  className="w-1 h-1 rounded-full"
-                  style={{ background: accentColor }}
-                  aria-hidden="true"
-                />
-              )}
+        {/* Description — Inter body */}
+        <p
+          style={{
+            fontFamily:   'Inter, system-ui, sans-serif',
+            fontSize:     '13px',
+            fontWeight:   400,
+            lineHeight:   '1.6',
+            color:        '#475569',
+            margin:       '0 0 18px 0',
+          }}
+        >
+          {description}
+        </p>
+
+        {/* Meta pill tags */}
+        {metaPills?.length > 0 && (
+          <div
+            style={{
+              display:   'flex',
+              flexWrap:  'wrap',
+              gap:       '6px',
+              marginBottom: '20px',
+            }}
+          >
+            {metaPills.map((pill, i) => (
               <span
-                className="font-mono uppercase"
-                style={{ fontSize: '9px', letterSpacing: '1px', color: '#566478' }}
+                key={i}
+                style={{
+                  fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
+                  fontSize:      '10px',
+                  fontWeight:    600,
+                  letterSpacing: '0.5px',
+                  textTransform: 'uppercase',
+                  color:         accentColor,
+                  background:    accentColor + '14',
+                  border:        `1px solid ${accentColor}30`,
+                  padding:       '3px 9px',
+                  borderRadius:  '4px',
+                }}
               >
                 {pill}
               </span>
+            ))}
+          </div>
+        )}
+
+        {/* Score (if completed) — Playfair Display 900 italic */}
+        {completed && score !== undefined && (
+          <div
+            style={{
+              display:      'flex',
+              alignItems:   'baseline',
+              gap:          '8px',
+              marginBottom: '20px',
+              padding:      '10px 14px',
+              background:   accentColor + '0E',
+              border:       `1px solid ${accentColor}24`,
+              borderRadius: '8px',
+            }}
+          >
+            <span
+              style={{
+                fontFamily:  '"Playfair Display", Georgia, serif',
+                fontSize:    '38px',
+                fontWeight:  900,
+                fontStyle:   'italic',
+                color:       accentColor,
+                lineHeight:  1,
+              }}
+            >
+              {score}
             </span>
-          ))}
-        </div>
-      )}
+            <span
+              style={{
+                fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
+                fontSize:      '10px',
+                fontWeight:    600,
+                letterSpacing: '2px',
+                color:         '#94A3B8',
+              }}
+            >
+              PTS
+            </span>
+          </div>
+        )}
 
-      {/* Score (if completed) */}
-      {completed && score !== undefined && (
-        <div className="flex items-baseline gap-2 mb-3">
-          <span className="font-display font-semibold text-gold" style={{ fontSize: '28px' }}>
-            {score}
-          </span>
-          <span className="font-mono text-text-muted" style={{ fontSize: '9px', letterSpacing: '2px' }}>
-            PTS
-          </span>
+        {/* CTA Button — Midnight Blue bg → Human Red on hover */}
+        <div style={{ marginTop: '4px' }}>
+          <motion.button
+            onClick={(e) => { e.stopPropagation(); onPlay?.() }}
+            animate={shouldReduce ? {} : {
+              backgroundColor: hovered ? '#E11D48' : '#0F172A',
+            }}
+            transition={{ duration: 0.22, ease: 'easeInOut' }}
+            style={{
+              display:       'flex',
+              alignItems:    'center',
+              gap:           '8px',
+              padding:       '10px 20px',
+              borderRadius:  '8px',
+              border:        'none',
+              cursor:        'pointer',
+              minHeight:     '44px',
+              minWidth:      'unset',
+              backgroundColor: hovered ? '#E11D48' : '#0F172A',
+            }}
+          >
+            <span
+              style={{
+                fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
+                fontSize:      '11px',
+                fontWeight:    600,
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase',
+                color:         '#FFFFFF',
+              }}
+            >
+              {completed ? 'Play again' : 'Play now'}
+            </span>
+            <motion.span
+              animate={shouldReduce ? {} : { x: hovered ? 4 : 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              style={{ fontSize: '16px', lineHeight: 1, color: '#FFFFFF' }}
+              aria-hidden="true"
+            >
+              →
+            </motion.span>
+          </motion.button>
         </div>
-      )}
 
-      {/* CTA */}
-      <div
-        className="flex items-center gap-2 font-mono uppercase transition-colors duration-200"
-        style={{
-          fontSize:      '9px',
-          letterSpacing: '2px',
-          color:         hovered ? accentColor : '#566478',
-        }}
-      >
-        <span>{completed ? 'Play again' : 'Play now'}</span>
-        <span>→</span>
       </div>
     </motion.div>
   )

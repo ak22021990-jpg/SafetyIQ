@@ -48,13 +48,14 @@ function LiveLeaderboardPanel({ sessionId }) {
         onClick={() => setOpen(v => !v)}
         className="w-full flex items-center justify-between font-mono uppercase"
         style={{
-          fontSize: '9px', letterSpacing: '2px', padding: '8px 12px',
-          background: 'rgba(0,200,150,0.05)', border: '1px solid rgba(0,200,150,0.15)',
-          borderRadius: open ? '4px 4px 0 0' : '4px', color: ACCENT, cursor: 'pointer',
+          fontSize: '11px', letterSpacing: '1.5px', padding: '10px 14px',
+          background: 'rgba(0,200,150,0.06)', border: '1px solid rgba(0,200,150,0.20)',
+          borderRadius: open ? '6px 6px 0 0' : '6px', color: ACCENT, cursor: 'pointer',
+          fontWeight: 700,
         }}
       >
         <span>Live Standings</span>
-        <span style={{ opacity: 0.6 }}>{open ? '▲' : '▼'}</span>
+        <span style={{ opacity: 0.7 }}>{open ? '▲' : '▼'}</span>
       </button>
       <AnimatePresence>
         {open && (
@@ -67,10 +68,10 @@ function LiveLeaderboardPanel({ sessionId }) {
           >
             <div
               style={{
-                background: 'rgba(0,200,150,0.03)',
+                background: '#FAFFFE',
                 border: '1px solid rgba(0,200,150,0.15)',
                 borderTop: 'none',
-                borderRadius: '0 0 4px 4px',
+                borderRadius: '0 0 6px 6px',
                 padding: '8px',
               }}
             >
@@ -79,7 +80,7 @@ function LiveLeaderboardPanel({ sessionId }) {
                   key={entry.sessionId || idx}
                   className="flex items-center gap-2"
                   style={{
-                    padding: '5px 6px', borderRadius: '2px',
+                    padding: '6px 8px', borderRadius: '4px',
                     marginBottom: idx < board.length - 1 ? '2px' : 0,
                     background:   entry.sessionId === sessionId ? 'rgba(201,169,110,0.08)' : 'transparent',
                     borderLeft:   entry.sessionId === sessionId ? '2px solid #C9A96E' : '2px solid transparent',
@@ -88,19 +89,19 @@ function LiveLeaderboardPanel({ sessionId }) {
                   <span
                     className="font-display"
                     style={{
-                      width: '18px', fontSize: '13px', fontWeight: 600,
-                      color: rankColors[idx + 1] || 'rgba(255,255,255,0.25)',
+                      width: '18px', fontSize: '14px', fontWeight: 700,
+                      color: rankColors[idx + 1] || '#94A3B8',
                     }}
                   >
                     {idx + 1}
                   </span>
                   <span
                     className="font-heading font-bold uppercase text-text-primary"
-                    style={{ flex: 1, fontSize: '10px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                    style={{ flex: 1, fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                   >
                     {entry.name || 'Anonymous'}
                   </span>
-                  <span className="font-display font-semibold text-gold" style={{ fontSize: '14px' }}>
+                  <span className="font-display font-bold text-gold" style={{ fontSize: '15px' }}>
                     {entry.totalScore || 0}
                   </span>
                 </div>
@@ -221,33 +222,33 @@ export default function RedTeamRoulette({ navigate }) {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
               >
-                {/* Live leaderboard panel (right side intent: collapsible strip on mobile) */}
+                {/* Live leaderboard panel */}
                 <LiveLeaderboardPanel sessionId={sessionId} />
 
                 {/* Header row */}
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="font-mono uppercase text-text-muted mb-0.5" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                    <p className="font-mono uppercase font-bold text-text-secondary mb-0.5" style={{ fontSize: '11px', letterSpacing: '1.5px' }}>
                       6 AI Outputs — Flag violations
                     </p>
                     <p
-                      className="font-mono"
-                      style={{ fontSize: '10px', color: flaggedCount > 0 ? ACCENT : 'rgba(255,255,255,0.25)' }}
+                      className="font-mono font-semibold"
+                      style={{ fontSize: '13px', color: flaggedCount > 0 ? ACCENT : '#94A3B8' }}
                     >
                       {flaggedCount > 0 ? `${flaggedCount} flagged` : 'None flagged yet'}
                     </p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <p className="font-mono text-text-muted" style={{ fontSize: '8px', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    <p className="font-mono text-text-muted" style={{ fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase' }}>
                       Live Score
                     </p>
-                    <p className="font-display font-semibold text-gold" style={{ fontSize: '22px', lineHeight: 1 }}>
+                    <p className="font-display font-bold text-gold" style={{ fontSize: '26px', lineHeight: 1 }}>
                       {liveScore}
                     </p>
                   </div>
                 </div>
 
-                {/* 6-card grid (vertical scroll list) */}
+                {/* 6-card list */}
                 <div className="flex flex-col gap-4 mb-6">
                   {cards.map((card, idx) => (
                     <motion.div
@@ -273,9 +274,9 @@ export default function RedTeamRoulette({ navigate }) {
                   onClick={triggerReveal}
                   className="w-full font-mono uppercase tracking-widest transition-colors"
                   style={{
-                    fontSize: '11px', letterSpacing: '2px', padding: '14px',
-                    background: ACCENT, color: '#07101C', fontWeight: 700,
-                    border: 'none', borderRadius: '4px', cursor: 'pointer',
+                    fontSize: '13px', letterSpacing: '2px', padding: '14px',
+                    background: ACCENT, color: '#FFFFFF', fontWeight: 700,
+                    border: 'none', borderRadius: '8px', cursor: 'pointer',
                   }}
                 >
                   Submit for Review
@@ -293,30 +294,30 @@ export default function RedTeamRoulette({ navigate }) {
               >
                 {/* Score summary */}
                 <div className="text-center mb-6">
-                  <p className="font-mono uppercase text-text-muted mb-1" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                  <p className="font-mono uppercase font-bold text-text-secondary mb-1" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                     Red Team Review Complete
                   </p>
-                  <p className="font-display font-semibold text-gold" style={{ fontSize: '64px', lineHeight: '0.9' }}>
+                  <p className="font-display font-bold text-gold" style={{ fontSize: '72px', lineHeight: '0.9' }}>
                     {liveScore}
                   </p>
-                  <div className="flex gap-3 justify-center mt-2 flex-wrap">
-                    <span className="font-mono" style={{ fontSize: '10px', color: ACCENT }}>
+                  <div className="flex gap-4 justify-center mt-3 flex-wrap">
+                    <span className="font-mono font-semibold" style={{ fontSize: '13px', color: ACCENT }}>
                       ✓ {liveCorrect} correct
                     </span>
                     {liveMissed > 0 && (
-                      <span className="font-mono" style={{ fontSize: '10px', color: '#E8192C' }}>
+                      <span className="font-mono font-semibold" style={{ fontSize: '13px', color: '#E8192C' }}>
                         ✗ {liveMissed} missed
                       </span>
                     )}
                     {liveFP > 0 && (
-                      <span className="font-mono" style={{ fontSize: '10px', color: '#E8A830' }}>
+                      <span className="font-mono font-semibold" style={{ fontSize: '13px', color: '#E8A830' }}>
                         ⚑ {liveFP} false {liveFP === 1 ? 'positive' : 'positives'}
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Staggered card reveals — 100ms per card */}
+                {/* Staggered card reveals */}
                 <div className="flex flex-col gap-4 mb-6">
                   {cards.map((card, idx) =>
                     idx < revealedCount ? (
@@ -340,8 +341,8 @@ export default function RedTeamRoulette({ navigate }) {
                         key={card.id}
                         style={{
                           height: '80px',
-                          background: 'rgba(255,255,255,0.02)',
-                          border: '1px solid rgba(255,255,255,0.05)',
+                          background: '#F8FAFC',
+                          border: '1px solid #E2E8F0',
                           borderRadius: '10px',
                         }}
                       />
@@ -358,9 +359,9 @@ export default function RedTeamRoulette({ navigate }) {
                     onClick={handleContinue}
                     className="w-full font-mono uppercase tracking-widest transition-colors"
                     style={{
-                      fontSize: '11px', letterSpacing: '2px', padding: '14px',
-                      background: ACCENT, color: '#07101C', fontWeight: 700,
-                      border: 'none', borderRadius: '4px', cursor: 'pointer',
+                      fontSize: '13px', letterSpacing: '2px', padding: '14px',
+                      background: ACCENT, color: '#FFFFFF', fontWeight: 700,
+                      border: 'none', borderRadius: '8px', cursor: 'pointer',
                     }}
                   >
                     Continue

@@ -217,39 +217,39 @@ export default function DrawTheLine({ navigate }) {
             >
               {/* Policy header */}
               <div className="mb-6">
-                <p className="font-mono uppercase text-text-muted mb-1" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                <p className="font-mono uppercase text-text-muted mb-1" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                   Policy Configuration
                 </p>
-                <h2 className="font-heading font-extrabold text-text-primary mb-2" style={{ fontSize: '22px', lineHeight: '1.2' }}>
+                <h2 className="font-heading font-extrabold text-text-primary mb-2" style={{ fontSize: '26px', lineHeight: '1.2' }}>
                   {policy.title}
                 </h2>
-                <p className="font-mono text-text-secondary mb-3" style={{ fontSize: '11px', lineHeight: '1.6' }}>
+                <p className="font-mono text-text-secondary mb-3" style={{ fontSize: '13px', lineHeight: '1.65' }}>
                   {policy.description}
                 </p>
                 <div
-                  className="font-mono text-text-muted p-3"
+                  className="font-mono text-text-secondary p-3"
                   style={{
-                    fontSize: '10px', lineHeight: '1.5',
-                    background: 'rgba(74,127,165,0.08)',
+                    fontSize: '12px', lineHeight: '1.6',
+                    background: 'rgba(74,127,165,0.07)',
                     border: '1px solid rgba(74,127,165,0.20)',
-                    borderRadius: '4px',
+                    borderRadius: '6px',
                   }}
                 >
-                  <span style={{ color: ACCENT }}>Context: </span>{policy.platformContext}
+                  <span style={{ color: ACCENT, fontWeight: 700 }}>Context: </span>{policy.platformContext}
                 </div>
               </div>
 
               {/* Sliders */}
               <div
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  borderRadius: '8px',
+                  background: '#F8FAFC',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '10px',
                   padding: '20px',
                   marginBottom: '20px',
                 }}
               >
-                <p className="font-mono uppercase text-text-muted mb-5" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                <p className="font-mono uppercase font-bold text-text-secondary mb-5" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                   Set Your Policy Parameters
                 </p>
                 <div className="flex flex-col gap-8">
@@ -283,30 +283,32 @@ export default function DrawTheLine({ navigate }) {
               {/* Hints */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <p className="font-mono uppercase text-text-muted" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                  <p className="font-mono uppercase font-bold text-text-secondary" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                     Policy Hints
                   </p>
-                  <span className="font-mono text-text-muted" style={{ fontSize: '9px' }}>
+                  <span className="font-mono text-text-muted" style={{ fontSize: '12px' }}>
                     {hintsUsed}/{MAX_HINTS} used · −{HINT_PENALTY}pts each
                   </span>
                 </div>
                 <div className="flex flex-col gap-2">
                   {hints.map((hint, idx) => {
                     const used = idx < hintsUsed || activeHint === idx
+                    const disabled = hintsUsed >= MAX_HINTS && activeHint !== idx
                     return (
                       <div key={idx}>
                         <button
                           onClick={() => requestHint(idx)}
-                          disabled={hintsUsed >= MAX_HINTS && activeHint !== idx}
+                          disabled={disabled}
                           className="w-full text-left font-mono transition-colors"
                           style={{
-                            fontSize: '10px',
-                            padding: '8px 12px',
-                            background: used ? 'rgba(232,168,48,0.08)' : 'rgba(255,255,255,0.03)',
-                            border: `1px solid ${used ? 'rgba(232,168,48,0.30)' : 'rgba(255,255,255,0.07)'}`,
-                            borderRadius: '4px',
-                            color: hintsUsed >= MAX_HINTS && activeHint !== idx ? 'rgba(255,255,255,0.25)' : '#E8A830',
-                            cursor: hintsUsed >= MAX_HINTS && activeHint !== idx ? 'not-allowed' : 'pointer',
+                            fontSize: '12px',
+                            padding: '10px 12px',
+                            background: used ? 'rgba(232,168,48,0.07)' : '#F8FAFC',
+                            border: `1px solid ${used ? 'rgba(232,168,48,0.30)' : '#E2E8F0'}`,
+                            borderRadius: '6px',
+                            color: disabled ? '#CBD5E1' : '#E8A830',
+                            cursor: disabled ? 'not-allowed' : 'pointer',
+                            fontWeight: 600,
                           }}
                         >
                           {activeHint === idx ? '▲ Hide hint' : `▼ Hint ${idx + 1}${used ? ' (used)' : ` (−${HINT_PENALTY}pts)`}`}
@@ -323,14 +325,14 @@ export default function DrawTheLine({ navigate }) {
                 onClick={handleLockConfig}
                 className="w-full font-mono uppercase tracking-widest transition-colors"
                 style={{
-                  fontSize: '11px',
+                  fontSize: '13px',
                   letterSpacing: '2px',
                   padding: '16px',
                   background: ACCENT,
-                  color: '#07101C',
+                  color: '#FFFFFF',
                   fontWeight: 700,
                   border: 'none',
-                  borderRadius: '4px',
+                  borderRadius: '8px',
                   cursor: 'pointer',
                 }}
               >
@@ -356,11 +358,11 @@ export default function DrawTheLine({ navigate }) {
                       key={i}
                       style={{
                         flex: 1,
-                        height: '4px',
+                        height: '5px',
                         borderRadius: '100px',
                         background: result
                           ? result.passed ? '#00C896' : '#E8192C'
-                          : i === stressIndex ? ACCENT : 'rgba(255,255,255,0.12)',
+                          : i === stressIndex ? ACCENT : '#E2E8F0',
                         transition: shouldReduce ? 'none' : 'background 300ms',
                       }}
                     />
@@ -368,7 +370,7 @@ export default function DrawTheLine({ navigate }) {
                 })}
               </div>
 
-              <p className="font-mono uppercase text-text-muted mb-1" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+              <p className="font-mono uppercase font-bold text-text-secondary mb-1" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                 Stress Test {stressIndex + 1} of {policy.stressTests.length}
               </p>
 
@@ -381,23 +383,23 @@ export default function DrawTheLine({ navigate }) {
                     exit={shouldReduce ? { opacity: 0 } : { opacity: 0, x: -30 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <div className="flex items-baseline gap-2 mb-3">
-                      <h3 className="font-heading font-bold text-text-primary" style={{ fontSize: '20px' }}>
+                    <div className="flex items-baseline gap-2 mb-3 mt-2">
+                      <h3 className="font-heading font-bold text-text-primary" style={{ fontSize: '22px' }}>
                         {currentTest.title}
                       </h3>
-                      <span className="font-mono text-text-muted" style={{ fontSize: '12px' }}>{currentTest.region}</span>
+                      <span className="font-mono text-text-muted" style={{ fontSize: '13px' }}>{currentTest.region}</span>
                     </div>
 
                     <div
                       style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1px solid rgba(255,255,255,0.07)',
-                        borderRadius: '8px',
+                        background: '#F8FAFC',
+                        border: '1px solid #E2E8F0',
+                        borderRadius: '10px',
                         padding: '16px',
                         marginBottom: '20px',
                       }}
                     >
-                      <p className="font-mono text-text-secondary" style={{ fontSize: '12px', lineHeight: '1.7' }}>
+                      <p className="font-mono text-text-secondary" style={{ fontSize: '14px', lineHeight: '1.7' }}>
                         {currentTest.scenario}
                       </p>
                     </div>
@@ -413,12 +415,13 @@ export default function DrawTheLine({ navigate }) {
                           key={label}
                           className="font-mono"
                           style={{
-                            fontSize: '10px',
-                            padding: '6px 12px',
-                            background: 'rgba(74,127,165,0.10)',
-                            border: '1px solid rgba(74,127,165,0.25)',
-                            borderRadius: '4px',
+                            fontSize: '12px',
+                            padding: '7px 14px',
+                            background: 'rgba(74,127,165,0.08)',
+                            border: '1px solid rgba(74,127,165,0.22)',
+                            borderRadius: '6px',
                             color: ACCENT,
+                            fontWeight: 600,
                           }}
                         >
                           {label}: <strong>{val}</strong>
@@ -430,14 +433,14 @@ export default function DrawTheLine({ navigate }) {
                       onClick={evaluateCurrentTest}
                       className="w-full font-mono uppercase tracking-widest transition-colors"
                       style={{
-                        fontSize: '11px',
+                        fontSize: '13px',
                         letterSpacing: '2px',
                         padding: '14px',
                         background: ACCENT,
-                        color: '#07101C',
+                        color: '#FFFFFF',
                         fontWeight: 700,
                         border: 'none',
-                        borderRadius: '4px',
+                        borderRadius: '8px',
                         cursor: 'pointer',
                       }}
                     >
@@ -457,11 +460,12 @@ export default function DrawTheLine({ navigate }) {
                     <div
                       style={{
                         textAlign: 'center',
-                        padding: '24px 20px 28px',
+                        padding: '28px 20px',
                         marginBottom: '20px',
+                        marginTop: '8px',
                         background: lastResult.passed ? 'rgba(0,200,150,0.06)' : 'rgba(232,25,44,0.06)',
                         border: `1px solid ${lastResult.passed ? 'rgba(0,200,150,0.30)' : 'rgba(232,25,44,0.30)'}`,
-                        borderRadius: '8px',
+                        borderRadius: '10px',
                       }}
                     >
                       {!shouldReduce && (
@@ -474,14 +478,14 @@ export default function DrawTheLine({ navigate }) {
                       <p
                         className="font-heading font-extrabold mb-1"
                         style={{
-                          fontSize: '42px',
+                          fontSize: '48px',
                           color: lastResult.passed ? '#00C896' : '#E8192C',
                           lineHeight: 1,
                         }}
                       >
                         {lastResult.passed ? 'PASS' : 'FAIL'}
                       </p>
-                      <p className="font-mono text-text-muted" style={{ fontSize: '10px' }}>
+                      <p className="font-mono text-text-muted" style={{ fontSize: '12px' }}>
                         {lastResult.title} · {lastResult.region}
                       </p>
                     </div>
@@ -490,16 +494,16 @@ export default function DrawTheLine({ navigate }) {
                     <div
                       className="mb-6"
                       style={{
-                        borderLeft: '3px solid #4A7FA5',
-                        paddingLeft: '14px',
+                        borderLeft: `4px solid ${ACCENT}`,
+                        paddingLeft: '16px',
                         paddingTop: '8px',
                         paddingBottom: '8px',
                       }}
                     >
-                      <p className="font-mono uppercase text-text-muted mb-2" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                      <p className="font-mono uppercase font-bold text-text-secondary mb-2" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                         Policy Analysis
                       </p>
-                      <p className="font-mono text-text-secondary" style={{ fontSize: '11px', lineHeight: '1.65' }}>
+                      <p className="font-mono text-text-secondary" style={{ fontSize: '13px', lineHeight: '1.65' }}>
                         {lastResult.insight}
                       </p>
                     </div>
@@ -508,14 +512,14 @@ export default function DrawTheLine({ navigate }) {
                       onClick={advanceStressTest}
                       className="w-full font-mono uppercase tracking-widest transition-colors"
                       style={{
-                        fontSize: '11px',
+                        fontSize: '13px',
                         letterSpacing: '2px',
                         padding: '14px',
                         background: 'transparent',
                         color: ACCENT,
                         fontWeight: 700,
-                        border: `1px solid ${ACCENT}`,
-                        borderRadius: '4px',
+                        border: `2px solid ${ACCENT}`,
+                        borderRadius: '8px',
                         cursor: 'pointer',
                       }}
                     >
@@ -537,27 +541,27 @@ export default function DrawTheLine({ navigate }) {
               className="flex flex-col items-center text-center"
               style={{ paddingTop: '20px' }}
             >
-              <p className="font-mono uppercase text-text-muted mb-2" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+              <p className="font-mono uppercase font-bold text-text-secondary mb-2" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                 Policy Review Complete
               </p>
 
               {/* 0/5 special outcome */}
               {passedCount === 0 ? (
                 <>
-                  <h2 className="font-heading font-extrabold text-text-primary mb-4" style={{ fontSize: '28px', lineHeight: '1.2' }}>
+                  <h2 className="font-heading font-extrabold text-text-primary mb-4" style={{ fontSize: '30px', lineHeight: '1.2' }}>
                     Every Line Broke.
                   </h2>
                   <div
                     style={{
-                      background: 'rgba(232,25,44,0.06)',
-                      border: '1px solid rgba(232,25,44,0.25)',
-                      borderRadius: '8px',
+                      background: 'rgba(232,25,44,0.05)',
+                      border: '1px solid rgba(232,25,44,0.20)',
+                      borderRadius: '10px',
                       padding: '20px',
                       marginBottom: '24px',
                       maxWidth: '400px',
                     }}
                   >
-                    <p className="font-mono text-text-secondary" style={{ fontSize: '11px', lineHeight: '1.7' }}>
+                    <p className="font-mono text-text-secondary" style={{ fontSize: '13px', lineHeight: '1.7' }}>
                       Every single line broke. That&apos;s not failure — that&apos;s the reality of global policy at
                       scale. No configuration satisfies every edge case. The goal isn&apos;t perfection. It&apos;s knowing
                       which trade-offs you&apos;re choosing — and owning them.
@@ -567,12 +571,12 @@ export default function DrawTheLine({ navigate }) {
               ) : (
                 <>
                   <p
-                    className="font-display font-semibold text-gold mb-2"
-                    style={{ fontSize: '72px', lineHeight: '0.9' }}
+                    className="font-display font-bold text-gold mb-2"
+                    style={{ fontSize: '80px', lineHeight: '0.9' }}
                   >
                     {passedCount}/{policy.stressTests.length}
                   </p>
-                  <p className="font-mono text-text-muted mb-4" style={{ fontSize: '11px' }}>
+                  <p className="font-mono text-text-muted mb-4" style={{ fontSize: '14px' }}>
                     stress tests passed
                   </p>
                 </>
@@ -581,32 +585,32 @@ export default function DrawTheLine({ navigate }) {
               {/* Score */}
               <div
                 style={{
-                  background: 'rgba(74,127,165,0.08)',
+                  background: 'rgba(74,127,165,0.07)',
                   border: '1px solid rgba(74,127,165,0.20)',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   padding: '16px 24px',
                   marginBottom: '24px',
                   width: '100%',
                   maxWidth: '320px',
                 }}
               >
-                <p className="font-mono uppercase text-text-muted mb-2" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                <p className="font-mono uppercase font-bold text-text-secondary mb-2" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                   Score Breakdown
                 </p>
                 <div className="flex flex-col gap-1">
-                  <div className="flex justify-between font-mono" style={{ fontSize: '11px' }}>
+                  <div className="flex justify-between font-mono" style={{ fontSize: '13px' }}>
                     <span className="text-text-secondary">Tests passed</span>
-                    <span className="text-text-primary">+{passedCount * STRESS_POINTS}</span>
+                    <span className="text-text-primary font-semibold">+{passedCount * STRESS_POINTS}</span>
                   </div>
                   {hintsUsed > 0 && (
-                    <div className="flex justify-between font-mono" style={{ fontSize: '11px' }}>
+                    <div className="flex justify-between font-mono" style={{ fontSize: '13px' }}>
                       <span className="text-text-secondary">Hints used ({hintsUsed})</span>
-                      <span style={{ color: '#E8192C' }}>−{hintPenalty}</span>
+                      <span style={{ color: '#E8192C', fontWeight: 600 }}>−{hintPenalty}</span>
                     </div>
                   )}
                   <div
                     className="flex justify-between font-mono font-bold"
-                    style={{ fontSize: '13px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '8px', marginTop: '4px' }}
+                    style={{ fontSize: '15px', borderTop: '1px solid #E2E8F0', paddingTop: '8px', marginTop: '4px' }}
                   >
                     <span className="text-text-primary">Total</span>
                     <span style={{ color: ACCENT }}>{scoreRef.current}</span>
@@ -615,12 +619,12 @@ export default function DrawTheLine({ navigate }) {
               </div>
 
               {/* Test result dots */}
-              <div className="flex gap-2 mb-8">
+              <div className="flex gap-3 mb-8">
                 {stressResults.map((r, i) => (
                   <div
                     key={i}
                     style={{
-                      width: '12px', height: '12px',
+                      width: '14px', height: '14px',
                       borderRadius: '50%',
                       background: r.passed ? '#00C896' : '#E8192C',
                     }}
@@ -633,14 +637,14 @@ export default function DrawTheLine({ navigate }) {
                 onClick={handleComplete}
                 className="font-mono uppercase tracking-widest transition-colors"
                 style={{
-                  fontSize: '11px',
+                  fontSize: '13px',
                   letterSpacing: '2px',
-                  padding: '14px 32px',
+                  padding: '14px 40px',
                   background: ACCENT,
-                  color: '#07101C',
+                  color: '#FFFFFF',
                   fontWeight: 700,
                   border: 'none',
-                  borderRadius: '4px',
+                  borderRadius: '8px',
                   cursor: 'pointer',
                 }}
               >

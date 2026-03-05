@@ -13,17 +13,23 @@ function getTier(timeTaken, wasCorrect) {
 const TIER_CONFIG = {
   elite: {
     label:       'Elite Decision',
-    color:       '#E8C84A',
+    color:       '#C9A96E',
+    bg:          'rgba(201,169,110,0.08)',
+    border:      'rgba(201,169,110,0.25)',
     description: 'You\'re in the top 10% of reviewers on this type of case.',
   },
   strong: {
     label:       'Strong Call',
-    color:       '#C9A96E',
+    color:       '#4A7FA5',
+    bg:          'rgba(74,127,165,0.08)',
+    border:      'rgba(74,127,165,0.25)',
     description: 'You\'re in the top 40% of reviewers on this type of case.',
   },
   learning: {
     label:       'Learning Opportunity',
-    color:       '#8899AA',
+    color:       '#94A3B8',
+    bg:          'rgba(148,163,184,0.08)',
+    border:      'rgba(148,163,184,0.20)',
     description: 'Most experienced reviewers approach this differently.',
   },
 }
@@ -41,37 +47,46 @@ export default function InsightPopup({ open, caseData, wasCorrect, timeTaken, on
         {/* Tier badge */}
         <div className="flex items-center gap-3">
           <div
-            className="font-mono uppercase"
-            style={{ fontSize: '9px', letterSpacing: '3px', color: config.color }}
+            className="font-mono uppercase font-bold"
+            style={{
+              fontSize: '11px',
+              letterSpacing: '2px',
+              color: config.color,
+              padding: '4px 10px',
+              background: config.bg,
+              border: `1px solid ${config.border}`,
+              borderRadius: '4px',
+            }}
           >
             {config.label}
           </div>
-          <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+          <div className="flex-1 h-px" style={{ background: '#E2E8F0' }} />
         </div>
 
         {/* Percentile context */}
-        <p className="font-mono text-body-s" style={{ color: config.color }}>
+        <p className="font-mono" style={{ fontSize: '14px', color: config.color }}>
           {config.description}
         </p>
 
         {/* Outcome indicator */}
         <div
-          className="flex items-center gap-3 p-3"
+          className="flex items-center gap-3 p-4"
           style={{
-            background:  wasCorrect ? 'rgba(0,200,150,0.08)' : 'rgba(232,25,44,0.08)',
-            border:      `1px solid ${wasCorrect ? 'rgba(0,200,150,0.30)' : 'rgba(232,25,44,0.30)'}`,
+            background:   wasCorrect ? 'rgba(0,200,150,0.06)' : 'rgba(232,25,44,0.06)',
+            border:       `1px solid ${wasCorrect ? 'rgba(0,200,150,0.30)' : 'rgba(232,25,44,0.30)'}`,
+            borderRadius: '8px',
           }}
         >
-          <span style={{ fontSize: '20px' }}>{wasCorrect ? '✓' : '✗'}</span>
+          <span style={{ fontSize: '24px' }}>{wasCorrect ? '✓' : '✗'}</span>
           <div>
             <p
-              className="font-heading font-bold text-body-s"
-              style={{ color: wasCorrect ? '#00C896' : '#E8192C' }}
+              className="font-heading font-bold"
+              style={{ fontSize: '16px', color: wasCorrect ? '#00C896' : '#E8192C' }}
             >
               {wasCorrect ? 'Correct call.' : 'Not the recommended action.'}
             </p>
             {timeTaken <= 30 && wasCorrect && (
-              <p className="font-mono text-text-muted" style={{ fontSize: '10px' }}>
+              <p className="font-mono text-text-muted mt-1" style={{ fontSize: '12px' }}>
                 +5 speed bonus — decision in {timeTaken}s
               </p>
             )}
@@ -80,32 +95,33 @@ export default function InsightPopup({ open, caseData, wasCorrect, timeTaken, on
 
         {/* Explanation */}
         <div>
-          <p className="font-mono text-micro uppercase tracking-widest text-text-muted mb-2">
+          <p className="font-mono uppercase tracking-widest text-text-muted mb-2" style={{ fontSize: '10px' }}>
             What experienced reviewers know
           </p>
-          <p className="font-mono text-body-s text-text-secondary" style={{ lineHeight: '1.7' }}>
+          <p className="font-mono text-text-secondary" style={{ fontSize: '14px', lineHeight: '1.7' }}>
             {caseData.insight.explanation}
           </p>
         </div>
 
         {/* Sutherland context line */}
         <div
-          className="p-3"
+          className="p-4"
           style={{
-            background: 'rgba(201,169,110,0.06)',
-            border:     '1px solid rgba(201,169,110,0.20)',
+            background:   'rgba(201,169,110,0.06)',
+            border:       '1px solid rgba(201,169,110,0.20)',
+            borderRadius: '8px',
           }}
         >
-          <p className="font-mono text-micro uppercase tracking-widest text-gold mb-1">
+          <p className="font-mono uppercase tracking-widest text-gold mb-2" style={{ fontSize: '10px' }}>
             Sutherland Perspective
           </p>
-          <p className="font-mono text-body-s text-text-secondary italic" style={{ lineHeight: '1.7' }}>
+          <p className="font-mono text-text-secondary italic" style={{ fontSize: '14px', lineHeight: '1.7' }}>
             {caseData.insight.sutherlandLine}
           </p>
         </div>
 
         {/* Continue CTA */}
-        <div className="flex justify-end mt-2">
+        <div className="flex justify-end mt-1">
           <Button variant="primary" showArrow onClick={onContinue}>
             Continue
           </Button>

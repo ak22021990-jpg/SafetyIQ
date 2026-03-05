@@ -21,7 +21,6 @@ function VectorSlider({ vector, value, onChange, disabled }) {
     if (!trackRef.current) return value
     const rect = trackRef.current.getBoundingClientRect()
     const pct  = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
-    // Snap to $100K increments
     return Math.round((pct * maxVal) / 100_000) * 100_000
   }, [value, maxVal])
 
@@ -51,31 +50,31 @@ function VectorSlider({ vector, value, onChange, disabled }) {
     if (e.key === 'ArrowLeft'  || e.key === 'ArrowDown') onChange(Math.max(0,      value - step))
   }
 
-  const pct              = (value / maxVal) * 100
-  const thresholdPct     = (vector.breachThreshold / maxVal) * 100
-  const isBlocked        = value >= vector.breachThreshold
-  const thumbActive      = hovered
+  const pct          = (value / maxVal) * 100
+  const thresholdPct = (vector.breachThreshold / maxVal) * 100
+  const isBlocked    = value >= vector.breachThreshold
+  const thumbActive  = hovered
 
   return (
     <div style={{ opacity: disabled ? 0.6 : 1 }}>
       {/* Header row */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span style={{ fontSize: '16px' }}>{vector.icon}</span>
+          <span style={{ fontSize: '18px' }}>{vector.icon}</span>
           <div>
-            <p className="font-mono font-medium text-text-primary" style={{ fontSize: '12px' }}>
+            <p className="font-mono font-semibold text-text-primary" style={{ fontSize: '13px' }}>
               {vector.name}
             </p>
-            <p className="font-mono" style={{ fontSize: '9px', color: vector.riskColor }}>
+            <p className="font-mono font-semibold" style={{ fontSize: '11px', color: vector.riskColor }}>
               {vector.riskLevel} Risk
             </p>
           </div>
         </div>
         <div className="text-right">
-          <p className="font-mono font-bold" style={{ fontSize: '13px', color: isBlocked ? '#00C896' : ACCENT }}>
+          <p className="font-mono font-bold" style={{ fontSize: '14px', color: isBlocked ? '#00C896' : ACCENT }}>
             {formatM(value)}
           </p>
-          <p className="font-mono text-text-muted" style={{ fontSize: '9px' }}>
+          <p className="font-mono text-text-muted" style={{ fontSize: '11px' }}>
             min {formatM(vector.breachThreshold)}
           </p>
         </div>
@@ -103,43 +102,43 @@ function VectorSlider({ vector, value, onChange, disabled }) {
           cursor:     disabled ? 'not-allowed' : 'pointer',
           outline:    'none',
           userSelect: 'none',
-          marginBottom: '12px',
+          marginBottom: '8px',
         }}
       >
         {/* Track bg */}
-        <div style={{ position: 'absolute', left: 0, right: 0, height: '4px', borderRadius: '100px', background: 'rgba(255,255,255,0.10)' }} />
+        <div style={{ position: 'absolute', left: 0, right: 0, height: '5px', borderRadius: '100px', background: '#E2E8F0' }} />
         {/* Fill */}
         <div style={{
-          position: 'absolute', left: 0, width: pct + '%', height: '4px', borderRadius: '100px',
+          position: 'absolute', left: 0, width: pct + '%', height: '5px', borderRadius: '100px',
           background: isBlocked ? '#00C896' : ACCENT,
           transition: shouldReduce ? 'none' : 'width 30ms linear, background 200ms',
         }} />
         {/* Breach threshold marker */}
         <div style={{
-          position:  'absolute',
-          left:       thresholdPct + '%',
-          width:     '2px',
-          height:    '12px',
-          background: 'rgba(255,255,255,0.35)',
+          position:     'absolute',
+          left:          thresholdPct + '%',
+          width:        '2px',
+          height:       '14px',
+          background:   'rgba(15,23,42,0.25)',
           borderRadius: '1px',
-          transform: 'translateX(-50%)',
+          transform:    'translateX(-50%)',
         }} title={`Minimum: ${formatM(vector.breachThreshold)}`} />
         {/* Thumb */}
         <div style={{
-          position:    'absolute',
-          left:        `calc(${pct}% - ${thumbActive ? 11 : 9}px)`,
-          width:        thumbActive ? '22px' : '18px',
-          height:       thumbActive ? '22px' : '18px',
+          position:     'absolute',
+          left:         `calc(${pct}% - ${thumbActive ? 11 : 9}px)`,
+          width:         thumbActive ? '22px' : '18px',
+          height:        thumbActive ? '22px' : '18px',
           borderRadius: '50%',
           background:   isBlocked ? '#00C896' : ACCENT,
-          boxShadow:    thumbActive ? '0 0 0 4px rgba(232,168,48,0.20), 0 2px 8px rgba(0,0,0,0.5)' : '0 2px 6px rgba(0,0,0,0.4)',
+          boxShadow:    thumbActive ? '0 0 0 4px rgba(232,168,48,0.20), 0 2px 8px rgba(0,0,0,0.15)' : '0 2px 6px rgba(0,0,0,0.12)',
           transition:   shouldReduce ? 'none' : 'width 120ms ease, height 120ms ease, left 30ms linear, background 200ms',
           pointerEvents:'none',
         }} />
       </div>
 
       {/* Description */}
-      <p className="font-mono text-text-muted" style={{ fontSize: '10px', lineHeight: '1.5' }}>
+      <p className="font-mono text-text-muted" style={{ fontSize: '11px', lineHeight: '1.5' }}>
         {vector.description.slice(0, 100)}…
       </p>
     </div>
@@ -152,7 +151,6 @@ export default function BudgetAllocator({ vectors, allocations, onAllocate, disa
   const isOver    = remaining < 0
 
   const handleChange = (vectorId, newVal) => {
-    // Constrain: don't exceed total
     const otherSpend = spent - (allocations[vectorId] || 0)
     const clamped    = Math.min(newVal, TOTAL_BUDGET - otherSpend)
     onAllocate(vectorId, Math.max(0, clamped))
@@ -166,26 +164,26 @@ export default function BudgetAllocator({ vectors, allocations, onAllocate, disa
           display:        'flex',
           alignItems:     'center',
           justifyContent: 'space-between',
-          padding:        '12px 16px',
-          background:     isOver ? 'rgba(232,25,44,0.08)' : 'rgba(232,168,48,0.08)',
-          border:         `1px solid ${isOver ? 'rgba(232,25,44,0.30)' : 'rgba(232,168,48,0.20)'}`,
-          borderRadius:   '6px',
+          padding:        '14px 16px',
+          background:     isOver ? 'rgba(232,25,44,0.06)' : 'rgba(232,168,48,0.07)',
+          border:         `1px solid ${isOver ? 'rgba(232,25,44,0.25)' : 'rgba(232,168,48,0.20)'}`,
+          borderRadius:   '8px',
           marginBottom:   '20px',
         }}
       >
         <div>
-          <p className="font-mono uppercase text-text-muted" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+          <p className="font-mono uppercase font-bold text-text-secondary" style={{ fontSize: '11px', letterSpacing: '1.5px' }}>
             Total Budget
           </p>
-          <p className="font-mono font-bold text-text-primary" style={{ fontSize: '18px' }}>
+          <p className="font-mono font-bold text-text-primary" style={{ fontSize: '20px' }}>
             $10.0M
           </p>
         </div>
         <div className="text-right">
-          <p className="font-mono uppercase text-text-muted" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+          <p className="font-mono uppercase font-bold text-text-secondary" style={{ fontSize: '11px', letterSpacing: '1.5px' }}>
             Remaining
           </p>
-          <p className="font-mono font-bold" style={{ fontSize: '18px', color: isOver ? '#E8192C' : '#00C896' }}>
+          <p className="font-mono font-bold" style={{ fontSize: '20px', color: isOver ? '#E8192C' : '#00C896' }}>
             {remaining >= 0 ? formatM(remaining) : `-${formatM(Math.abs(remaining))}`}
           </p>
         </div>

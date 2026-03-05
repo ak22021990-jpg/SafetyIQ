@@ -77,11 +77,12 @@ export default function SelfieScreen({ navigate }) {
         {/* Back button — always visible */}
         <button
           onClick={() => navigate(SCREENS.SUMMARY)}
-          className="absolute top-4 left-4 z-20 font-mono uppercase text-text-muted"
+          className="absolute top-4 left-4 font-mono uppercase text-text-muted"
           style={{
             fontSize: '9px', letterSpacing: '2px',
-            background: 'rgba(7,16,28,0.7)', border: '1px solid rgba(255,255,255,0.10)',
-            borderRadius: '4px', padding: '8px 12px', cursor: 'pointer',
+            background: 'rgba(255,255,255,0.9)', border: '1px solid #E2E8F0',
+            borderRadius: '8px', padding: '8px 12px', cursor: 'pointer', color: '#0F172A',
+            zIndex: 70,
           }}
         >
           ← Back to Summary
@@ -152,8 +153,8 @@ export default function SelfieScreen({ navigate }) {
                   className="w-full font-mono uppercase tracking-widest"
                   style={{
                     fontSize: '10px', letterSpacing: '2px', padding: '13px',
-                    background: '#C9A96E', color: '#07101C',
-                    fontWeight: 700, border: 'none', borderRadius: '4px', cursor: 'pointer',
+                    background: '#0F172A', color: '#FFFFFF',
+                    fontWeight: 700, border: 'none', borderRadius: '8px', cursor: 'pointer',
                   }}
                 >
                   Create my Summit Card →
@@ -163,8 +164,8 @@ export default function SelfieScreen({ navigate }) {
                   className="w-full font-mono uppercase tracking-widest"
                   style={{
                     fontSize: '10px', letterSpacing: '2px', padding: '11px',
-                    background: 'transparent', color: 'rgba(255,255,255,0.35)',
-                    border: '1px solid rgba(255,255,255,0.12)', borderRadius: '4px', cursor: 'pointer',
+                    background: 'transparent', color: '#475569',
+                    border: '1px solid #E2E8F0', borderRadius: '8px', cursor: 'pointer',
                   }}
                 >
                   Retake photo
@@ -228,8 +229,8 @@ export default function SelfieScreen({ navigate }) {
                 className="font-mono uppercase tracking-widest mt-8"
                 style={{
                   fontSize: '10px', letterSpacing: '2px', padding: '11px 24px',
-                  background: 'transparent', color: 'rgba(255,255,255,0.35)',
-                  border: '1px solid rgba(255,255,255,0.12)', borderRadius: '4px', cursor: 'pointer',
+                  background: 'transparent', color: '#94A3B8',
+                  border: '1px solid #E2E8F0', borderRadius: '4px', cursor: 'pointer',
                 }}
               >
                 Play Again

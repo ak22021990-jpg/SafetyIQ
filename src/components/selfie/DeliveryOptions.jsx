@@ -78,12 +78,12 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
       letterSpacing: '2px',
       textTransform: 'uppercase',
       padding:       '13px',
-      border:        '1px solid rgba(255,255,255,0.12)',
+      border:        '1px solid #CBD5E1',
       borderRadius:  '4px',
       cursor:        'pointer',
       width:         '100%',
       background:    'transparent',
-      color:         '#E8EDF5',
+      color:         '#0F172A',
       display:       'block',
       textAlign:     'center',
       textDecoration:'none',
@@ -110,7 +110,7 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
         <div
           style={{
             height:       '3px',
-            background:   'rgba(255,255,255,0.08)',
+            background:   '#E2E8F0',
             borderRadius: '2px',
             overflow:     'hidden',
           }}

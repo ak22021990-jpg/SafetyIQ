@@ -75,13 +75,13 @@ export default function ThreatSurface({ navigate }) {
                 transition={{ duration: 0.3 }}
               >
                 <div className="mb-5">
-                  <p className="font-mono uppercase text-text-muted mb-1" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                  <p className="font-mono uppercase font-bold text-text-secondary mb-1" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                     Budget Allocation
                   </p>
-                  <h2 className="font-heading font-extrabold text-text-primary mb-2" style={{ fontSize: '22px' }}>
+                  <h2 className="font-heading font-extrabold text-text-primary mb-2" style={{ fontSize: '26px' }}>
                     Defend the Platform
                   </h2>
-                  <p className="font-mono text-text-secondary" style={{ fontSize: '11px', lineHeight: '1.6' }}>
+                  <p className="font-mono text-text-secondary" style={{ fontSize: '13px', lineHeight: '1.65' }}>
                     You have <strong style={{ color: ACCENT }}>$10M</strong> in trust & safety budget. Allocate it across
                     6 threat vectors. Each vector has a minimum threshold to block the attack — underfund it and it
                     breaks through.
@@ -101,21 +101,21 @@ export default function ThreatSurface({ navigate }) {
                     disabled={totalSpent === 0}
                     className="w-full font-mono uppercase tracking-widest transition-colors"
                     style={{
-                      fontSize:   '11px',
+                      fontSize:      '13px',
                       letterSpacing: '2px',
-                      padding:    '16px',
-                      background: totalSpent === 0 ? 'rgba(232,168,48,0.20)' : ACCENT,
-                      color:      totalSpent === 0 ? 'rgba(7,16,28,0.5)' : '#07101C',
-                      fontWeight: 700,
-                      border:     'none',
-                      borderRadius: '4px',
-                      cursor:     totalSpent === 0 ? 'not-allowed' : 'pointer',
+                      padding:       '16px',
+                      background:    totalSpent === 0 ? '#F1F5F9' : ACCENT,
+                      color:         totalSpent === 0 ? '#94A3B8' : '#FFFFFF',
+                      fontWeight:    700,
+                      border:        totalSpent === 0 ? '1px solid #E2E8F0' : 'none',
+                      borderRadius:  '8px',
+                      cursor:        totalSpent === 0 ? 'not-allowed' : 'pointer',
                     }}
                   >
                     Launch Attack Simulation →
                   </button>
                   {totalSpent === 0 && (
-                    <p className="font-mono text-text-muted text-center mt-2" style={{ fontSize: '10px' }}>
+                    <p className="font-mono text-text-muted text-center mt-2" style={{ fontSize: '12px' }}>
                       Allocate at least some budget to continue
                     </p>
                   )}
@@ -133,10 +133,10 @@ export default function ThreatSurface({ navigate }) {
                 transition={{ duration: 0.3 }}
               >
                 <div className="mb-5">
-                  <p className="font-mono uppercase text-text-muted mb-1" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+                  <p className="font-mono uppercase font-bold text-text-secondary mb-1" style={{ fontSize: '11px', letterSpacing: '2px' }}>
                     Attack Wave Incoming
                   </p>
-                  <h2 className="font-heading font-extrabold text-text-primary" style={{ fontSize: '22px' }}>
+                  <h2 className="font-heading font-extrabold text-text-primary" style={{ fontSize: '26px' }}>
                     Defences Activating...
                   </h2>
                   {!shouldReduce && (
@@ -173,15 +173,15 @@ export default function ThreatSurface({ navigate }) {
                   onClick={handleFinish}
                   className="w-full font-mono uppercase tracking-widest transition-colors mt-6"
                   style={{
-                    fontSize:   '11px',
+                    fontSize:      '13px',
                     letterSpacing: '2px',
-                    padding:    '14px',
-                    background: ACCENT,
-                    color:      '#07101C',
-                    fontWeight: 700,
-                    border:     'none',
-                    borderRadius: '4px',
-                    cursor:     'pointer',
+                    padding:       '14px',
+                    background:    ACCENT,
+                    color:         '#FFFFFF',
+                    fontWeight:    700,
+                    border:        'none',
+                    borderRadius:  '8px',
+                    cursor:        'pointer',
                   }}
                 >
                   Continue →

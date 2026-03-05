@@ -60,14 +60,14 @@ export default function Slider({
     <div style={{ opacity: disabled ? 0.45 : 1 }}>
       {/* Label row */}
       <div className="flex items-center justify-between mb-3">
-        <span className="font-mono uppercase text-text-muted" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+        <span className="font-mono uppercase font-bold text-text-secondary" style={{ fontSize: '11px', letterSpacing: '1.5px' }}>
           {label}
         </span>
         {/* Floating value badge */}
         <span
           className="font-mono font-bold"
           style={{
-            fontSize:    '11px',
+            fontSize:    '13px',
             color:       accentColor,
             transition:  shouldReduce ? 'none' : 'color 150ms',
           }}
@@ -108,7 +108,7 @@ export default function Slider({
             right:         0,
             height:        '4px',
             borderRadius:  '100px',
-            background:    'rgba(255,255,255,0.10)',
+            background:    '#E2E8F0',
           }}
         />
         {/* Track fill */}
@@ -141,8 +141,8 @@ export default function Slider({
 
       {/* End labels */}
       <div className="flex items-center justify-between mt-1.5">
-        <span className="font-mono text-text-muted" style={{ fontSize: '9px' }}>{leftLabel}</span>
-        <span className="font-mono text-text-muted" style={{ fontSize: '9px' }}>{rightLabel}</span>
+        <span className="font-mono text-text-muted" style={{ fontSize: '11px' }}>{leftLabel}</span>
+        <span className="font-mono text-text-muted" style={{ fontSize: '11px' }}>{rightLabel}</span>
       </div>
     </div>
   )

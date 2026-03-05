@@ -50,10 +50,13 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
     if (!videoReady || !videoRef.current || capturing) return
     setCapturing(true)
     try {
+      console.log('Capturing: video ready?', videoReady, 'video paused?', videoRef.current.paused, 'dimensions:', videoRef.current.videoWidth, 'x', videoRef.current.videoHeight)
       const bitmap = await createImageBitmap(videoRef.current)
+      console.log('Bitmap created:', bitmap.width, 'x', bitmap.height)
       streamRef.current?.getTracks().forEach(t => t.stop())
       onCapture(bitmap)
-    } catch {
+    } catch (err) {
+      console.error('Capture failed:', err)
       setCapturing(false)
     }
   }

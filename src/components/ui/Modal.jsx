@@ -11,7 +11,7 @@ export default function Modal({ open, onClose, children, maxWidth = '560px' }) {
           {/* Backdrop */}
           <motion.div
             className="fixed inset-0 z-40"
-            style={{ background: 'rgba(7,16,28,0.85)', backdropFilter: 'blur(20px)' }}
+            style={{ background: 'rgba(15,23,42,0.50)', backdropFilter: 'blur(8px)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -28,15 +28,17 @@ export default function Modal({ open, onClose, children, maxWidth = '560px' }) {
           >
             <motion.div
               style={{
-                width:      '100%',
+                width:        '100%',
                 maxWidth,
-                background: '#172540',
-                border:     '1px solid rgba(201,169,110,0.20)',
-                padding:    '40px',
+                background:   '#FFFFFF',
+                border:       '1px solid #E2E8F0',
+                borderRadius: '16px',
+                padding:      '40px',
+                boxShadow:    '0 25px 50px -12px rgba(0,0,0,0.18)',
               }}
-              initial={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
-              animate={shouldReduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-              exit={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
+              initial={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 8 }}
+              animate={shouldReduce ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+              exit={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: 8 }}
               transition={{ type: 'spring', stiffness: 200, damping: 25 }}
             >
               {children}

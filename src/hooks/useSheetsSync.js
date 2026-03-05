@@ -13,7 +13,11 @@ export function useSheetsSync() {
   const [syncStatus, setSyncStatus] = useState('idle')
 
   const runSync = async () => {
-    if (!WEBHOOK_URL)          { setSyncStatus('offline'); return }
+    if (!WEBHOOK_URL)          { 
+      console.warn('VITE_SHEETS_WEBHOOK_URL not configured')
+      setSyncStatus('offline')
+      return 
+    }
     if (!navigator.onLine)     { setSyncStatus('offline'); return }
     if (syncingRef.current)    return
 
@@ -32,9 +36,12 @@ export function useSheetsSync() {
 
       for (const session of sessions) {
         try {
+          // Google Apps Script requires no-cors + text/plain to avoid preflight CORS failure.
+          // Response is opaque (status 0) — we consider sent = success.
           await fetch(WEBHOOK_URL, {
             method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
+            mode:    'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify({
               timestamp:      session.timestamp,
               name:           session.player?.name     || '',
@@ -49,9 +56,11 @@ export function useSheetsSync() {
               selfieTaken:    session.selfieTaken ? 'Yes' : 'No',
             }),
           })
+          // With no-cors, response is opaque — assume success if no network error thrown
           synced.push(session.sessionId)
           localStorage.setItem(SYNC_KEY, JSON.stringify(synced))
-        } catch {
+        } catch (err) {
+          console.error('Sheets sync error:', err)
           setSyncStatus('queued')
         }
       }

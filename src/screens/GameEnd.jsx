@@ -103,7 +103,7 @@ export default function GameEnd({ navigate, game }) {
                     style={{
                       fontSize: '10px', letterSpacing: '2px', padding: '11px',
                       background: 'transparent', color: meta.accent,
-                      border: `1px solid ${meta.accent}`, borderRadius: '4px',
+                      border: `1px solid ${meta.accent}`, borderRadius: '8px',
                       cursor: 'pointer',
                     }}
                   >
@@ -114,7 +114,7 @@ export default function GameEnd({ navigate, game }) {
                     className="flex-1 font-mono uppercase tracking-widest transition-colors"
                     style={{
                       fontSize: '10px', letterSpacing: '2px', padding: '11px',
-                      background: meta.accent, color: '#07101C',
+                      background: meta.accent, color: '#FFFFFF',
                       fontWeight: 700, border: 'none', borderRadius: '4px',
                       cursor: 'pointer',
                     }}
@@ -162,7 +162,7 @@ export default function GameEnd({ navigate, game }) {
                         className="w-full font-mono uppercase tracking-widest transition-colors"
                         style={{
                           fontSize: '10px', letterSpacing: '2px', padding: '13px',
-                          background: meta.accent, color: '#07101C',
+                          background: meta.accent, color: '#FFFFFF',
                           fontWeight: 700, border: 'none', borderRadius: '4px',
                           cursor: 'pointer',
                         }}
@@ -175,7 +175,7 @@ export default function GameEnd({ navigate, game }) {
                         style={{
                           fontSize: '10px', letterSpacing: '2px', padding: '11px',
                           background: 'transparent', color: meta.accent,
-                          border: `1px solid ${meta.accent}`, borderRadius: '4px',
+                          border: `1px solid ${meta.accent}`, borderRadius: '8px',
                           cursor: 'pointer',
                         }}
                       >
@@ -186,8 +186,8 @@ export default function GameEnd({ navigate, game }) {
                         className="w-full font-mono uppercase tracking-widest transition-colors"
                         style={{
                           fontSize: '10px', letterSpacing: '2px', padding: '11px',
-                          background: 'transparent', color: 'rgba(255,255,255,0.35)',
-                          border: '1px solid rgba(255,255,255,0.12)', borderRadius: '4px',
+                          background: 'transparent', color: '#475569',
+                          border: '1px solid #E2E8F0', borderRadius: '8px',
                           cursor: 'pointer',
                         }}
                       >

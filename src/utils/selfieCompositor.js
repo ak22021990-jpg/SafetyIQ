@@ -50,6 +50,7 @@ export async function composeSelfieCard({
 
   // ── 2. Camera feed or avatar ───────────────────────────────────
   if (cameraBitmap) {
+    console.log('Compositing camera bitmap:', cameraBitmap.width, 'x', cameraBitmap.height)
     // Scale camera feed to fill canvas (cover)
     const scale = Math.max(width / cameraBitmap.width, height / cameraBitmap.height)
     const dx    = (width  - cameraBitmap.width  * scale) / 2
@@ -73,28 +74,22 @@ export async function composeSelfieCard({
     ctx.textBaseline = 'alphabetic'
   }
 
-  // ── 3. Overlay frame (frame PNG from public/) ──────────────────
-  try {
-    const frameImg = await loadImage(`${BASE_URL}selfie-frame.png`)
-    ctx.drawImage(frameImg, 0, 0, width, height)
-  } catch {
-    // Frame PNG not yet generated — draw a minimal dark bottom panel instead
-    const panelH = 560
-    ctx.fillStyle = 'rgba(7,16,28,0.88)'
-    ctx.fillRect(0, height - panelH, width, panelH)
-    // Corner accents (gold)
-    ctx.strokeStyle = '#C9A96E'
-    ctx.lineWidth   = 4
-    const accentLen = 48
-    // top-left
-    ctx.beginPath(); ctx.moveTo(30, 30 + accentLen); ctx.lineTo(30, 30); ctx.lineTo(30 + accentLen, 30); ctx.stroke()
-    // top-right
-    ctx.beginPath(); ctx.moveTo(width - 30 - accentLen, 30); ctx.lineTo(width - 30, 30); ctx.lineTo(width - 30, 30 + accentLen); ctx.stroke()
-    // bottom-left
-    ctx.beginPath(); ctx.moveTo(30, height - 30 - accentLen); ctx.lineTo(30, height - 30); ctx.lineTo(30 + accentLen, height - 30); ctx.stroke()
-    // bottom-right
-    ctx.beginPath(); ctx.moveTo(width - 30 - accentLen, height - 30); ctx.lineTo(width - 30, height - 30); ctx.lineTo(width - 30, height - 30 - accentLen); ctx.stroke()
-  }
+  // ── 3. Dark bottom info panel + corner accents ─────────────────
+  const panelH = 560
+  ctx.fillStyle = 'rgba(7,16,28,0.88)'
+  ctx.fillRect(0, height - panelH, width, panelH)
+  // Corner accents (gold)
+  ctx.strokeStyle = '#C9A96E'
+  ctx.lineWidth   = 4
+  const accentLen = 48
+  // top-left
+  ctx.beginPath(); ctx.moveTo(30, 30 + accentLen); ctx.lineTo(30, 30); ctx.lineTo(30 + accentLen, 30); ctx.stroke()
+  // top-right
+  ctx.beginPath(); ctx.moveTo(width - 30 - accentLen, 30); ctx.lineTo(width - 30, 30); ctx.lineTo(width - 30, 30 + accentLen); ctx.stroke()
+  // bottom-left
+  ctx.beginPath(); ctx.moveTo(30, height - 30 - accentLen); ctx.lineTo(30, height - 30); ctx.lineTo(30 + accentLen, height - 30); ctx.stroke()
+  // bottom-right
+  ctx.beginPath(); ctx.moveTo(width - 30 - accentLen, height - 30); ctx.lineTo(width - 30, height - 30); ctx.lineTo(width - 30, height - 30 - accentLen); ctx.stroke()
 
   // ── 4. Player name ─────────────────────────────────────────────
   const baseY = height - 480

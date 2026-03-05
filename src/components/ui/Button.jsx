@@ -13,11 +13,11 @@ export default function Button({
 }) {
   const shouldReduce = useReducedMotion()
 
-  const base = 'font-mono text-micro uppercase tracking-widest px-8 py-4 transition-colors duration-200 border cursor-pointer inline-flex items-center gap-2'
+  const base = 'font-heading text-micro uppercase tracking-widest px-8 py-4 transition-all duration-200 border cursor-pointer inline-flex items-center gap-2 rounded-[8px]'
 
   const variants = {
-    primary:     'border-gold text-gold hover:bg-gold hover:text-text-inverse',
-    secondary:   'border-white/10 text-text-secondary hover:bg-navy-elevated hover:text-text-primary',
+    primary:     'bg-midnight border-midnight text-white hover:bg-humanRed hover:border-humanRed',
+    secondary:   'bg-white border-surface-border text-text-secondary hover:bg-surface hover:text-text-primary',
     destructive: 'border-red-signal text-red-signal hover:bg-red-dim',
   }
 

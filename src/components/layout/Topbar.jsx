@@ -30,10 +30,10 @@ export default function Topbar({
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6"
       style={{
         height:          '64px',
-        background:      'rgba(7,16,28,0.95)',
+        background:      '#0F172A',
         backdropFilter:  'blur(12px)',
-        borderTop:       `2px solid ${accentColor}`,
-        borderBottom:    '1px solid rgba(255,255,255,0.06)',
+        borderTop:       `3px solid ${accentColor}`,
+        borderBottom:    '1px solid rgba(255,255,255,0.08)',
       }}
       aria-label="Game navigation bar"
     >

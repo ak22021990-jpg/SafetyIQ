@@ -23,13 +23,13 @@ export default function DamageReport({ vectors, allocations, score }) {
     >
       {/* Score header */}
       <div className="text-center mb-6">
-        <p className="font-mono uppercase text-text-muted mb-1" style={{ fontSize: '9px', letterSpacing: '2px' }}>
+        <p className="font-mono uppercase font-bold text-text-secondary mb-1" style={{ fontSize: '11px', letterSpacing: '2px' }}>
           Threat Surface Score
         </p>
-        <p className="font-display font-semibold text-gold" style={{ fontSize: '64px', lineHeight: '0.9' }}>
+        <p className="font-display font-bold text-gold" style={{ fontSize: '72px', lineHeight: '0.9' }}>
           {displayScore}
         </p>
-        <p className="font-mono text-text-muted mt-2" style={{ fontSize: '10px' }}>
+        <p className="font-mono text-text-muted mt-2" style={{ fontSize: '13px' }}>
           {blockedCount} of {vectors.length} threats blocked
         </p>
       </div>
@@ -38,26 +38,26 @@ export default function DamageReport({ vectors, allocations, score }) {
       <div className="flex gap-3 justify-center mb-6">
         <div
           style={{
-            padding: '8px 16px',
+            padding: '10px 18px',
             background: 'rgba(0,200,150,0.08)',
             border: '1px solid rgba(0,200,150,0.25)',
-            borderRadius: '4px',
+            borderRadius: '6px',
           }}
         >
-          <p className="font-mono text-center" style={{ fontSize: '10px', color: '#00C896' }}>
+          <p className="font-mono font-bold text-center" style={{ fontSize: '13px', color: '#00C896' }}>
             🛡 {blockedCount} Blocked
           </p>
         </div>
         {breachedCount > 0 && (
           <div
             style={{
-              padding: '8px 16px',
-              background: 'rgba(232,25,44,0.08)',
+              padding: '10px 18px',
+              background: 'rgba(232,25,44,0.07)',
               border: '1px solid rgba(232,25,44,0.25)',
-              borderRadius: '4px',
+              borderRadius: '6px',
             }}
           >
-            <p className="font-mono text-center" style={{ fontSize: '10px', color: '#E8192C' }}>
+            <p className="font-mono font-bold text-center" style={{ fontSize: '13px', color: '#E8192C' }}>
               ⚠ {breachedCount} Breached
             </p>
           </div>
@@ -72,28 +72,28 @@ export default function DamageReport({ vectors, allocations, score }) {
             style={{
               display:    'flex',
               alignItems: 'flex-start',
-              gap:        '10px',
-              padding:    '10px 12px',
+              gap:        '12px',
+              padding:    '12px 14px',
               background: r.blocked ? 'rgba(0,200,150,0.04)' : 'rgba(232,25,44,0.04)',
-              border:     `1px solid ${r.blocked ? 'rgba(0,200,150,0.15)' : 'rgba(232,25,44,0.20)'}`,
-              borderRadius: '4px',
+              border:     `1px solid ${r.blocked ? 'rgba(0,200,150,0.18)' : 'rgba(232,25,44,0.18)'}`,
+              borderRadius: '8px',
             }}
           >
-            <span style={{ fontSize: '14px', marginTop: '2px' }}>{r.icon}</span>
+            <span style={{ fontSize: '18px', marginTop: '2px' }}>{r.icon}</span>
             <div style={{ flex: 1 }}>
               <div className="flex items-center justify-between">
-                <p className="font-mono font-medium text-text-primary" style={{ fontSize: '11px' }}>
+                <p className="font-mono font-semibold text-text-primary" style={{ fontSize: '13px' }}>
                   {r.name}
                 </p>
                 <span
                   className="font-mono font-bold"
-                  style={{ fontSize: '10px', color: r.blocked ? '#00C896' : '#E8192C' }}
+                  style={{ fontSize: '13px', color: r.blocked ? '#00C896' : '#E8192C' }}
                 >
                   {r.blocked ? '+8 pts' : '0 pts'}
                 </span>
               </div>
               {!r.blocked && (
-                <p className="font-mono text-text-muted mt-0.5" style={{ fontSize: '10px', lineHeight: '1.4' }}>
+                <p className="font-mono text-text-muted mt-1" style={{ fontSize: '12px', lineHeight: '1.4' }}>
                   {r.damageAmount} · {r.damageBusinessImpact.split(' · ')[0]}
                 </p>
               )}

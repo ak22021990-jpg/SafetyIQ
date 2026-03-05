@@ -26,25 +26,26 @@ export default function SocialPostCard({
   return (
     <div
       style={{
-        background:   '#1A2535',
-        border:       '1px solid rgba(255,255,255,0.09)',
-        borderRadius: '10px',
+        background:   '#FFFFFF',
+        border:       '1px solid #E2E8F0',
+        borderRadius: '12px',
         overflow:     'hidden',
+        boxShadow:    '0 4px 12px rgba(0,0,0,0.06)',
       }}
     >
       {/* Pulse platform header */}
       <div
-        className="flex items-center justify-between px-4 py-2.5"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(74,111,165,0.08)' }}
+        className="flex items-center justify-between px-4 py-3"
+        style={{ borderBottom: '1px solid #E2E8F0', background: '#F8FAFC' }}
       >
         <div className="flex items-center gap-2">
-          <span className="font-heading font-bold text-body-s" style={{ color: '#4A6FA5' }}>Pulse</span>
-          <span className="font-mono text-text-muted" style={{ fontSize: '9px', letterSpacing: '1px' }}>
+          <span className="font-pulse font-bold" style={{ fontSize: '15px', color: '#4A6FA5', letterSpacing: '-0.3px' }}>Pulse</span>
+          <span className="font-mono text-text-muted" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>
             Share what matters.
           </span>
         </div>
         <div className="flex items-center gap-1">
-          <span className="font-mono text-text-muted" style={{ fontSize: '9px' }}>Content Review Queue</span>
+          <span className="font-mono text-text-muted" style={{ fontSize: '11px' }}>Content Review Queue</span>
         </div>
       </div>
 
@@ -53,26 +54,26 @@ export default function SocialPostCard({
         {/* Author */}
         <div className="flex items-start gap-3 mb-3">
           <div
-            className="flex items-center justify-center shrink-0 font-mono font-bold text-text-primary rounded-full"
-            style={{ width: '36px', height: '36px', background: '#4A6FA5', fontSize: '12px' }}
+            className="flex items-center justify-center shrink-0 font-mono font-bold text-white rounded-full"
+            style={{ width: '40px', height: '40px', background: '#4A6FA5', fontSize: '14px' }}
             aria-hidden="true"
           >
             {avatar}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline gap-2 flex-wrap">
-              <span className="font-mono font-medium text-text-primary" style={{ fontSize: '13px' }}>
+              <span className="font-mono font-semibold text-text-primary" style={{ fontSize: '14px' }}>
                 {username}
               </span>
-              <span className="font-mono text-text-secondary" style={{ fontSize: '11px' }}>
+              <span className="font-mono text-text-secondary" style={{ fontSize: '12px' }}>
                 {handle} · {timeAgo}
               </span>
-              <span className="font-mono text-text-muted" style={{ fontSize: '11px' }}>
+              <span className="font-mono text-text-muted" style={{ fontSize: '12px' }}>
                 {region}
               </span>
             </div>
             {accountNote && (
-              <p className="font-mono text-text-muted mt-0.5" style={{ fontSize: '10px' }}>
+              <p className="font-mono text-text-muted mt-0.5" style={{ fontSize: '11px' }}>
                 {accountNote}
               </p>
             )}
@@ -80,7 +81,7 @@ export default function SocialPostCard({
         </div>
 
         {/* Post text */}
-        <p className="font-mono text-text-primary mb-3" style={{ fontSize: '14px', lineHeight: '1.7' }}>
+        <p className="font-mono text-text-primary mb-3" style={{ fontSize: '15px', lineHeight: '1.7' }}>
           {content}
         </p>
 
@@ -89,13 +90,13 @@ export default function SocialPostCard({
           <div
             className="mb-3 flex items-center justify-center font-mono text-text-muted"
             style={{
-              height:     '80px',
-              background: 'rgba(74,111,165,0.08)',
-              border:     '1px solid rgba(74,111,165,0.20)',
-              borderRadius: '4px',
-              fontSize:   '10px',
-              padding:    '8px',
-              lineHeight: '1.5',
+              height:       '80px',
+              background:   'rgba(74,111,165,0.06)',
+              border:       '1px solid rgba(74,111,165,0.18)',
+              borderRadius: '6px',
+              fontSize:     '12px',
+              padding:      '8px',
+              lineHeight:   '1.5',
             }}
           >
             <span style={{ textAlign: 'center' }}>📷 {imageDescription}</span>
@@ -104,7 +105,7 @@ export default function SocialPostCard({
 
         {/* Video */}
         {videoSrc && (
-          <div className="mb-3" style={{ borderRadius: '4px', overflow: 'hidden', background: '#000' }}>
+          <div className="mb-3" style={{ borderRadius: '6px', overflow: 'hidden', background: '#000' }}>
             <video
               src={`${BASE_URL}${videoSrc}`}
               controls
@@ -114,8 +115,8 @@ export default function SocialPostCard({
             />
             {videoTitle && (
               <div
-                className="flex items-center justify-between font-mono px-2 py-1"
-                style={{ background: 'rgba(0,0,0,0.6)', fontSize: '10px' }}
+                className="flex items-center justify-between font-mono px-2 py-1.5"
+                style={{ background: 'rgba(0,0,0,0.6)', fontSize: '11px' }}
               >
                 <span className="text-text-secondary">{videoTitle}</span>
                 {videoDuration && <span className="text-text-muted">{videoDuration}</span>}
@@ -127,23 +128,23 @@ export default function SocialPostCard({
         {/* Context note */}
         {contextNote && (
           <div
-            className="mb-3 font-mono text-text-muted p-2"
+            className="mb-3 font-mono text-text-secondary p-3"
             style={{
-              fontSize:    '10px',
-              lineHeight:  '1.5',
-              background:  'rgba(232,168,48,0.08)',
-              border:      '1px solid rgba(232,168,48,0.20)',
-              borderRadius: '4px',
+              fontSize:     '12px',
+              lineHeight:   '1.6',
+              background:   'rgba(232,168,48,0.07)',
+              border:       '1px solid rgba(232,168,48,0.20)',
+              borderRadius: '6px',
             }}
           >
-            <span style={{ color: '#E8A830' }}>⚑ Context: </span>{contextNote}
+            <span style={{ color: '#E8A830', fontWeight: 700 }}>Context: </span>{contextNote}
           </div>
         )}
 
         {/* Engagement bar */}
         <div
           className="flex items-center gap-4 font-mono text-text-muted pb-3 mb-3"
-          style={{ fontSize: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+          style={{ fontSize: '12px', borderBottom: '1px solid #F1F5F9' }}
           aria-hidden="true"
         >
           <span>👍 {engagementLikes || '—'}</span>
@@ -152,10 +153,10 @@ export default function SocialPostCard({
         </div>
 
         {/* Report strip */}
-        <div className="flex items-center justify-between font-mono" style={{ fontSize: '10px' }}>
+        <div className="flex items-center justify-between font-mono" style={{ fontSize: '12px' }}>
           <div className="flex items-center gap-2">
             <span className="text-red-signal">⚑</span>
-            <span className="text-text-secondary">{reportReason}</span>
+            <span className="text-text-secondary font-medium">{reportReason}</span>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-text-muted">{reportCount.toLocaleString()} reports</span>
@@ -166,13 +167,13 @@ export default function SocialPostCard({
 
       {/* Choice options */}
       <div
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '16px' }}
+        style={{ borderTop: '1px solid #E2E8F0', padding: '16px', background: '#FAFAFA' }}
         role="group"
         aria-label="Select your moderation decision"
       >
         <p
-          className="font-mono uppercase text-text-muted mb-3"
-          style={{ fontSize: '9px', letterSpacing: '2px' }}
+          className="font-mono uppercase font-bold text-text-secondary mb-3"
+          style={{ fontSize: '11px', letterSpacing: '1.5px' }}
         >
           Your Decision
         </p>
@@ -182,19 +183,19 @@ export default function SocialPostCard({
           animate="visible"
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
         >
-          {choices.map((choice, choiceIdx) => {
+          {choices.map((choice) => {
             const isSelected = selectedId === choice.id
             const isCorrect  = isRevealed && choice.id === revealedCorrectId
             const isWrong    = isRevealed && isSelected && choice.id !== revealedCorrectId
             const isFaded    = isRevealed && !isSelected && choice.id !== revealedCorrectId
 
-            let borderColor = 'rgba(255,255,255,0.09)'
-            let bg          = 'transparent'
+            let borderColor = '#E2E8F0'
+            let bg          = '#FFFFFF'
             let leftBorder  = 'none'
 
             if (!isRevealed && isSelected) {
-              bg          = 'rgba(201,169,110,0.06)'
-              borderColor = 'rgba(201,169,110,0.40)'
+              bg          = 'rgba(201,169,110,0.08)'
+              borderColor = 'rgba(201,169,110,0.50)'
             }
             if (isCorrect) {
               leftBorder = '3px solid #00C896'
@@ -213,15 +214,16 @@ export default function SocialPostCard({
                 disabled={isLocked}
                 className="w-full text-left transition-all duration-150 font-mono"
                 style={{
-                  padding:     '10px 14px',
+                  padding:    '12px 14px',
                   background:  bg,
                   border:      `1px solid ${borderColor}`,
                   borderLeft:  leftBorder || `1px solid ${borderColor}`,
+                  borderRadius: '6px',
                   opacity:     isFaded ? 0.35 : 1,
                   cursor:      isLocked ? 'default' : 'pointer',
-                  fontSize:    '11px',
+                  fontSize:    '13px',
                   lineHeight:  '1.6',
-                  color:       isCorrect ? '#00C896' : isWrong ? '#E8192C' : '#E8EDF5',
+                  color:       isCorrect ? '#00C896' : isWrong ? '#E8192C' : '#0F172A',
                 }}
                 aria-pressed={isSelected}
                 aria-label={`Option ${choice.id.toUpperCase()}: ${choice.text}`}

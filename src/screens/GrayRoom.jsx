@@ -15,6 +15,12 @@ import { GRAY_ROOM_CASES } from '../data/gameContent'
 
 const MAX_SECONDS = 90
 
+// ── Scoring constants (adjust here to tune the game) ───────────────
+const SCORE_CORRECT        = 15   // points for a correct answer
+const SCORE_SPEED_BONUS    = 5    // extra points for answering within the threshold
+const SCORE_SPEED_THRESHOLD = 30  // seconds — answers faster than this earn the speed bonus
+const SCORE_CRIT_PENALTY   = 5    // points deducted for a critically wrong answer
+
 export default function GrayRoom({ navigate }) {
   const { updateScore } = useSession()
   const playSound = useSound()
@@ -72,9 +78,9 @@ export default function GrayRoom({ navigate }) {
     const correct     = choiceId === currentCase.correctChoiceId
     const critWrong   = currentCase.choices.find(c => c.id === choiceId)?.isCriticallyWrong
     let points        = 0
-    if (correct)         points += 15
-    if (correct && elapsed < 30) points += 5
-    if (critWrong)       points -= 5
+    if (correct)                               points += SCORE_CORRECT
+    if (correct && elapsed < SCORE_SPEED_THRESHOLD) points += SCORE_SPEED_BONUS
+    if (critWrong)                             points -= SCORE_CRIT_PENALTY
 
     scoreRef.current.total   += points
     scoreRef.current.correct += correct ? 1 : 0
