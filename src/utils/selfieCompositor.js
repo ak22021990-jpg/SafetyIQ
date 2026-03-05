@@ -48,6 +48,7 @@ export async function composeSelfieCard({
   ctx.fillStyle = '#07101C'
   ctx.fillRect(0, 0, width, height)
 
+  // ── 2. Camera feed or avatar ───────────────────────────────────
   if (cameraBitmap) {
     // Scale camera feed to fill canvas (cover)
     const scale = Math.max(width / cameraBitmap.width, height / cameraBitmap.height)
@@ -72,7 +73,7 @@ export async function composeSelfieCard({
     ctx.textBaseline = 'alphabetic'
   }
 
-  // ── 2. Overlay frame (frame PNG from public/) ──────────────────
+  // ── 3. Overlay frame (frame PNG from public/) ──────────────────
   try {
     const frameImg = await loadImage(`${BASE_URL}selfie-frame.png`)
     ctx.drawImage(frameImg, 0, 0, width, height)
@@ -95,7 +96,7 @@ export async function composeSelfieCard({
     ctx.beginPath(); ctx.moveTo(width - 30 - accentLen, height - 30); ctx.lineTo(width - 30, height - 30); ctx.lineTo(width - 30, height - 30 - accentLen); ctx.stroke()
   }
 
-  // ── 3. Player name ─────────────────────────────────────────────
+  // ── 4. Player name ─────────────────────────────────────────────
   const baseY = height - 480
   ctx.font         = '800 52px Syne, sans-serif'
   ctx.fillStyle    = '#FFFFFF'

@@ -10,17 +10,35 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
   const streamRef  = useRef(null)
   const [cameraError, setCameraError] = useState(false)
   const [capturing,   setCapturing]   = useState(false)
+  const [videoReady, setVideoReady] = useState(false)
 
   useEffect(() => {
     let active = true
     navigator.mediaDevices
-      ?.getUserMedia({ video: { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 1280 } } })
+      ?.getUserMedia({ video: { facingMode: 'user', width: { ideal: 1920 }, height: { ideal: 1080 } } })
       .then(stream => {
         if (!active) { stream.getTracks().forEach(t => t.stop()); return }
         streamRef.current = stream
-        if (videoRef.current) videoRef.current.srcObject = stream
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+          videoRef.current.onloadedmetadata = () => {
+            console.log('Video metadata loaded:', videoRef.current.videoWidth, 'x', videoRef.current.videoHeight)
+            videoRef.current.play()
+              .then(() => {
+                console.log('Video playing')
+                setVideoReady(true)
+              })
+              .catch(err => {
+                console.error('Video play failed:', err)
+                setCameraError(true)
+              })
+          }
+        }
       })
-      .catch(() => { if (active) setCameraError(true) })
+      .catch(err => { 
+        console.error('getUserMedia failed:', err)
+        if (active) setCameraError(true) 
+      })
 
     return () => {
       active = false
@@ -29,7 +47,7 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
   }, [])
 
   const handleCapture = async () => {
-    if (!videoRef.current || capturing) return
+    if (!videoReady || !videoRef.current || capturing) return
     setCapturing(true)
     try {
       const bitmap = await createImageBitmap(videoRef.current)
@@ -62,6 +80,7 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
           autoPlay
           playsInline
           muted
+          onError={() => setCameraError(true)}
           style={{
             position:  'absolute',
             inset:      0,
@@ -69,11 +88,12 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
             height:    '100%',
             objectFit: 'cover',
             transform: 'scaleX(-1)', // mirror for selfie
+            backgroundColor: 'transparent',
           }}
         />
 
         {/* Frame overlay PNG */}
-        <img
+        {/* <img
           src={`${BASE_URL}selfie-frame.png`}
           alt=""
           aria-hidden
@@ -86,7 +106,7 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
             pointerEvents: 'none',
           }}
           onError={e => { e.currentTarget.style.display = 'none' }}
-        />
+        /> */}
 
         {/* Capture button */}
         <div
