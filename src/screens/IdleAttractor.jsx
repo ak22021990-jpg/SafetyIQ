@@ -6,6 +6,18 @@ import ScreenWrapper from '../components/layout/ScreenWrapper'
 import { getLeaderboard } from '../utils/storageEngine'
 import { SCREENS } from '../constants/screens'
 
+import att01 from '../assets/images/attractor-01.jpg'
+import att02 from '../assets/images/attractor-02.jpg'
+import att03 from '../assets/images/attractor-03.jpg'
+import att04 from '../assets/images/attractor-04.jpg'
+import att05 from '../assets/images/attractor-05.jpg'
+import att06 from '../assets/images/attractor-06.jpg'
+import att07 from '../assets/images/attractor-07.jpg'
+import att08 from '../assets/images/attractor-08.jpg'
+import att09 from '../assets/images/attractor-09.jpg'
+import att10 from '../assets/images/attractor-10.jpg'
+const ATTRACTOR_IMAGES = [att01, att02, att03, att04, att05, att06, att07, att08, att09, att10]
+
 // Teaser questions from PRD §5 — gold word indicated by ** markers in text
 const TEASER_QUESTIONS = [
   { text: "A 14-year-old's bio says 'struggling lately.' Do you **remove** it?",       highlight: 'remove'   },
@@ -122,6 +134,9 @@ export default function IdleAttractor({ navigate }) {
     () => Math.floor(Math.random() * TEASER_QUESTIONS.length)
   )
   const [showPanel, setShowPanel] = useState(true)
+  const [imgIndex, setImgIndex] = useState(
+    () => Math.floor(Math.random() * ATTRACTOR_IMAGES.length)
+  )
 
   // Rotate panels every 5s
   useEffect(() => {
@@ -141,6 +156,14 @@ export default function IdleAttractor({ navigate }) {
     return () => clearInterval(timer)
   }, [])
 
+  // Rotate background image every 10s (slower than panels)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setImgIndex(i => (i + 1) % ATTRACTOR_IMAGES.length)
+    }, 10000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <ScreenWrapper>
       <div
@@ -151,8 +174,32 @@ export default function IdleAttractor({ navigate }) {
         aria-label="Tap to start playing Signal and Noise"
         onKeyDown={(e) => e.key === 'Enter' && navigate(SCREENS.REGISTER)}
       >
-        {/* Panel content */}
-        <div className="flex-1 flex items-center justify-center w-full">
+        {/* Cycling background image */}
+        <AnimatePresence mode="sync">
+          <motion.img
+            key={imgIndex}
+            src={ATTRACTOR_IMAGES[imgIndex]}
+            alt=""
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5 }}
+            style={{
+              position:   'absolute',
+              inset:       0,
+              width:      '100%',
+              height:     '100%',
+              objectFit:  'cover',
+              filter:     'blur(2px) brightness(0.22)',
+              pointerEvents: 'none',
+              zIndex:      0,
+            }}
+          />
+        </AnimatePresence>
+
+        {/* Panel content — sits above background image */}
+        <div className="flex-1 flex items-center justify-center w-full" style={{ position: 'relative', zIndex: 1 }}>
           <AnimatePresence mode="wait">
             {showPanel && (
               <div key={`${PANELS[panelIndex]}-${questionIndex}`} className="w-full">
@@ -189,7 +236,7 @@ export default function IdleAttractor({ navigate }) {
         {/* Pulsing CTA */}
         <motion.p
           className="font-mono uppercase tracking-widest text-gold mb-16"
-          style={{ fontSize: '10px', letterSpacing: '3px' }}
+          style={{ fontSize: '10px', letterSpacing: '3px', position: 'relative', zIndex: 1 }}
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >

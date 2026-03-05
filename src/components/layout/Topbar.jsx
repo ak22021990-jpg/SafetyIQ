@@ -1,6 +1,8 @@
 // src/components/layout/Topbar.jsx
 // Fixed 64px topbar with per-game accent border
 
+const BASE_URL = import.meta.env.BASE_URL
+
 export default function Topbar({
   gameName    = '',
   accentColor = '#C9A96E',
@@ -42,11 +44,20 @@ export default function Topbar({
         aria-label="Sutherland logo"
         tabIndex={-1}
       >
-        {/* ⚠️ REPLACE BEFORE SUMMIT: Add real sutherland-logo.png to public/ */}
         <div className="flex items-center gap-2">
+          <img
+            src={`${BASE_URL}images/sutherland-logo.png`}
+            alt="Sutherland"
+            style={{ height: '28px', width: 'auto', objectFit: 'contain' }}
+            onError={e => {
+              e.currentTarget.style.display = 'none'
+              e.currentTarget.nextSibling.style.display = 'block'
+            }}
+          />
+          {/* Fallback text — hidden when logo loads */}
           <div
             className="font-heading font-bold text-body-s tracking-widest text-text-primary uppercase"
-            style={{ letterSpacing: '3px' }}
+            style={{ letterSpacing: '3px', display: 'none' }}
           >
             SUTHERLAND
           </div>

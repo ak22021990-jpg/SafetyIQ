@@ -14,7 +14,7 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
   useEffect(() => {
     let active = true
     navigator.mediaDevices
-      ?.getUserMedia({ video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } } })
+      ?.getUserMedia({ video: { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 1280 } } })
       .then(stream => {
         if (!active) { stream.getTracks().forEach(t => t.stop()); return }
         streamRef.current = stream
@@ -50,63 +50,70 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
   }
 
   return (
-    <div className="relative w-full h-full overflow-hidden" style={{ background: '#000' }}>
-      {/* Live video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        muted
-        style={{
-          position:   'absolute',
-          inset:       0,
-          width:      '100%',
-          height:     '100%',
-          objectFit:  'cover',
-          transform:  'scaleX(-1)', // mirror for selfie
-        }}
-      />
+    /* Outer: full screen, black letterbox background */
+    <div style={{ position: 'relative', width: '100%', height: '100%', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-      {/* Frame overlay PNG */}
-      <img
-        src={`${BASE_URL}selfie-frame.png`}
-        alt=""
-        aria-hidden
-        style={{
-          position:  'absolute',
-          inset:      0,
-          width:     '100%',
-          height:    '100%',
-          objectFit: 'fill',
-          pointerEvents: 'none',
-        }}
-        onError={e => { e.currentTarget.style.display = 'none' }}
-      />
+      {/* Portrait viewport — 9:16, height-constrained, centered */}
+      <div style={{ position: 'relative', height: '100%', aspectRatio: '9 / 16', overflow: 'hidden' }}>
 
-      {/* Capture button */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom:   '48px',
-          left:      0,
-          right:     0,
-          display:  'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <button
-          onClick={handleCapture}
-          disabled={capturing}
-          className="font-mono uppercase tracking-widest"
+        {/* Live video */}
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
           style={{
-            fontSize: '11px', letterSpacing: '2px', padding: '14px 36px',
-            background: capturing ? 'rgba(201,169,110,0.5)' : '#C9A96E',
-            color: '#07101C', fontWeight: 700,
-            border: 'none', borderRadius: '4px', cursor: capturing ? 'default' : 'pointer',
+            position:  'absolute',
+            inset:      0,
+            width:     '100%',
+            height:    '100%',
+            objectFit: 'cover',
+            transform: 'scaleX(-1)', // mirror for selfie
+          }}
+        />
+
+        {/* Frame overlay PNG */}
+        <img
+          src={`${BASE_URL}selfie-frame.png`}
+          alt=""
+          aria-hidden
+          style={{
+            position:  'absolute',
+            inset:      0,
+            width:     '100%',
+            height:    '100%',
+            objectFit: 'fill',
+            pointerEvents: 'none',
+          }}
+          onError={e => { e.currentTarget.style.display = 'none' }}
+        />
+
+        {/* Capture button */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom:   '48px',
+            left:      0,
+            right:     0,
+            display:  'flex',
+            justifyContent: 'center',
           }}
         >
-          {capturing ? 'Capturing…' : 'Capture →'}
-        </button>
+          <button
+            onClick={handleCapture}
+            disabled={capturing}
+            className="font-mono uppercase tracking-widest"
+            style={{
+              fontSize: '11px', letterSpacing: '2px', padding: '14px 36px',
+              background: capturing ? 'rgba(201,169,110,0.5)' : '#C9A96E',
+              color: '#07101C', fontWeight: 700,
+              border: 'none', borderRadius: '4px', cursor: capturing ? 'default' : 'pointer',
+            }}
+          >
+            {capturing ? 'Capturing…' : 'Capture →'}
+          </button>
+        </div>
+
       </div>
     </div>
   )

@@ -1223,7 +1223,7 @@ export const RED_TEAM_OUTPUTS = [
     handle: "@neuravance_official",
     timeAgo: "3h",
     videoId: "neuravance",
-    videoSrc: "",          // ⚠️ REPLACE BEFORE SUMMIT: /src/assets/videos/neuravance-ad.mp4
+    videoSrc: "videos/neuravance-ad.mp4",
     videoTitle: "NeuraVance™ — Clinically Proven Cognitive Support",
     videoDuration: "0:15",
     engagementLikes: "4.1K",
@@ -1243,7 +1243,7 @@ export const RED_TEAM_OUTPUTS = [
     handle: "@yieldvault_app",
     timeAgo: "5h",
     videoId: "yieldvault",
-    videoSrc: "",          // ⚠️ REPLACE BEFORE SUMMIT: /src/assets/videos/yieldvault-ad.mp4
+    videoSrc: "videos/yieldvault-ad.mp4",
     videoTitle: "YieldVault — My $4,200 Month",
     videoDuration: "0:15",
     engagementLikes: "2.8K",

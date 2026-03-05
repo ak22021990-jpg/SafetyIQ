@@ -11,10 +11,13 @@ export default function SocialPostCard({
 }) {
   const {
     avatar, username, handle, timeAgo, content,
-    hasImage, imageDescription, reportReason, reportCount, region, regionLabel,
+    hasImage, imageDescription, videoSrc, videoTitle, videoDuration, engagementLikes, engagementComments, engagementShares,
+    reportReason, reportCount, region, regionLabel,
     accountAge, accountNote, contextNote,
     choices,
   } = caseData
+
+  const BASE_URL = import.meta.env.BASE_URL
 
   const shouldReduce = useReducedMotion()
   const isRevealed   = state === 'revealed'
@@ -99,6 +102,28 @@ export default function SocialPostCard({
           </div>
         )}
 
+        {/* Video */}
+        {videoSrc && (
+          <div className="mb-3" style={{ borderRadius: '4px', overflow: 'hidden', background: '#000' }}>
+            <video
+              src={`${BASE_URL}${videoSrc}`}
+              controls
+              muted
+              playsInline
+              style={{ width: '100%', maxHeight: '200px', display: 'block' }}
+            />
+            {videoTitle && (
+              <div
+                className="flex items-center justify-between font-mono px-2 py-1"
+                style={{ background: 'rgba(0,0,0,0.6)', fontSize: '10px' }}
+              >
+                <span className="text-text-secondary">{videoTitle}</span>
+                {videoDuration && <span className="text-text-muted">{videoDuration}</span>}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Context note */}
         {contextNote && (
           <div
@@ -121,9 +146,9 @@ export default function SocialPostCard({
           style={{ fontSize: '10px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
           aria-hidden="true"
         >
-          <span>👍 —</span>
-          <span>💬 —</span>
-          <span>↗ —</span>
+          <span>👍 {engagementLikes || '—'}</span>
+          <span>💬 {engagementComments || '—'}</span>
+          <span>↗ {engagementShares || '—'}</span>
         </div>
 
         {/* Report strip */}
