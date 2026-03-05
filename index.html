@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/SafetyIQ/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signal &amp; Noise — Trust &amp; Safety Intelligence Games</title>
+    <script>
+      // Capture any JS errors before React mounts and show them on screen
+      window.onerror = function(msg, src, line, col, err) {
+        var el = document.getElementById('pre-react-error')
+        if (el) {
+          el.style.display = 'flex'
+          el.querySelector('pre').textContent = (err ? err.stack : msg) || msg
+        }
+        return false
+      }
+      window.addEventListener('unhandledrejection', function(e) {
+        var el = document.getElementById('pre-react-error')
+        if (el) {
+          el.style.display = 'flex'
+          el.querySelector('pre').textContent = String(e.reason)
+        }
+      })
+    </script>
+    <script type="module" crossorigin src="/SafetyIQ/assets/index-JUXOr8e6.js"></script>
+    <link rel="stylesheet" crossorigin href="/SafetyIQ/assets/index-C2iESEhp.css">
+  </head>
+  <body>
+    <!-- Shown only if React fails to mount (React will hide this via #root) -->
+    <div id="pre-react-error" style="display:none;position:fixed;inset:0;z-index:99999;background:#07101C;color:#E8EDF5;font-family:monospace;flex-direction:column;align-items:center;justify-content:center;padding:40px;gap:16px;">
+      <p style="font-size:11px;letter-spacing:3px;color:#C9A96E;text-transform:uppercase;">JavaScript Error — Cannot Load App</p>
+      <pre style="font-size:12px;color:#E8192C;white-space:pre-wrap;max-width:700px;"></pre>
+      <p style="font-size:10px;color:#566478;">Open DevTools Console (F12) for full details</p>
+    </div>
+    <div id="root"></div>
+  </body>
+</html>
