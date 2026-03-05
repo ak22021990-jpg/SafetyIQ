@@ -10,7 +10,7 @@ import { RED_TEAM_OUTPUTS } from '../data/gameContent'
 import { useSession } from '../context/SessionContext'
 import { useSound } from '../hooks/useSound'
 import { getLeaderboard } from '../utils/storageEngine'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const ACCENT        = '#00C896'
 const TIMER_SECONDS = 90

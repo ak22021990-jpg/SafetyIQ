@@ -9,7 +9,7 @@ import Button from '../components/ui/Button'
 import { useSession } from '../context/SessionContext'
 import { useGame } from '../context/GameContext'
 import { getLeaderboard } from '../utils/storageEngine'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const GAMES = [
   {
@@ -213,7 +213,7 @@ export default function HomeScreen({ navigate }) {
             </div>
 
             {/* 2×2 Game cards grid */}
-            <div className="grid grid-cols-2 gap-4 flex-1">
+            <div className="grid grid-cols-2 gap-4">
               {GAMES.map(game => (
                 <GameCard
                   key={game.id}

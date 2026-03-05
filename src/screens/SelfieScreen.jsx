@@ -10,7 +10,7 @@ import DeliveryOptions from '../components/selfie/DeliveryOptions'
 import { useSession } from '../context/SessionContext'
 import { getBadgesByIds } from '../utils/badgeEngine'
 import { composeSelfieCard } from '../utils/selfieCompositor'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 // phase: 'camera' | 'badgeSelect' | 'compositing' | 'delivery'
 

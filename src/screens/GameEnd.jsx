@@ -7,7 +7,7 @@ import ScoreReveal from '../components/game/ScoreReveal'
 import StatsInfomercial from '../components/game/StatsInfomercial'
 import { useSession } from '../context/SessionContext'
 import { evaluateBadges } from '../utils/badgeEngine'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const GAME_META = {
   grayRoom: { name: 'The Gray Room',     accent: '#C9A96E', maxScore: 160 },
@@ -168,6 +168,18 @@ export default function GameEnd({ navigate, game }) {
                         }}
                       >
                         {gamesCompleted >= 4 ? 'See Final Summary →' : 'Return to Hub →'}
+                      </button>
+                      <button
+                        onClick={() => navigate(SCREENS.SELFIE)}
+                        className="w-full font-mono uppercase tracking-widest transition-colors"
+                        style={{
+                          fontSize: '10px', letterSpacing: '2px', padding: '11px',
+                          background: 'transparent', color: meta.accent,
+                          border: `1px solid ${meta.accent}`, borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        📸 Take Selfie
                       </button>
                       <button
                         onClick={handleReplay}

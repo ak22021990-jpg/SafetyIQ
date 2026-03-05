@@ -12,7 +12,7 @@ import DamageReport from '../components/game/DamageReport'
 import { THREAT_VECTORS } from '../data/gameContent'
 import { useSession } from '../context/SessionContext'
 import { useSound } from '../hooks/useSound'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const ACCENT       = '#E8A830'
 const POINTS_PER_BLOCK = 8

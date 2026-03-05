@@ -8,7 +8,7 @@ import LeaderboardRow from '../components/leaderboard/LeaderboardRow'
 import { useSession } from '../context/SessionContext'
 import { getLeaderboard } from '../utils/storageEngine'
 import { staggerContainer } from '../utils/motionVariants'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 export default function Leaderboard({ navigate }) {
   const { sessionId } = useSession()

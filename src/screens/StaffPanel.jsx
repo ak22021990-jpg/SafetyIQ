@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getAllSessions, exportCSV, resetLeaderboard } from '../utils/storageEngine'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const DEFAULT_PASSWORD = 'sutherland2025'
 const STAFF_PASSWORD   = import.meta.env.VITE_STAFF_PASSWORD || DEFAULT_PASSWORD

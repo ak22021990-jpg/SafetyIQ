@@ -11,7 +11,7 @@ import { useSession } from '../context/SessionContext'
 import { getLeaderboard } from '../utils/storageEngine'
 import { getJudgementStyle } from '../utils/judgementStyle'
 import useCountUp from '../hooks/useCountUp'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const GAME_LABELS = {
   grayRoom: 'The Gray Room',

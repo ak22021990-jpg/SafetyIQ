@@ -13,7 +13,7 @@ import HintBox from '../components/ui/HintBox'
 import { DRAW_THE_LINE_POLICIES } from '../data/gameContent'
 import { useSession } from '../context/SessionContext'
 import { useSound } from '../hooks/useSound'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const ACCENT = '#4A7FA5'
 const TIMER_SECONDS = 120

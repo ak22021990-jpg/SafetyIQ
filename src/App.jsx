@@ -6,6 +6,7 @@ import { GameProvider } from './context/GameContext'
 import { useLongPress } from './hooks/useLongPress'
 import { useSheetsSync } from './hooks/useSheetsSync'
 import { useIdleTimer } from './hooks/useIdleTimer'
+import { SCREENS } from './constants/screens'
 
 // Screens
 import Registration    from './screens/Registration'
@@ -22,20 +23,7 @@ import SelfieScreen   from './screens/SelfieScreen'
 import StaffPanel     from './screens/StaffPanel'
 import TickerBanner   from './components/layout/TickerBanner'
 
-export const SCREENS = {
-  IDLE:        'idle',
-  REGISTER:    'register',
-  HOME:        'home',
-  GRAY_ROOM:   'gray_room',
-  DRAW_LINE:   'draw_line',
-  THREAT:      'threat_surface',
-  RED_TEAM:    'red_team',
-  GAME_END:    'game_end',
-  LEADERBOARD: 'leaderboard',
-  SUMMARY:     'final_summary',
-  SELFIE:      'selfie',
-  STAFF:       'staff_panel',
-}
+export { SCREENS }
 
 // Inner component so hooks can access navigate
 function AppInner() {
@@ -61,7 +49,7 @@ function AppInner() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-abyss relative">
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         {screen === SCREENS.REGISTER    && <Registration    key="reg"         navigate={navigate} />}
         {screen === SCREENS.IDLE        && <IdleAttractor   key="idle"        navigate={navigate} />}
         {screen === SCREENS.HOME        && <HomeScreen      key="home"        navigate={navigate} />}

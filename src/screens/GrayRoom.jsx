@@ -10,7 +10,7 @@ import InsightPopup from '../components/game/InsightPopup'
 import Button from '../components/ui/Button'
 import { useSession } from '../context/SessionContext'
 import { useSound } from '../hooks/useSound'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 import { GRAY_ROOM_CASES } from '../data/gameContent'
 
 const MAX_SECONDS = 90

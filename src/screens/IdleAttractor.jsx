@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import ScreenWrapper from '../components/layout/ScreenWrapper'
 import { getLeaderboard } from '../utils/storageEngine'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 // Teaser questions from PRD §5 — gold word indicated by ** markers in text
 const TEASER_QUESTIONS = [

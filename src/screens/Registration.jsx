@@ -5,7 +5,7 @@ import ScreenWrapper from '../components/layout/ScreenWrapper'
 import Button from '../components/ui/Button'
 import Input from '../components/ui/Input'
 import { useSession } from '../context/SessionContext'
-import { SCREENS } from '../App'
+import { SCREENS } from '../constants/screens'
 
 const TITLE_OPTIONS = [
   'VP Marketing',
@@ -84,7 +84,10 @@ export default function Registration({ navigate }) {
 
   return (
     <ScreenWrapper>
-      <div className="w-full h-full flex flex-col items-center justify-center overflow-auto py-8 px-4">
+      <div className="w-full h-full flex flex-col items-center overflow-y-auto py-8 px-4">
+
+        {/* Spacer pushes content to center when there's room; collapses when scrolling */}
+        <div className="flex-1" style={{ minHeight: '16px', maxHeight: '60px' }} />
 
         {/* Header */}
         <div className="text-center mb-8">
@@ -242,8 +245,8 @@ export default function Registration({ navigate }) {
           </form>
         </div>
 
-        {/* Spacer for ticker */}
-        <div className="h-4 shrink-0" />
+        {/* Bottom spacer */}
+        <div className="flex-1" style={{ minHeight: '16px', maxHeight: '60px' }} />
       </div>
     </ScreenWrapper>
   )

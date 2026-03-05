@@ -1,123 +1,88 @@
 // src/components/game/StatsInfomercial.jsx
-// 8-stat animated sequence: stat fades in → number counts up → context line reveals → 0.5s hold → next stat
-// Total sequence ~40s (8 stats × ~5s each)
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { SUTHERLAND_STATS, SUTHERLAND_VOICE_STATEMENTS } from '../../data/gameContent'
+// 8-stat grid layout: 4 rows × 2 columns — all stats visible at once with count-up animations
+import { useEffect } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { SUTHERLAND_STATS } from '../../data/gameContent'
 import useCountUp from '../../hooks/useCountUp'
 
-const STAT_HOLD_MS    = 4500  // time on each stat before advancing
-const COUNT_UP_MS     = 1800
-const REVEAL_DELAY_MS = 400   // context line appears after number starts
+const COUNT_UP_MS = 1800
 
-// Single stat slide
-function StatSlide({ stat, active, game }) {
-  const shouldReduce = useReducedMotion()
-
-  // Parse numeric value from stat
+// Single stat card in the grid
+function StatCard({ stat, index, shouldReduce }) {
   const numericVal = parseFloat(stat.value.replace(/[^0-9.]/g, '')) || 0
   const hasNumber  = !isNaN(numericVal) && numericVal > 0 && !stat.value.includes('[X]')
-  const displayVal = useCountUp(active && hasNumber ? numericVal : 0, COUNT_UP_MS, 200)
+  const displayVal = useCountUp(hasNumber ? numericVal : 0, COUNT_UP_MS, index * 80)
 
-  const [showContext, setShowContext] = useState(false)
-  useEffect(() => {
-    if (!active) { setShowContext(false); return }
-    const t = setTimeout(() => setShowContext(true), REVEAL_DELAY_MS + 400)
-    return () => clearTimeout(t)
-  }, [active])
+  const displayText = stat.value.includes('[X]')
+    ? stat.value
+    : hasNumber
+      ? `${displayVal}${stat.suffix}`
+      : `${stat.value}${stat.suffix}`
 
   return (
-    <div className="flex flex-col items-center text-center" style={{ padding: '0 24px' }}>
-      {/* Number */}
+    <motion.div
+      initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.06 }}
+      style={{
+        background: 'rgba(201,169,110,0.04)',
+        border: '1px solid rgba(201,169,110,0.14)',
+        borderRadius: '6px',
+        padding: '14px 10px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        gap: '4px',
+      }}
+    >
       <p
         className="font-display font-semibold text-gold"
-        style={{ fontSize: stat.isHero ? '80px' : '60px', lineHeight: '0.9', marginBottom: '8px' }}
+        style={{ fontSize: stat.isHero ? '36px' : '30px', lineHeight: '1', letterSpacing: '-0.5px' }}
       >
-        {stat.value.includes('[X]')
-          ? stat.value
-          : hasNumber
-            ? `${displayVal}${stat.suffix}`
-            : `${stat.value}${stat.suffix}`
-        }
+        {displayText}
       </p>
-
-      {/* Label */}
       <p
         className="font-mono uppercase text-text-muted"
-        style={{ fontSize: '10px', letterSpacing: '3px', marginBottom: '16px' }}
+        style={{ fontSize: '9px', letterSpacing: '1.5px', lineHeight: '1.3' }}
       >
         {stat.label}
       </p>
-
-      {/* Context line */}
-      <AnimatePresence>
-        {showContext && (
-          <motion.p
-            initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="font-mono text-text-secondary"
-            style={{ fontSize: '11px', lineHeight: '1.65', maxWidth: '280px' }}
-          >
-            {SUTHERLAND_VOICE_STATEMENTS[game] || SUTHERLAND_VOICE_STATEMENTS.summary}
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </div>
+    </motion.div>
   )
 }
 
-export default function StatsInfomercial({ onComplete, game }) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+export default function StatsInfomercial({ onComplete }) {
   const shouldReduce = useReducedMotion()
-  const timerRef     = useRef(null)
 
+  // Signal complete after count-ups finish so parent can show CTA
   useEffect(() => {
-    timerRef.current = setTimeout(() => {
-      if (currentIndex + 1 >= SUTHERLAND_STATS.length) {
-        onComplete?.()
-      } else {
-        setCurrentIndex(prev => prev + 1)
-      }
-    }, shouldReduce ? 1200 : STAT_HOLD_MS)
-    return () => clearTimeout(timerRef.current)
-  }, [currentIndex, onComplete, shouldReduce])
-
-  const stat = SUTHERLAND_STATS[currentIndex]
+    const delay = shouldReduce ? 500 : COUNT_UP_MS + SUTHERLAND_STATS.length * 80 + 400
+    const t = setTimeout(() => onComplete?.(), delay)
+    return () => clearTimeout(t)
+  }, [onComplete, shouldReduce])
 
   return (
-    <div style={{ width: '100%', minHeight: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      {/* Progress dots */}
-      <div className="flex gap-1.5 mb-8">
-        {SUTHERLAND_STATS.map((_, i) => (
-          <div
-            key={i}
-            style={{
-              width:  i === currentIndex ? '20px' : '8px',
-              height: '3px',
-              borderRadius: '100px',
-              background: i < currentIndex ? 'rgba(201,169,110,0.50)' : i === currentIndex ? '#C9A96E' : 'rgba(255,255,255,0.12)',
-              transition: shouldReduce ? 'none' : 'width 200ms ease, background 200ms',
-            }}
-          />
+    <div style={{ width: '100%' }}>
+      {/* 4-row × 2-column grid */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '10px',
+          width: '100%',
+          maxWidth: '420px',
+          margin: '0 auto',
+        }}
+      >
+        {SUTHERLAND_STATS.map((stat, i) => (
+          <StatCard key={stat.id} stat={stat} index={i} shouldReduce={shouldReduce} />
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 1.04 }}
-          transition={{ duration: 0.35 }}
-        >
-          <StatSlide stat={stat} active={true} game={game} />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Sutherland attribution */}
+      {/* Attribution */}
       <p
-        className="font-mono uppercase text-text-muted mt-8"
+        className="font-mono uppercase text-text-muted mt-6 text-center"
         style={{ fontSize: '8px', letterSpacing: '3px' }}
       >
         Sutherland Global Services · Trust &amp; Safety Practice
