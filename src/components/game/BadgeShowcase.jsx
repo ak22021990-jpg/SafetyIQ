@@ -1,7 +1,8 @@
 // src/components/game/BadgeShowcase.jsx
 // Staggered row of earned badges — 80ms spring stagger between each
-// Lottie slot: badge-earned.json plays when showcase mounts (Phase 16)
 import { motion, useReducedMotion } from 'framer-motion'
+import Lottie from 'lottie-react'
+import badgeEarned from '../../assets/lottie/badge-earned.json'
 import Badge from '../ui/Badge'
 import { getBadgesByIds } from '../../utils/badgeEngine'
 
@@ -13,8 +14,7 @@ export default function BadgeShowcase({ earnedIds = [], size = 48, showLabels = 
 
   return (
     <div className="flex flex-col items-center gap-3 w-full">
-      {/* Lottie slot — Phase 16: replace null with <Lottie animationData={badgeEarned} loop={false} style={{ width: 80 }} /> */}
-      {null}
+      <Lottie animationData={badgeEarned} loop={false} style={{ width: 80, height: 80 }} />
 
       <div className="flex flex-wrap gap-3 justify-center">
         {badges.map((badge, idx) => (

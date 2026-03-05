@@ -18,6 +18,9 @@ export default function LeaderboardRow({ entry, rank, isCurrentPlayer, index }) 
   return (
     <motion.div
       variants={!shouldReduce ? leaderboardItem : undefined}
+      initial={!shouldReduce ? { opacity: 0, y: 10 } : false}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30, delay: !shouldReduce ? index * 0.06 : 0 }}
       layout
       style={{
         display:        'flex',

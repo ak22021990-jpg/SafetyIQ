@@ -80,6 +80,39 @@ button {
   padding: 0;
   cursor: pointer;
   font-family: inherit;
+  /* 44×44px minimum touch target (WCAG 2.5.5) */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Keyboard focus ring — gold, 2px, 4px offset */
+:focus-visible {
+  outline: 2px solid #C9A96E;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Remove focus ring for mouse/touch — only show for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced motion — disable transitions and animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Shimmer keyframe for leaderboard ghost rows */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Prevent user-select on game elements */

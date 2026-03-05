@@ -1,6 +1,9 @@
 // src/screens/DrawTheLine.jsx
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import Lottie from 'lottie-react'
+import shieldBlocked from '../assets/lottie/shield-blocked.json'
+import breachExplosion from '../assets/lottie/breach-explosion.json'
 import ScreenWrapper from '../components/layout/ScreenWrapper'
 import SafeZoneWrapper from '../components/layout/SafeZoneWrapper'
 import Topbar from '../components/layout/Topbar'
@@ -454,13 +457,20 @@ export default function DrawTheLine({ navigate }) {
                     <div
                       style={{
                         textAlign: 'center',
-                        padding: '32px 20px',
+                        padding: '24px 20px 28px',
                         marginBottom: '20px',
                         background: lastResult.passed ? 'rgba(0,200,150,0.06)' : 'rgba(232,25,44,0.06)',
                         border: `1px solid ${lastResult.passed ? 'rgba(0,200,150,0.30)' : 'rgba(232,25,44,0.30)'}`,
                         borderRadius: '8px',
                       }}
                     >
+                      {!shouldReduce && (
+                        <Lottie
+                          animationData={lastResult.passed ? shieldBlocked : breachExplosion}
+                          loop={false}
+                          style={{ width: 80, height: 80, margin: '0 auto 8px' }}
+                        />
+                      )}
                       <p
                         className="font-heading font-extrabold mb-1"
                         style={{

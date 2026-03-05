@@ -1,6 +1,9 @@
 // src/components/game/AttackWave.jsx
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import Lottie from 'lottie-react'
+import shieldBlocked from '../../assets/lottie/shield-blocked.json'
+import breachExplosion from '../../assets/lottie/breach-explosion.json'
 
 const ATTACK_DELAY = 900 // ms between each vector animation
 
@@ -50,7 +53,15 @@ export default function AttackWave({ vectors, allocations, onComplete }) {
                     borderRadius: '6px',
                   }}
                 >
-                  <span style={{ fontSize: '20px', flexShrink: 0 }}>{vector.icon}</span>
+                  {shouldReduce ? (
+                    <span style={{ fontSize: '20px', flexShrink: 0 }}>{vector.icon}</span>
+                  ) : (
+                    <Lottie
+                      animationData={isBlocked ? shieldBlocked : breachExplosion}
+                      loop={false}
+                      style={{ width: 36, height: 36, flexShrink: 0 }}
+                    />
+                  )}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div className="flex items-center justify-between mb-0.5">
                       <p className="font-mono font-medium text-text-primary" style={{ fontSize: '12px' }}>

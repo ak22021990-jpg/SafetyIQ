@@ -2,6 +2,8 @@
 // Score count-up → "Well played." → badge showcase → onComplete
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import Lottie from 'lottie-react'
+import scoreRevealAnim from '../../assets/lottie/score-reveal.json'
 import useCountUp from '../../hooks/useCountUp'
 import { useSound } from '../../hooks/useSound'
 import Badge from '../ui/Badge'
@@ -38,6 +40,11 @@ export default function ScoreReveal({ score, maxScore, game, accentColor, earned
       className="flex flex-col items-center text-center w-full"
       style={{ padding: '40px 24px' }}
     >
+      {/* Score reveal animation */}
+      {!shouldReduce && (
+        <Lottie animationData={scoreRevealAnim} loop={false} style={{ width: 100, height: 100, marginBottom: '4px' }} />
+      )}
+
       {/* Game label */}
       <p
         className="font-mono uppercase mb-2"

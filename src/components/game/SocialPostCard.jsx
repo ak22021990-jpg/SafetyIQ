@@ -1,5 +1,6 @@
 // src/components/game/SocialPostCard.jsx
 // Pulse platform social post card — fictional platform, not resembling any real platform
+import { motion, useReducedMotion } from 'framer-motion'
 
 export default function SocialPostCard({
   caseData,
@@ -15,8 +16,9 @@ export default function SocialPostCard({
     choices,
   } = caseData
 
-  const isRevealed = state === 'revealed'
-  const isLocked   = state === 'locked' || isRevealed
+  const shouldReduce = useReducedMotion()
+  const isRevealed   = state === 'revealed'
+  const isLocked     = state === 'locked' || isRevealed
 
   return (
     <div
@@ -149,8 +151,13 @@ export default function SocialPostCard({
         >
           Your Decision
         </p>
-        <div className="flex flex-col gap-2">
-          {choices.map((choice) => {
+        <motion.div
+          className="flex flex-col gap-2"
+          initial={shouldReduce ? false : 'hidden'}
+          animate="visible"
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
+        >
+          {choices.map((choice, choiceIdx) => {
             const isSelected = selectedId === choice.id
             const isCorrect  = isRevealed && choice.id === revealedCorrectId
             const isWrong    = isRevealed && isSelected && choice.id !== revealedCorrectId
@@ -174,8 +181,9 @@ export default function SocialPostCard({
             }
 
             return (
-              <button
+              <motion.button
                 key={choice.id}
+                variants={shouldReduce ? undefined : { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } } }}
                 onClick={() => !isLocked && onChoiceSelect?.(choice.id)}
                 disabled={isLocked}
                 className="w-full text-left transition-all duration-150 font-mono"
@@ -202,10 +210,10 @@ export default function SocialPostCard({
                 {choice.text}
                 {isCorrect && <span className="ml-2" style={{ color: '#00C896' }}>✓</span>}
                 {isWrong   && <span className="ml-2" style={{ color: '#E8192C' }}>✗</span>}
-              </button>
+              </motion.button>
             )
           })}
-        </div>
+        </motion.div>
       </div>
     </div>
   )

@@ -1,6 +1,8 @@
 // src/screens/ThreatSurface.jsx
 import { useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import Lottie from 'lottie-react'
+import attackWaveAnim from '../assets/lottie/attack-wave.json'
 import ScreenWrapper from '../components/layout/ScreenWrapper'
 import SafeZoneWrapper from '../components/layout/SafeZoneWrapper'
 import Topbar from '../components/layout/Topbar'
@@ -137,6 +139,11 @@ export default function ThreatSurface({ navigate }) {
                   <h2 className="font-heading font-extrabold text-text-primary" style={{ fontSize: '22px' }}>
                     Defences Activating...
                   </h2>
+                  {!shouldReduce && (
+                    <div className="flex justify-center mt-4">
+                      <Lottie animationData={attackWaveAnim} loop style={{ width: 160, height: 160 }} />
+                    </div>
+                  )}
                 </div>
 
                 <AttackWave
