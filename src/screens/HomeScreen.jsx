@@ -1,6 +1,6 @@
 // src/screens/HomeScreen.jsx
 import { useState, useEffect } from 'react'
-import { Volume2, VolumeX, Trophy, X } from 'lucide-react'
+import { Volume2, VolumeX, Trophy, X, Camera } from 'lucide-react'
 import ScreenWrapper from '../components/layout/ScreenWrapper'
 import SafeZoneWrapper from '../components/layout/SafeZoneWrapper'
 import Topbar from '../components/layout/Topbar'
@@ -196,7 +196,7 @@ export default function HomeScreen({ navigate }) {
                   className="font-mono uppercase text-text-muted mb-1"
                   style={{ fontSize: '11px', letterSpacing: '2px' }}
                 >
-                  Safety IQ Challenge
+                  Trust &amp; Safety Challenge
                 </p>
                 <h1
                   className="font-heading font-extrabold text-text-primary"
@@ -211,6 +211,20 @@ export default function HomeScreen({ navigate }) {
 
               {/* Header Actions */}
               <div className="flex items-center gap-3">
+                <button
+                  onClick={() => navigate(SCREENS.SELFIE, null, SCREENS.HOME)}
+                  className="flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary transition-colors hover:bg-slate-100"
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    flexShrink: 0,
+                  }}
+                  aria-label="Take a selfie"
+                >
+                  <Camera size={18} />
+                </button>
                 <button
                   onClick={() => setIsLeaderboardOpen(true)}
                   className="flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary transition-colors hover:bg-slate-100"

@@ -46,10 +46,11 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blob])
 
-  // Generate QR once we have the Cloudinary URL
+  // Generate QR once we have the Cloudinary URL — points to share page, not raw image
   useEffect(() => {
     if (!cloudinaryUrl) return
-    QRCode.toDataURL(cloudinaryUrl, {
+    const sharePageUrl = `${window.location.origin}/share.html?card=${encodeURIComponent(cloudinaryUrl)}`
+    QRCode.toDataURL(sharePageUrl, {
       width: 160, margin: 1,
       color: { dark: '#E8EDF5', light: '#07101C' },
     }).then(setQrDataUrl).catch(() => { })
@@ -137,7 +138,7 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
               style={{ width: '140px', height: '140px', borderRadius: '4px' }}
             />
             <p className="font-mono text-text-muted" style={{ fontSize: '9px' }}>
-              Scan to save your card
+              Scan to share your Summit Card
             </p>
           </motion.div>
         )}

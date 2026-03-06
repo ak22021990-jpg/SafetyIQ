@@ -14,7 +14,7 @@ import { SCREENS } from '../constants/screens'
 
 // phase: 'camera' | 'badgeSelect' | 'compositing' | 'delivery'
 
-export default function SelfieScreen({ navigate }) {
+export default function SelfieScreen({ navigate, returnTo = SCREENS.SUMMARY }) {
   const { player, badges: earnedIds, totalScore } = useSession()
 
   const [phase,         setPhase]         = useState('camera')
@@ -76,7 +76,7 @@ export default function SelfieScreen({ navigate }) {
 
         {/* Back button — always visible */}
         <button
-          onClick={() => navigate(SCREENS.SUMMARY)}
+          onClick={() => navigate(returnTo)}
           className="absolute top-4 left-4 font-mono uppercase text-text-muted"
           style={{
             fontSize: '9px', letterSpacing: '2px',

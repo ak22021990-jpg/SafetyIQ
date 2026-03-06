@@ -40,9 +40,22 @@ export default function ScoreReveal({ score, maxScore, game, accentColor, earned
       className="flex flex-col items-center text-center w-full"
       style={{ padding: '40px 24px' }}
     >
-      {/* Score reveal animation */}
+      {/* Score reveal animation — full-screen overlay, non-blocking */}
       {!shouldReduce && (
-        <Lottie animationData={scoreRevealAnim} loop={false} style={{ width: 100, height: 100, marginBottom: '4px' }} />
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: 'none',
+          }}
+        >
+          <Lottie
+            animationData={scoreRevealAnim}
+            loop={false}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
       )}
 
       {/* Game label */}

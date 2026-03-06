@@ -2,8 +2,7 @@
 // Live camera feed with overlay frame. "Capture →" freezes frame and composites card.
 import { useRef, useEffect, useState } from 'react'
 import NoCameraFallback from './NoCameraFallback'
-
-const BASE_URL = import.meta.env.BASE_URL
+import selfieFrameImg from '../../assets/selfie-overlay-frame.png'
 
 export default function SelfieCamera({ playerName = '', onCapture, onFallback }) {
   const videoRef   = useRef(null)
@@ -96,8 +95,8 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
         />
 
         {/* Frame overlay PNG */}
-        {/* <img
-          src={`${BASE_URL}selfie-frame.png`}
+        <img
+          src={selfieFrameImg}
           alt=""
           aria-hidden
           style={{
@@ -107,19 +106,20 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
             height:    '100%',
             objectFit: 'fill',
             pointerEvents: 'none',
+            zIndex: 2,
           }}
-          onError={e => { e.currentTarget.style.display = 'none' }}
-        /> */}
+        />
 
-        {/* Capture button */}
+        {/* Capture button — sits in the dark footer strip (~bottom 12% of frame) */}
         <div
           style={{
             position: 'absolute',
-            bottom:   '48px',
+            bottom:   '3.5%',
             left:      0,
             right:     0,
             display:  'flex',
             justifyContent: 'center',
+            zIndex: 3,
           }}
         >
           <button

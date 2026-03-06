@@ -27,11 +27,13 @@ export { SCREENS }
 
 // Inner component so hooks can access navigate
 function AppInner() {
-  const [screen,     setScreen]     = useState(SCREENS.REGISTER)
-  const [activeGame, setActiveGame] = useState(null)
+  const [screen,         setScreen]         = useState(SCREENS.REGISTER)
+  const [activeGame,     setActiveGame]     = useState(null)
+  const [selfieReturnTo, setSelfieReturnTo] = useState(SCREENS.SUMMARY)
 
-  const navigate = (to, game = null) => {
+  const navigate = (to, game = null, returnTo = null) => {
     setActiveGame(game)
+    if (to === SCREENS.SELFIE && returnTo) setSelfieReturnTo(returnTo)
     setScreen(to)
   }
 
@@ -70,7 +72,7 @@ function AppInner() {
         {screen === SCREENS.GAME_END    && <GameEnd         key="end"         navigate={navigate} game={activeGame} />}
         {screen === SCREENS.LEADERBOARD && <Leaderboard     key="leaderboard" navigate={navigate} />}
         {screen === SCREENS.SUMMARY     && <FinalSummary    key="summary"     navigate={navigate} />}
-        {screen === SCREENS.SELFIE      && <SelfieScreen    key="selfie"      navigate={navigate} />}
+        {screen === SCREENS.SELFIE      && <SelfieScreen    key="selfie"      navigate={navigate} returnTo={selfieReturnTo} />}
         {screen === SCREENS.STAFF       && (
           <StaffPanel key="staff" navigate={navigate} forceSync={forceSync} syncStatus={syncStatus} />
         )}

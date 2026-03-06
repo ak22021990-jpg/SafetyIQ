@@ -1,6 +1,7 @@
 // src/screens/Registration.jsx
 // LAUNCH SCREEN — first screen users see when app starts
 import { useState } from 'react'
+import { Camera } from 'lucide-react'
 import ScreenWrapper from '../components/layout/ScreenWrapper'
 import Button from '../components/ui/Button'
 import Input from '../components/ui/Input'
@@ -79,6 +80,20 @@ export default function Registration({ navigate }) {
   }
 
   const canSubmit = form.consent && !submitting
+  const formValid = Object.keys(validate(form)).length === 0
+
+  const handleSelfie = () => {
+    if (!formValid) return
+    const playerData = {
+      name:    form.name.trim(),
+      company: form.company.trim(),
+      title:   form.title === 'Other' ? form.titleOther.trim() : form.title,
+      email:   form.email.trim(),
+      consent: true,
+    }
+    registerPlayer(playerData)
+    navigate(SCREENS.SELFIE, null, SCREENS.HOME)
+  }
 
   return (
     <ScreenWrapper>
@@ -236,6 +251,27 @@ export default function Registration({ navigate }) {
               >
                 Create My Safety IQ Profile
               </Button>
+
+              <button
+                type="button"
+                onClick={handleSelfie}
+                disabled={!formValid}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                  width: '100%', padding: '11px',
+                  background: 'transparent',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '8px',
+                  cursor: formValid ? 'pointer' : 'not-allowed',
+                  opacity: formValid ? 1 : 0.4,
+                  fontFamily: 'monospace', fontSize: '10px', letterSpacing: '2px',
+                  textTransform: 'uppercase', fontWeight: 700,
+                  color: '#475569',
+                }}
+              >
+                <Camera size={13} />
+                Take a Selfie
+              </button>
 
             </div>
           </form>

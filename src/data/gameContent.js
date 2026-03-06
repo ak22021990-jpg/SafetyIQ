@@ -270,7 +270,7 @@ export const GRAY_ROOM_CASES = [
       },
       {
         id: "c",
-        text: "Send a wellness check message with crisis resources, do not remove the post",
+        text: "Send wellness check — attach crisis resources in-message, leave the post visible",
         isCriticallyWrong: false
       },
       {
@@ -363,12 +363,12 @@ export const GRAY_ROOM_CASES = [
       },
       {
         id: "c",
-        text: "Apply reduced visibility to this post and flag for network analysis",
+        text: "Apply reduced visibility — downrank this post and flag for network analysis",
         isCriticallyWrong: false
       },
       {
         id: "d",
-        text: "Remove the post, suspend all 187 accounts, and report the product to the commerce team",
+        text: "Remove, suspend all 187 accounts, report to commerce — treat as coordinated inauthentic behaviour at network scale",
         isCriticallyWrong: false
       }
     ],

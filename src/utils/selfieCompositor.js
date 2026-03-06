@@ -1,7 +1,19 @@
 // src/utils/selfieCompositor.js
 // Composites camera feed + overlay frame + player data into a 1080×1920 PNG blob.
+import selfieFrameUrl from '../assets/selfie-overlay-frame.png'
 
 const BASE_URL = import.meta.env.BASE_URL
+
+// ── New frame layout constants (1080×1920) ───────────────────────────────────
+// Trust & Safety Summit frame: dark header / transparent white window / dark footer
+const FRAME_HEADER_H = 158   // dark top band (logo + diamonds)
+const FRAME_FOOTER_H = 250   // dark bottom band (Sutherland / Building Safer Communities)
+const FRAME_SIDE_PAD = 40    // horizontal margin from canvas edge to white window
+
+// Derived white-window bounds
+const WIN_X = FRAME_SIDE_PAD
+const WIN_Y = FRAME_HEADER_H
+// WIN_W and WIN_H are computed at call time from canvas width/height
 
 async function loadImage(src) {
   return new Promise((resolve, reject) => {
@@ -44,101 +56,114 @@ export async function composeSelfieCard({
   canvas.height = height
   const ctx = canvas.getContext('2d')
 
+  // Computed white-window dimensions
+  const winW   = width  - FRAME_SIDE_PAD * 2       // ~1000
+  const winBot = height - FRAME_FOOTER_H            // ~1632
+  const winH   = winBot - WIN_Y                     // ~1474
+
   // ── 1. Background ──────────────────────────────────────────────
   ctx.fillStyle = '#07101C'
   ctx.fillRect(0, 0, width, height)
 
-  // ── 2. Camera feed or avatar ───────────────────────────────────
+  // ── 2. Camera feed or avatar — clipped to white window ─────────
+  ctx.save()
+  ctx.beginPath()
+  ctx.rect(WIN_X, WIN_Y, winW, winH)
+  ctx.clip()
+
   if (cameraBitmap) {
     console.log('Compositing camera bitmap:', cameraBitmap.width, 'x', cameraBitmap.height)
-    // Scale camera feed to fill canvas (cover)
-    const scale = Math.max(width / cameraBitmap.width, height / cameraBitmap.height)
-    const dx    = (width  - cameraBitmap.width  * scale) / 2
-    const dy    = (height - cameraBitmap.height * scale) / 2
+    const scale = Math.max(winW / cameraBitmap.width, winH / cameraBitmap.height)
+    const dx    = WIN_X + (winW - cameraBitmap.width  * scale) / 2
+    const dy    = WIN_Y + (winH - cameraBitmap.height * scale) / 2
     ctx.drawImage(cameraBitmap, dx, dy, cameraBitmap.width * scale, cameraBitmap.height * scale)
   } else if (avatarInitials) {
+    // White background fill inside window
+    ctx.fillStyle = '#F1F5F9'
+    ctx.fillRect(WIN_X, WIN_Y, winW, winH)
     // Initials avatar circle
-    const cx = width / 2
-    const cy = height * 0.38
-    const r  = 220
+    const cx = WIN_X + winW / 2
+    const cy = WIN_Y + winH * 0.40
+    const r  = 200
     ctx.fillStyle = '#4A6FA5'
     ctx.beginPath()
     ctx.arc(cx, cy, r, 0, Math.PI * 2)
     ctx.fill()
-    ctx.font      = '800 180px Syne, sans-serif'
-    ctx.fillStyle = '#FFFFFF'
-    ctx.textAlign = 'center'
+    ctx.font         = '800 160px Syne, sans-serif'
+    ctx.fillStyle    = '#FFFFFF'
+    ctx.textAlign    = 'center'
     ctx.textBaseline = 'middle'
     ctx.fillText(avatarInitials.slice(0, 2).toUpperCase(), cx, cy)
     ctx.textAlign    = 'left'
     ctx.textBaseline = 'alphabetic'
   }
 
-  // ── 3. Dark bottom info panel + corner accents ─────────────────
-  const panelH = 560
-  ctx.fillStyle = 'rgba(7,16,28,0.88)'
-  ctx.fillRect(0, height - panelH, width, panelH)
-  // Corner accents (gold)
-  ctx.strokeStyle = '#E11D48'
-  ctx.lineWidth   = 4
-  const accentLen = 48
-  // top-left
-  ctx.beginPath(); ctx.moveTo(30, 30 + accentLen); ctx.lineTo(30, 30); ctx.lineTo(30 + accentLen, 30); ctx.stroke()
-  // top-right
-  ctx.beginPath(); ctx.moveTo(width - 30 - accentLen, 30); ctx.lineTo(width - 30, 30); ctx.lineTo(width - 30, 30 + accentLen); ctx.stroke()
-  // bottom-left
-  ctx.beginPath(); ctx.moveTo(30, height - 30 - accentLen); ctx.lineTo(30, height - 30); ctx.lineTo(30 + accentLen, height - 30); ctx.stroke()
-  // bottom-right
-  ctx.beginPath(); ctx.moveTo(width - 30 - accentLen, height - 30); ctx.lineTo(width - 30, height - 30); ctx.lineTo(width - 30, height - 30 - accentLen); ctx.stroke()
+  ctx.restore()
 
-  // ── 4. Player name ─────────────────────────────────────────────
-  const baseY = height - 480
-  ctx.font         = '800 52px Syne, sans-serif'
-  ctx.fillStyle    = '#FFFFFF'
-  ctx.textAlign    = 'left'
-  ctx.fillText((playerData.name || '').toUpperCase(), 80, baseY)
-
-  // ── 4. Title · Company ─────────────────────────────────────────
-  ctx.font      = '400 28px DM Mono, monospace'
-  ctx.fillStyle = '#8899AA'
-  const sub = [playerData.title, playerData.company].filter(Boolean).join(' · ')
-  ctx.fillText(sub, 80, baseY + 50)
-
-  // ── 5. SAFETY IQ label ─────────────────────────────────────────
-  ctx.font      = '500 22px DM Mono, monospace'
-  ctx.fillStyle = '#E11D48'
-  ctx.fillText('SAFETY IQ', 80, baseY + 110)
-
-  // ── 6. Score ───────────────────────────────────────────────────
-  ctx.font      = '600 120px Syne, sans-serif'
-  ctx.fillStyle = '#E11D48'
-  ctx.fillText((playerData.score ?? 0).toString(), 80, baseY + 230)
-
-  // ── 7. Badges (up to 4) ────────────────────────────────────────
-  const badgeSize = 80
-  const badgeGap  = 28
-  const badgesX   = 80
-  const badgesY   = baseY + 270
-
-  for (let i = 0; i < Math.min(selectedBadges.length, 4); i++) {
-    const img = await loadBadgeImage(selectedBadges[i])
-    if (img) {
-      ctx.drawImage(img, badgesX + i * (badgeSize + badgeGap), badgesY, badgeSize, badgeSize)
-    } else if (selectedBadges[i]?.icon) {
-      // Emoji fallback
-      ctx.font      = '60px serif'
-      ctx.textAlign = 'center'
-      ctx.fillText(selectedBadges[i].icon, badgesX + i * (badgeSize + badgeGap) + badgeSize / 2, badgesY + badgeSize * 0.75)
-      ctx.textAlign = 'left'
-    }
+  // ── 3. Frame overlay PNG (on top of camera) ────────────────────
+  try {
+    const frameImg = await loadImage(selfieFrameUrl)
+    ctx.drawImage(frameImg, 0, 0, width, height)
+  } catch {
+    // Frame unavailable — continue without it
   }
 
-  // ── 8. "Signal & Noise · Sutherland" mark ─────────────────────
-  ctx.font      = '700 22px Syne, sans-serif'
-  ctx.fillStyle = 'rgba(232,237,245,0.5)'
-  ctx.textAlign = 'right'
-  ctx.fillText('Signal & Noise · Sutherland', width - 80, height - 60)
+  // ── 4–7. Info panel + text + badges — clipped to white window ──
+  ctx.save()
+  ctx.beginPath()
+  ctx.rect(WIN_X, WIN_Y, winW, winH)
+  ctx.clip()
+
+  // Gradient info panel — bottom of white window
+  const PANEL_H  = 260
+  const panelTop = winBot - PANEL_H
+
+  const grad = ctx.createLinearGradient(0, panelTop, 0, winBot)
+  grad.addColorStop(0,    'rgba(7,16,28,0)')
+  grad.addColorStop(0.35, 'rgba(7,16,28,0.65)')
+  grad.addColorStop(1,    'rgba(7,16,28,0.90)')
+  ctx.fillStyle = grad
+  ctx.fillRect(WIN_X, panelTop, winW, PANEL_H)
+
+  // Centered layout — name, title, badges
+  const centerX = WIN_X + winW / 2   // horizontal centre of white window
+
+  // Player name
+  const nameY = panelTop + 62
+
+  ctx.font         = '800 54px Syne, sans-serif'
+  ctx.fillStyle    = '#FFFFFF'
+  ctx.textAlign    = 'center'
+  ctx.fillText((playerData.name || '').toUpperCase(), centerX, nameY)
+
+  // Title · Company
+  ctx.font      = '400 26px DM Mono, monospace'
+  ctx.fillStyle = '#AABBCC'
+  const sub = [playerData.title, playerData.company].filter(Boolean).join(' · ')
+  ctx.fillText(sub, centerX, nameY + 46)
+
+  // Badges — centred row of up to 4
+  const badgeSize  = 72
+  const badgeGap   = 24
+  const badgeCount = Math.min(selectedBadges.length, 4)
+  const rowWidth   = badgeCount * badgeSize + (badgeCount - 1) * badgeGap
+  const badgeStartX = centerX - rowWidth / 2
+  const badgeTopY   = nameY + 46 + 28    // below title
+
+  for (let i = 0; i < badgeCount; i++) {
+    const img = await loadBadgeImage(selectedBadges[i])
+    const bx  = badgeStartX + i * (badgeSize + badgeGap)
+    if (img) {
+      ctx.drawImage(img, bx, badgeTopY, badgeSize, badgeSize)
+    } else if (selectedBadges[i]?.icon) {
+      ctx.font      = '54px serif'
+      ctx.textAlign = 'center'
+      ctx.fillText(selectedBadges[i].icon, bx + badgeSize / 2, badgeTopY + badgeSize * 0.78)
+    }
+  }
   ctx.textAlign = 'left'
+
+  ctx.restore()
 
   // Return as PNG blob
   return new Promise((resolve, reject) => {

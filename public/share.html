@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>My Safety IQ Summit Card</title>
+  <meta name="description" content="I just completed the Signal &amp; Noise Trust &amp; Safety challenge at the Sutherland booth." />
+
+  <!-- Open Graph (for link previews when sharing the page URL) -->
+  <meta id="og-title"       property="og:title"       content="My Safety IQ Summit Card" />
+  <meta id="og-description" property="og:description" content="I just completed the Signal &amp; Noise challenge at the Sutherland Trust &amp; Safety booth." />
+  <meta id="og-image"       property="og:image"       content="" />
+  <meta id="og-url"         property="og:url"         content="" />
+  <meta                     property="og:type"         content="website" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #07101C;
+      color: #F8FAFC;
+      font-family: 'Courier New', Courier, monospace;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 20px 52px;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #E8C84A;
+      text-align: center;
+    }
+
+    /* ── Card image ─────────────────────────────── */
+    .card-wrap {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #card-img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      display: none;
+    }
+
+    .state-text {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #475569;
+      text-align: center;
+    }
+
+    .error-text {
+      font-size: 11px;
+      color: #F87171;
+      text-align: center;
+      display: none;
+    }
+
+    /* ── Heading ───────────────────────────────── */
+    .title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #F8FAFC;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #475569;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ── Share section ────────────────────────── */
+    .share-section {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-label {
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #334155;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+
+    /* Native share — big primary */
+    .btn-native {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      padding: 16px;
+      background: #E11D48;
+      color: #FFFFFF;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: none; /* shown when Web Share API available */
+    }
+
+    /* 2-col grid for platform links */
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .btn-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 13px 8px;
+      border-radius: 8px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.04);
+      transition: background 0.15s;
+    }
+
+    .btn-social:hover,
+    .btn-social:active { background: rgba(255, 255, 255, 0.1); }
+
+    .btn-linkedin  { border: 1px solid #0077B5; color: #0077B5; }
+    .btn-facebook  { border: 1px solid #1877F2; color: #1877F2; }
+    .btn-twitter   { border: 1px solid #CBD5E1; color: #CBD5E1; }
+    .btn-whatsapp  { border: 1px solid #25D366; color: #25D366; }
+    .btn-telegram  { border: 1px solid #2AABEE; color: #2AABEE; }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #1E293B;
+    }
+    .divider span {
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #334155;
+      white-space: nowrap;
+    }
+
+    /* Save to phone */
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      background: transparent;
+      color: #64748B;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid #1E293B;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-download:hover,
+    .btn-download:active { border-color: #334155; color: #94A3B8; }
+
+    .footer {
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #0F172A;
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="brand">Sutherland &middot; Trust &amp; Safety &middot; Signal &amp; Noise</p>
+
+  <!-- Card image -->
+  <div class="card-wrap">
+    <img id="card-img" alt="My Safety IQ Summit Card" />
+    <p id="state-loading" class="state-text">Loading your card&hellip;</p>
+    <p id="state-error" class="error-text">Could not load card. Please scan the QR code again.</p>
+  </div>
+
+  <div>
+    <p class="title">My Safety IQ Summit Card</p>
+    <p class="subtitle">Signal &amp; Noise &middot; Sutherland</p>
+  </div>
+
+  <!-- Share section -->
+  <div class="share-section">
+
+    <p class="section-label">Share your card</p>
+
+    <!-- Native share — covers Instagram, Snapchat, TikTok & every installed app -->
+    <button id="btn-native" class="btn-native" onclick="nativeShare()">
+      <!-- share icon -->
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      Share to Instagram, Snapchat &amp; more
+    </button>
+
+    <!-- Platform links with web intents -->
+    <div class="social-grid">
+
+      <a id="btn-linkedin" class="btn-social btn-linkedin" href="#" target="_blank" rel="noopener noreferrer">
+        <!-- linkedin icon -->
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+        LinkedIn
+      </a>
+
+      <a id="btn-facebook" class="btn-social btn-facebook" href="#" target="_blank" rel="noopener noreferrer">
+        <!-- facebook icon -->
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+        Facebook
+      </a>
+
+      <a id="btn-twitter" class="btn-social btn-twitter" href="#" target="_blank" rel="noopener noreferrer">
+        <!-- X / Twitter icon -->
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X / Twitter
+      </a>
+
+      <a id="btn-whatsapp" class="btn-social btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer">
+        <!-- whatsapp icon -->
+        <svg width="13" height="13" viewBox="0 0 32 32" fill="currentColor">
+          <path d="M16 0C7.164 0 0 7.164 0 16c0 2.82.736 5.469 2.023 7.773L0 32l8.469-2.219A15.93 15.93 0 0 0 16 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm0 29.333a13.27 13.27 0 0 1-6.781-1.854l-.487-.289-5.027 1.317 1.34-4.899-.318-.502A13.24 13.24 0 0 1 2.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.273-9.911c-.398-.199-2.354-1.162-2.719-1.294-.364-.133-.629-.199-.894.199-.265.398-1.028 1.294-1.26 1.559-.232.265-.464.298-.862.1-2.355-1.178-3.903-2.102-5.456-4.766-.412-.708.412-.659 1.178-2.193.133-.265.066-.497-.033-.696-.1-.199-.894-2.153-1.225-2.946-.322-.773-.649-.667-.894-.68-.232-.013-.497-.016-.762-.016-.265 0-.696.1-1.06.497-.364.398-1.392 1.36-1.392 3.314s1.425 3.844 1.623 4.109c.199.265 2.802 4.277 6.789 5.998 2.524 1.09 3.513 1.182 4.776.995.764-.113 2.354-.962 2.685-1.892.332-.93.332-1.726.232-1.892-.099-.165-.364-.265-.762-.464z"/>
+        </svg>
+        WhatsApp
+      </a>
+
+      <a id="btn-telegram" class="btn-social btn-telegram" href="#" target="_blank" rel="noopener noreferrer">
+        <!-- telegram icon -->
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+        </svg>
+        Telegram
+      </a>
+
+      <a id="btn-threads" class="btn-social" style="border:1px solid #CBD5E1;color:#CBD5E1;" href="#" target="_blank" rel="noopener noreferrer">
+        <!-- Threads icon (stylised @) -->
+        <svg width="13" height="13" viewBox="0 0 192 192" fill="currentColor">
+          <path d="M141.537 88.988a66.667 66.667 0 0 0-2.518-1.143c-1.482-27.307-16.403-42.94-41.457-43.1h-.34c-14.986 0-27.449 6.396-35.12 18.036l13.779 9.452c5.73-8.695 14.724-10.548 21.348-10.548h.232c8.25.053 14.476 2.452 18.502 7.13 2.932 3.405 4.893 8.11 5.864 14.05-7.314-1.243-15.224-1.626-23.68-1.14-23.82 1.371-39.134 15.264-38.105 34.568.522 9.792 5.4 18.216 13.735 23.719 7.047 4.652 16.124 6.927 25.557 6.412 12.458-.683 22.231-5.436 29.049-14.127 5.178-6.6 8.453-15.153 9.899-25.93 5.937 3.583 10.337 8.298 12.767 13.966 4.132 9.635 4.373 25.468-8.546 38.376-11.319 11.308-24.925 16.2-45.488 16.351-22.809-.169-40.06-7.484-51.275-21.742C35.236 139.966 29.808 120.682 29.606 96c.202-24.682 5.63-43.966 16.133-57.317C56.954 24.425 74.205 17.11 97.014 16.94c22.975.17 40.526 7.52 52.171 21.847 5.71 7.026 10.015 15.86 12.853 26.162l16.147-4.308c-3.44-12.68-8.853-23.606-16.219-32.668C147.036 10.606 125.202 1.197 97.145 1h-.29C68.819 1.197 47.265 10.64 32.921 28.087 20.3 43.525 13.938 65.312 13.717 96c.221 30.688 6.583 52.474 19.204 67.913C47.265 181.336 68.819 190.803 96.855 191h.29c24.729-.168 42.102-6.675 56.405-21.118 18.568-18.679 18.026-42.94 11.944-57.534-4.366-10.177-12.723-18.356-23.957-23.36zm-41.24 29.967c-10.44.588-21.286-4.098-21.82-14.135-.397-7.442 5.296-15.746 22.461-16.735 1.966-.113 3.895-.169 5.79-.169 6.235 0 12.068.606 17.37 1.765-1.978 24.702-13.754 28.706-23.801 29.274z"/>
+        </svg>
+        Threads
+      </a>
+
+    </div>
+
+    <!-- Divider -->
+    <div class="divider"><span>or</span></div>
+
+    <!-- Save to phone -->
+    <a id="btn-download" class="btn-download" href="#" download="safety-iq-summit-card.png">
+      <!-- download icon -->
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Save to Phone
+    </a>
+
+  </div>
+
+  <p class="footer">Signal &amp; Noise &middot; Sutherland Trust &amp; Safety Practice</p>
+
+  <script>
+    const params     = new URLSearchParams(window.location.search)
+    const cardUrl    = params.get('card')
+    const pageUrl    = window.location.href
+    const shareText  = "I just completed the Signal \u0026 Noise Trust \u0026 Safety challenge at the Sutherland booth! Check out my Summit Card:"
+
+    const img         = document.getElementById('card-img')
+    const stateLoad   = document.getElementById('state-loading')
+    const stateErr    = document.getElementById('state-error')
+    const btnNative   = document.getElementById('btn-native')
+    const btnDownload = document.getElementById('btn-download')
+
+    let imageBlob = null
+
+    // ── Set OG tags dynamically ──────────────────────────────────────
+    document.getElementById('og-image').setAttribute('content', cardUrl || '')
+    document.getElementById('og-url').setAttribute('content', pageUrl)
+
+    // ── Build platform share URLs ────────────────────────────────────
+    function setupLinks() {
+      const encodedPage = encodeURIComponent(pageUrl)
+      const encodedCard = encodeURIComponent(cardUrl || pageUrl)
+      const encodedText = encodeURIComponent(shareText)
+
+      document.getElementById('btn-linkedin').href =
+        'https://www.linkedin.com/sharing/share-offsite/?url=' + encodedPage
+
+      document.getElementById('btn-facebook').href =
+        'https://www.facebook.com/sharer/sharer.php?u=' + encodedPage
+
+      document.getElementById('btn-twitter').href =
+        'https://twitter.com/intent/tweet?text=' + encodedText + '&url=' + encodedCard
+
+      document.getElementById('btn-whatsapp').href =
+        'https://api.whatsapp.com/send?text=' + encodedText + '%20' + encodedCard
+
+      document.getElementById('btn-telegram').href =
+        'https://t.me/share/url?url=' + encodedCard + '&text=' + encodedText
+
+      document.getElementById('btn-threads').href =
+        'https://www.threads.net/intent/post?text=' + encodedText + '%20' + encodedCard
+
+      btnDownload.href = cardUrl || '#'
+    }
+
+    // ── Load image and detect native share support ───────────────────
+    async function init() {
+      if (!cardUrl) {
+        stateLoad.style.display = 'none'
+        stateErr.style.display  = 'block'
+        return
+      }
+
+      setupLinks()
+
+      try {
+        // Fetch blob — needed for native file sharing
+        const res = await fetch(cardUrl)
+        imageBlob = await res.blob()
+
+        img.src    = cardUrl
+        img.onload = () => {
+          stateLoad.style.display = 'none'
+          img.style.display       = 'block'
+        }
+        img.onerror = () => {
+          stateLoad.style.display = 'none'
+          stateErr.style.display  = 'block'
+        }
+
+        // Show native share button when Web Share API is available
+        if (navigator.share) {
+          btnNative.style.display = 'flex'
+        }
+      } catch (_) {
+        stateLoad.style.display = 'none'
+        stateErr.style.display  = 'block'
+      }
+    }
+
+    // ── Native share handler ─────────────────────────────────────────
+    async function nativeShare() {
+      try {
+        const file = imageBlob
+          ? new File([imageBlob], 'safety-iq-summit-card.png', { type: 'image/png' })
+          : null
+
+        const canShareFile = file && navigator.canShare && navigator.canShare({ files: [file] })
+
+        if (canShareFile) {
+          await navigator.share({
+            title: 'My Safety IQ Summit Card',
+            text:  shareText,
+            files: [file],
+          })
+        } else {
+          await navigator.share({
+            title: 'My Safety IQ Summit Card',
+            text:  shareText,
+            url:   cardUrl || pageUrl,
+          })
+        }
+      } catch (e) {
+        if (e.name !== 'AbortError') console.warn('Share failed', e)
+      }
+    }
+
+    // Expose for inline onclick
+    window.nativeShare = nativeShare
+
+    init()
+  </script>
+</body>
+</html>
