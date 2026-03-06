@@ -79,7 +79,7 @@ export async function composeSelfieCard({
   ctx.fillStyle = 'rgba(7,16,28,0.88)'
   ctx.fillRect(0, height - panelH, width, panelH)
   // Corner accents (gold)
-  ctx.strokeStyle = '#C9A96E'
+  ctx.strokeStyle = '#E11D48'
   ctx.lineWidth   = 4
   const accentLen = 48
   // top-left
@@ -106,12 +106,12 @@ export async function composeSelfieCard({
 
   // ── 5. SAFETY IQ label ─────────────────────────────────────────
   ctx.font      = '500 22px DM Mono, monospace'
-  ctx.fillStyle = '#C9A96E'
+  ctx.fillStyle = '#E11D48'
   ctx.fillText('SAFETY IQ', 80, baseY + 110)
 
   // ── 6. Score ───────────────────────────────────────────────────
   ctx.font      = '600 120px Syne, sans-serif'
-  ctx.fillStyle = '#C9A96E'
+  ctx.fillStyle = '#E11D48'
   ctx.fillText((playerData.score ?? 0).toString(), 80, baseY + 230)
 
   // ── 7. Badges (up to 4) ────────────────────────────────────────

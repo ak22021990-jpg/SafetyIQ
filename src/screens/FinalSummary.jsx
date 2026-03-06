@@ -82,7 +82,7 @@ export default function FinalSummary({ navigate }) {
 
   return (
     <ScreenWrapper>
-      <Topbar gameName="Safety IQ" accentColor="#C9A96E" />
+      <Topbar gameName="Safety IQ" accentColor="#E11D48" />
       <SafeZoneWrapper hasTopbar>
         <div className="w-full h-full overflow-y-auto" style={{ padding: '24px 20px' }}>
 
@@ -138,8 +138,8 @@ export default function FinalSummary({ navigate }) {
               <div
                 style={{
                   padding: '10px 20px', marginBottom: '16px',
-                  background: 'rgba(201,169,110,0.06)',
-                  border: '1px solid rgba(201,169,110,0.18)',
+                  background: 'rgba(225,29,72,0.06)',
+                  border: '1px solid rgba(225,29,72,0.18)',
                   borderRadius: '4px',
                 }}
               >
@@ -159,8 +159,8 @@ export default function FinalSummary({ navigate }) {
                 <div
                   style={{
                     padding: '8px 20px', marginBottom: '20px',
-                    background: 'rgba(201,169,110,0.10)',
-                    border: '1px solid rgba(201,169,110,0.25)',
+                    background: 'rgba(225,29,72,0.10)',
+                    border: '1px solid rgba(225,29,72,0.25)',
                     borderRadius: '4px',
                   }}
                 >
@@ -188,8 +188,8 @@ export default function FinalSummary({ navigate }) {
                             className="flex items-center justify-between py-2 font-mono"
                             style={{
                               borderBottom: '1px solid rgba(255,255,255,0.05)',
-                              background:   isMe ? 'rgba(201,169,110,0.06)' : 'transparent',
-                              outline:      isMe ? '1px solid rgba(201,169,110,0.20)' : 'none',
+                              background:   isMe ? 'rgba(225,29,72,0.06)' : 'transparent',
+                              outline:      isMe ? '1px solid rgba(225,29,72,0.20)' : 'none',
                               padding:      isMe ? '8px 8px' : '8px 0',
                             }}
                           >
@@ -215,7 +215,7 @@ export default function FinalSummary({ navigate }) {
                             </span>
                           </div>
                           {i === 2 && board.length > 3 && (
-                            <div style={{ height: '1px', background: 'rgba(201,169,110,0.25)', margin: '2px 0' }} />
+                            <div style={{ height: '1px', background: 'rgba(225,29,72,0.25)', margin: '2px 0' }} />
                           )}
                         </div>
                       )
@@ -287,7 +287,7 @@ export default function FinalSummary({ navigate }) {
                   className="w-full font-mono uppercase tracking-widest"
                   style={{
                     fontSize: '10px', letterSpacing: '2px', padding: '13px',
-                    background: '#C9A96E', color: '#07101C',
+                    background: '#E11D48', color: '#07101C',
                     fontWeight: 700, border: 'none', borderRadius: '4px', cursor: 'pointer',
                   }}
                 >
@@ -298,8 +298,8 @@ export default function FinalSummary({ navigate }) {
                   className="w-full font-mono uppercase tracking-widest"
                   style={{
                     fontSize: '10px', letterSpacing: '2px', padding: '11px',
-                    background: 'transparent', color: '#C9A96E',
-                    border: '1px solid #C9A96E', borderRadius: '4px', cursor: 'pointer',
+                    background: 'transparent', color: '#E11D48',
+                    border: '1px solid #E11D48', borderRadius: '4px', cursor: 'pointer',
                   }}
                 >
                   Sutherland Stats →
@@ -340,7 +340,7 @@ export default function FinalSummary({ navigate }) {
                     className="w-full font-mono uppercase tracking-widest"
                     style={{
                       fontSize: '10px', letterSpacing: '2px', padding: '13px',
-                      background: '#C9A96E', color: '#07101C',
+                      background: '#E11D48', color: '#07101C',
                       fontWeight: 700, border: 'none', borderRadius: '4px', cursor: 'pointer',
                     }}
                   >

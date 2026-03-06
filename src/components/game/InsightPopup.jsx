@@ -13,9 +13,9 @@ function getTier(timeTaken, wasCorrect) {
 const TIER_CONFIG = {
   elite: {
     label:       'Elite Decision',
-    color:       '#C9A96E',
-    bg:          'rgba(201,169,110,0.08)',
-    border:      'rgba(201,169,110,0.25)',
+    color:       '#E11D48',
+    bg:          'rgba(225,29,72,0.08)',
+    border:      'rgba(225,29,72,0.25)',
     description: 'You\'re in the top 10% of reviewers on this type of case.',
   },
   strong: {
@@ -64,7 +64,7 @@ export default function InsightPopup({ open, caseData, wasCorrect, timeTaken, on
         </div>
 
         {/* Percentile context */}
-        <p className="font-mono" style={{ fontSize: '14px', color: config.color }}>
+        <p className="font-mono font-bold" style={{ fontSize: '14px', color: config.color }}>
           {config.description}
         </p>
 
@@ -86,7 +86,7 @@ export default function InsightPopup({ open, caseData, wasCorrect, timeTaken, on
               {wasCorrect ? 'Correct call.' : 'Not the recommended action.'}
             </p>
             {timeTaken <= 30 && wasCorrect && (
-              <p className="font-mono text-text-muted mt-1" style={{ fontSize: '12px' }}>
+              <p className="font-mono mt-1" style={{ fontSize: '12px', color: '#475569' }}>
                 +5 speed bonus — decision in {timeTaken}s
               </p>
             )}
@@ -95,10 +95,10 @@ export default function InsightPopup({ open, caseData, wasCorrect, timeTaken, on
 
         {/* Explanation */}
         <div>
-          <p className="font-mono uppercase tracking-widest text-text-muted mb-2" style={{ fontSize: '10px' }}>
+          <p className="font-mono uppercase tracking-widest mb-2" style={{ fontSize: '10px', color: '#64748B' }}>
             What experienced reviewers know
           </p>
-          <p className="font-mono text-text-secondary" style={{ fontSize: '14px', lineHeight: '1.7' }}>
+          <p className="font-mono" style={{ fontSize: '14px', lineHeight: '1.7', color: '#1E293B' }}>
             {caseData.insight.explanation}
           </p>
         </div>
@@ -107,15 +107,15 @@ export default function InsightPopup({ open, caseData, wasCorrect, timeTaken, on
         <div
           className="p-4"
           style={{
-            background:   'rgba(201,169,110,0.06)',
-            border:       '1px solid rgba(201,169,110,0.20)',
+            background:   'rgba(225,29,72,0.06)',
+            border:       '1px solid rgba(225,29,72,0.20)',
             borderRadius: '8px',
           }}
         >
-          <p className="font-mono uppercase tracking-widest text-gold mb-2" style={{ fontSize: '10px' }}>
+          <p className="font-mono uppercase tracking-widest mb-2" style={{ fontSize: '10px', color: '#E11D48' }}>
             Sutherland Perspective
           </p>
-          <p className="font-mono text-text-secondary italic" style={{ fontSize: '14px', lineHeight: '1.7' }}>
+          <p className="font-mono italic" style={{ fontSize: '14px', lineHeight: '1.7', color: '#1E293B' }}>
             {caseData.insight.sutherlandLine}
           </p>
         </div>

@@ -5,24 +5,24 @@ const MAX_TOTAL = 318  // Gray 160 + Draw 50 + Threat 48 + Red 60
 
 // ── Badge definitions ─────────────────────────────────────────────────────
 export const BADGE_DEFINITIONS = [
-  // ── Performance Tier — #C9A96E ──────────────────────────────────────────
+  // ── Performance Tier — #E11D48 ──────────────────────────────────────────
   {
-    id: 'sentinel', category: 'performance', color: '#C9A96E',
+    id: 'sentinel', category: 'performance', color: '#E11D48',
     name: 'Sentinel', framing: 'Fewer than 1% reach this. You see what others miss.',
     icon: '👁', imageFile: 'performance/sentinel.png',
   },
   {
-    id: 'analyst', category: 'performance', color: '#C9A96E',
+    id: 'analyst', category: 'performance', color: '#E11D48',
     name: 'Analyst', framing: 'Top 12%. Sharp instincts, sharper under pressure.',
     icon: '🔍', imageFile: 'performance/analyst.png',
   },
   {
-    id: 'practitioner', category: 'performance', color: '#C9A96E',
+    id: 'practitioner', category: 'performance', color: '#E11D48',
     name: 'Practitioner', framing: 'Solid across the board.',
     icon: '📋', imageFile: 'performance/practitioner.png',
   },
   {
-    id: 'investigator', category: 'performance', color: '#C9A96E',
+    id: 'investigator', category: 'performance', color: '#E11D48',
     name: 'Investigator', framing: 'You engaged complexity most never face.',
     icon: '🧩', imageFile: 'performance/investigator.png',
   },

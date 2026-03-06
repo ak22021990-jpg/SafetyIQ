@@ -47,7 +47,7 @@ export default function TickerBanner() {
         height:         '48px',
         background:     'rgba(7,16,28,0.96)',
         backdropFilter: 'blur(12px)',
-        borderTop:      '1px solid rgba(201,169,110,0.30)',
+        borderTop:      '1px solid rgba(225,29,72,0.30)',
       }}
       aria-live="polite"
       aria-label="Live updates ticker"

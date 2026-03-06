@@ -27,15 +27,15 @@ const TITLE_OPTIONS = [
 
 function validate(form) {
   const errors = {}
-  if (!form.name.trim())    errors.name    = 'Name is required'
+  if (!form.name.trim()) errors.name = 'Name is required'
   if (!form.company.trim()) errors.company = 'Company is required'
-  if (!form.title)          errors.title   = 'Please select your title'
+  if (!form.title) errors.title = 'Please select your title'
   if (form.title === 'Other' && !form.titleOther.trim())
     errors.titleOther = 'Please specify your title'
-  if (!form.email.trim())   errors.email   = 'Email is required'
+  if (!form.email.trim()) errors.email = 'Email is required'
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
     errors.email = 'Please enter a valid email address'
-  if (!form.consent)        errors.consent = 'Please accept to continue'
+  if (!form.consent) errors.consent = 'Please accept to continue'
   return errors
 }
 
@@ -43,12 +43,12 @@ export default function Registration({ navigate }) {
   const { registerPlayer } = useSession()
 
   const [form, setForm] = useState({
-    name:       '',
-    company:    '',
-    title:      '',
+    name: '',
+    company: '',
+    title: '',
     titleOther: '',
-    email:      '',
-    consent:    false,
+    email: '',
+    consent: false,
   })
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
@@ -68,10 +68,10 @@ export default function Registration({ navigate }) {
     }
     setSubmitting(true)
     const playerData = {
-      name:    form.name.trim(),
+      name: form.name.trim(),
       company: form.company.trim(),
-      title:   form.title === 'Other' ? form.titleOther.trim() : form.title,
-      email:   form.email.trim(),
+      title: form.title === 'Other' ? form.titleOther.trim() : form.title,
+      email: form.email.trim(),
       consent: true,
     }
     registerPlayer(playerData)
@@ -90,7 +90,7 @@ export default function Registration({ navigate }) {
         {/* Header */}
         <div className="text-center mb-8">
           <p className="font-mono uppercase tracking-widest text-gold mb-2"
-             style={{ fontSize: '9px', letterSpacing: '3px' }}>
+            style={{ fontSize: '9px', letterSpacing: '3px' }}>
             Sutherland · Trust &amp; Safety Practice
           </p>
           <h1 className="font-heading font-extrabold text-text-primary" style={{ fontSize: '44px', lineHeight: '1.05' }}>
@@ -105,19 +105,19 @@ export default function Registration({ navigate }) {
         <div
           className="w-full"
           style={{
-            maxWidth:     '480px',
-            background:   '#FFFFFF',
-            border:       '1px solid #E2E8F0',
+            maxWidth: '660px',
+            background: '#FFFFFF',
+            border: '1px solid #E2E8F0',
             borderRadius: '12px',
-            padding:      '40px',
-            boxShadow:    '0 10px 15px -3px rgba(0,0,0,0.05)',
+            padding: '44px 48px',
+            boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)',
           }}
         >
           <div className="mb-6">
-            <h2 className="font-heading font-bold text-text-primary" style={{ fontSize: '20px' }}>
+            <h2 className="font-heading font-bold text-midnight" style={{ fontSize: '20px' }}>
               Hello! Would you like to tell more about you?
             </h2>
-            <p className="font-mono text-body-s text-text-muted mt-1">
+            <p className="font-mono text-body-s text-slate-500 mt-1">
               Your results will be saved and ranked on the leaderboard.
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function Registration({ navigate }) {
                 <div className="flex flex-col gap-1">
                   <label
                     htmlFor="title-select"
-                    className="font-mono uppercase tracking-widest text-text-secondary"
+                    className="font-mono uppercase tracking-widest text-slate-600"
                     style={{ fontSize: '9px', letterSpacing: '2px' }}
                   >
                     Title<span className="text-gold ml-1">*</span>
@@ -164,7 +164,7 @@ export default function Registration({ navigate }) {
                     onChange={set('title')}
                     required
                     style={{ background: '#FFFFFF' }}
-                    className="w-full border border-surface-border focus:border-midnight font-heading text-body-m text-text-primary px-4 py-3 outline-none transition-all duration-150 rounded-[8px] appearance-none cursor-pointer focus:shadow-[0_0_0_3px_rgba(15,23,42,0.08)]"
+                    className="w-full border border-surface-border focus:border-midnight font-heading text-body-m text-midnight px-4 py-3 outline-none transition-all duration-150 rounded-[8px] appearance-none cursor-pointer focus:shadow-[0_0_0_3px_rgba(15,23,42,0.08)]"
                   >
                     <option value="" className="bg-white">Select title</option>
                     {TITLE_OPTIONS.map(opt => (
@@ -214,7 +214,7 @@ export default function Registration({ navigate }) {
                     className="mt-0.5 w-4 h-4 cursor-pointer shrink-0 accent-gold"
                     required
                   />
-                  <span className="font-mono text-body-s text-text-secondary group-hover:text-text-primary transition-colors">
+                  <span className="font-mono text-body-s text-slate-600 group-hover:text-midnight transition-colors">
                     I&apos;m happy for my information to be stored for business purposes
                     in accordance with Sutherland&apos;s data policy.
                   </span>

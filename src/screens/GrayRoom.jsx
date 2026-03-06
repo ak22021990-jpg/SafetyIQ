@@ -7,11 +7,18 @@ import TimerRing from '../components/ui/TimerRing'
 import ProgressDots from '../components/ui/ProgressDots'
 import SocialPostCard from '../components/game/SocialPostCard'
 import InsightPopup from '../components/game/InsightPopup'
-import Button from '../components/ui/Button'
 import { useSession } from '../context/SessionContext'
 import { useSound } from '../hooks/useSound'
 import { SCREENS } from '../constants/screens'
 import { GRAY_ROOM_CASES } from '../data/gameContent'
+
+import caseImg1 from '../assets/images/the-gray-room/1.hate-speech.png'
+import caseImg2 from '../assets/images/the-gray-room/2.distress-signal.png'
+import caseImg3 from '../assets/images/the-gray-room/3.electoral-framing.png'
+import caseImg4 from '../assets/images/the-gray-room/4.fake-reviews.png'
+import caseImg5 from '../assets/images/the-gray-room/5.cross-cultural.png'
+
+const CASE_IMAGES = { 1: caseImg1, 2: caseImg2, 3: caseImg3, 4: caseImg4, 5: caseImg5 }
 
 const MAX_SECONDS = 90
 
@@ -145,8 +152,9 @@ export default function GrayRoom({ navigate }) {
     <ScreenWrapper>
       <Topbar
         gameName="The Gray Room"
-        accentColor="#C9A96E"
+        accentColor="#fd7183"
         score={Math.max(0, scoreRef.current.total)}
+        onHomePress={() => navigate(SCREENS.HOME)}
         timerSlot={
           <TimerRing
             seconds={seconds}
@@ -157,51 +165,52 @@ export default function GrayRoom({ navigate }) {
       />
 
       <SafeZoneWrapper>
-        <div className="w-full h-full flex flex-col overflow-auto px-8 py-4">
+        <div className="w-full h-full overflow-auto">
+          <div className="mx-auto px-8 py-3" style={{ maxWidth: '900px' }}>
 
-          {/* Case header */}
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <p
-                className="font-mono uppercase text-gold mb-1"
-                style={{ fontSize: '9px', letterSpacing: '3px' }}
-              >
-                Case {caseIndex + 1} of {totalCases}
-              </p>
-              <p
-                className="font-heading font-bold text-text-primary"
-                style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '2px' }}
-              >
-                {currentCase.domain.replace(/_/g, ' ')}
-              </p>
+            {/* Case header */}
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <p
+                  className="font-mono uppercase text-gold mb-1"
+                  style={{ fontSize: '9px', letterSpacing: '3px' }}
+                >
+                  Case {caseIndex + 1} of {totalCases}
+                </p>
+                <p
+                  className="font-heading font-bold text-text-primary"
+                  style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '2px' }}
+                >
+                  {currentCase.domain.replace(/_/g, ' ')}
+                </p>
+              </div>
+              <ProgressDots
+                total={totalCases}
+                current={caseIndex}
+                completed={completedIdx}
+              />
             </div>
-            <ProgressDots
-              total={totalCases}
-              current={caseIndex}
-              completed={completedIdx}
-            />
-          </div>
 
-          {/* Social post card */}
-          <div className="flex-1 overflow-auto">
+            {/* Social post card */}
             <SocialPostCard
               caseData={currentCase}
               selectedId={selectedId}
               revealedCorrectId={currentCase.correctChoiceId}
               state={caseState}
               onChoiceSelect={handleChoiceSelect}
+              caseImage={CASE_IMAGES[currentCase.caseNumber]}
             />
+
+            {/* State: revealed, waiting for insight click */}
+            {caseState === 'revealed' && !showInsight && (
+              <div className="text-center py-3">
+                <p className="font-mono text-text-muted" style={{ fontSize: '10px' }}>
+                  Loading insight…
+                </p>
+              </div>
+            )}
+
           </div>
-
-          {/* State: revealed, waiting for insight click */}
-          {caseState === 'revealed' && !showInsight && (
-            <div className="text-center py-3">
-              <p className="font-mono text-text-muted" style={{ fontSize: '10px' }}>
-                Loading insight…
-              </p>
-            </div>
-          )}
-
         </div>
       </SafeZoneWrapper>
 

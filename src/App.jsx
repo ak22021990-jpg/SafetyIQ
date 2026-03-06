@@ -41,10 +41,20 @@ function AppInner() {
   // Long-press on Sutherland logo area (top-left 200×64px) → open staff panel
   const logoLongPress = useLongPress(() => navigate(SCREENS.STAFF), 3000)
 
-  // Idle reset — navigate to IDLE after 60s of inactivity (except on IDLE + STAFF screens)
+  // Screens where players are actively engaged — 5 min idle before showing attractor.
+  // All other screens (summary, selfie, game end, leaderboard, register) — 2 min.
+  const LONG_IDLE_SCREENS = [
+    SCREENS.HOME,
+    SCREENS.GRAY_ROOM,
+    SCREENS.DRAW_LINE,
+    SCREENS.THREAT,
+    SCREENS.RED_TEAM,
+  ]
+  const idleMs = LONG_IDLE_SCREENS.includes(screen) ? 5 * 60_000 : 2 * 60_000
+
   useIdleTimer(() => {
     if (screen !== SCREENS.IDLE && screen !== SCREENS.STAFF) navigate(SCREENS.IDLE)
-  }, 60_000)
+  }, idleMs)
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-abyss relative">

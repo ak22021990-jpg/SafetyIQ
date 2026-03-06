@@ -43,7 +43,7 @@ export default function NoCameraFallback({ playerName = '', onContinue }) {
         className="font-mono uppercase tracking-widest"
         style={{
           fontSize: '10px', letterSpacing: '2px', padding: '13px 24px',
-          background: '#C9A96E', color: '#07101C',
+          background: '#E11D48', color: '#07101C',
           fontWeight: 700, border: 'none', borderRadius: '4px', cursor: 'pointer',
         }}
       >

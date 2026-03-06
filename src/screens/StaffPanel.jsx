@@ -8,26 +8,26 @@ import { getAllSessions, exportCSV, resetLeaderboard } from '../utils/storageEng
 import { SCREENS } from '../constants/screens'
 
 const DEFAULT_PASSWORD = 'sutherland2025'
-const STAFF_PASSWORD   = import.meta.env.VITE_STAFF_PASSWORD || DEFAULT_PASSWORD
-const MAX_ATTEMPTS     = 3
-const LOCKOUT_MS       = 60_000
+const STAFF_PASSWORD = import.meta.env.VITE_STAFF_PASSWORD || DEFAULT_PASSWORD
+const MAX_ATTEMPTS = 3
+const LOCKOUT_MS = 60_000
 
 // ── Small reusable button ────────────────────────────────────────────────────
 function StaffBtn({ onClick, children, variant = 'ghost', disabled = false }) {
   const styles = {
-    ghost:   { background: 'transparent',             color: '#E8EDF5', border: '1px solid rgba(255,255,255,0.12)' },
-    gold:    { background: 'transparent',             color: '#C9A96E', border: '1px solid #C9A96E' },
-    danger:  { background: 'transparent',             color: '#FF6B6B', border: '1px solid rgba(255,107,107,0.4)' },
-    primary: { background: '#C9A96E', color: '#07101C', border: 'none', fontWeight: 700 },
+    ghost: { background: 'transparent', color: '#E8EDF5', border: '1px solid rgba(255,255,255,0.12)' },
+    gold: { background: 'transparent', color: '#E11D48', border: '1px solid #E11D48' },
+    danger: { background: 'transparent', color: '#FF6B6B', border: '1px solid rgba(255,107,107,0.4)' },
+    primary: { background: '#E11D48', color: '#07101C', border: 'none', fontWeight: 700 },
   }
   return (
     <button
       onClick={onClick}
-      disabled={disabled}
+      className="font-mono"
       style={{
         ...styles[variant],
         width: '100%', padding: '12px', borderRadius: '4px', cursor: disabled ? 'default' : 'pointer',
-        fontFamily: 'DM Mono, monospace', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase',
+        fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase',
         opacity: disabled ? 0.4 : 1,
       }}
     >
@@ -64,12 +64,13 @@ function ConfirmModal({ message, onConfirm, onCancel, requireTyped }) {
               Type <span className="text-red-400">{requireTyped}</span> to confirm
             </p>
             <input
+              className="font-mono"
               value={typed}
               onChange={e => setTyped(e.target.value)}
               style={{
                 width: '100%', padding: '10px 12px', borderRadius: '4px',
                 background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)',
-                color: '#E8EDF5', fontFamily: 'DM Mono, monospace', fontSize: '13px',
+                color: '#E8EDF5', fontSize: '13px',
               }}
               autoFocus
             />
@@ -87,7 +88,7 @@ function ConfirmModal({ message, onConfirm, onCancel, requireTyped }) {
 // ── Raw data modal ───────────────────────────────────────────────────────────
 function RawDataModal({ onClose }) {
   const sessions = getAllSessions()
-  const raw      = JSON.stringify(sessions, null, 2)
+  const raw = JSON.stringify(sessions, null, 2)
   const [copied, setCopied] = useState(false)
 
   const handleCopy = () => {
@@ -115,10 +116,11 @@ function RawDataModal({ onClose }) {
         </div>
       </div>
       <pre
+        className="font-mono"
         style={{
           flex: 1, overflow: 'auto', background: 'rgba(255,255,255,0.03)',
           border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px',
-          padding: '16px', fontFamily: 'DM Mono, monospace', fontSize: '10px',
+          padding: '16px', fontSize: '10px',
           color: '#8899AA', lineHeight: '1.6',
         }}
       >
@@ -131,21 +133,21 @@ function RawDataModal({ onClose }) {
 // ── Main component ───────────────────────────────────────────────────────────
 export default function StaffPanel({ navigate, forceSync, syncStatus }) {
   // ── Password gate ────────────────────────────────────────────────────────
-  const [authed,       setAuthed]       = useState(false)
-  const [pwInput,      setPwInput]      = useState('')
-  const [attempts,     setAttempts]     = useState(0)
-  const [lockedUntil,  setLockedUntil]  = useState(null)
-  const [pwError,      setPwError]      = useState('')
+  const [authed, setAuthed] = useState(false)
+  const [pwInput, setPwInput] = useState('')
+  const [attempts, setAttempts] = useState(0)
+  const [lockedUntil, setLockedUntil] = useState(null)
+  const [pwError, setPwError] = useState('')
 
   // ── UI state ─────────────────────────────────────────────────────────────
-  const [confirm,      setConfirm]      = useState(null)  // { message, action, requireTyped? }
-  const [showRaw,      setShowRaw]      = useState(false)
-  const [actionMsg,    setActionMsg]    = useState('')
+  const [confirm, setConfirm] = useState(null)  // { message, action, requireTyped? }
+  const [showRaw, setShowRaw] = useState(false)
+  const [actionMsg, setActionMsg] = useState('')
 
-  const sessions     = getAllSessions()
+  const sessions = getAllSessions()
   const totalPlayers = sessions.length
-  const completed    = sessions.filter(s => s.completed).length
-  const avgScore     = totalPlayers
+  const completed = sessions.filter(s => s.completed).length
+  const avgScore = totalPlayers
     ? Math.round(sessions.reduce((s, x) => s + (x.totalScore || 0), 0) / totalPlayers)
     : 0
 
@@ -246,10 +248,11 @@ export default function StaffPanel({ navigate, forceSync, syncStatus }) {
               onChange={e => setPwInput(e.target.value)}
               disabled={!!isLocked}
               placeholder="Staff password"
+              className="font-mono"
               style={{
                 padding: '12px 14px', borderRadius: '4px', width: '100%',
                 background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)',
-                color: '#E8EDF5', fontFamily: 'DM Mono, monospace', fontSize: '14px',
+                color: '#E8EDF5', fontSize: '14px',
               }}
               autoFocus
             />
@@ -312,7 +315,7 @@ export default function StaffPanel({ navigate, forceSync, syncStatus }) {
           {[
             { label: 'Total Players', value: totalPlayers },
             { label: 'Completed All', value: completed },
-            { label: 'Avg Score',     value: avgScore },
+            { label: 'Avg Score', value: avgScore },
           ].map(({ label, value }) => (
             <div
               key={label}
@@ -359,11 +362,11 @@ export default function StaffPanel({ navigate, forceSync, syncStatus }) {
 
         {/* Actions */}
         <div className="flex flex-col gap-3">
-          <StaffBtn onClick={handleExportCSV}         variant="gold">Export CSV →</StaffBtn>
-          <StaffBtn onClick={handleForceSync}         variant="ghost">Force Sheets Sync</StaffBtn>
-          <StaffBtn onClick={() => setShowRaw(true)}  variant="ghost">View Raw Data</StaffBtn>
-          <StaffBtn onClick={handleResetLeaderboard}  variant="danger">Reset Leaderboard</StaffBtn>
-          <StaffBtn onClick={handleClearAll}          variant="danger">Clear All Data</StaffBtn>
+          <StaffBtn onClick={handleExportCSV} variant="gold">Export CSV →</StaffBtn>
+          <StaffBtn onClick={handleForceSync} variant="ghost">Force Sheets Sync</StaffBtn>
+          <StaffBtn onClick={() => setShowRaw(true)} variant="ghost">View Raw Data</StaffBtn>
+          <StaffBtn onClick={handleResetLeaderboard} variant="danger">Reset Leaderboard</StaffBtn>
+          <StaffBtn onClick={handleClearAll} variant="danger">Clear All Data</StaffBtn>
         </div>
 
         {/* Default password reminder */}

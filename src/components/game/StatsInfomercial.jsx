@@ -25,8 +25,8 @@ function StatCard({ stat, index, shouldReduce }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.06 }}
       style={{
-        background: 'rgba(201,169,110,0.04)',
-        border: '1px solid rgba(201,169,110,0.14)',
+        background: 'rgba(225,29,72,0.04)',
+        border: '1px solid rgba(225,29,72,0.14)',
         borderRadius: '6px',
         padding: '14px 10px',
         display: 'flex',

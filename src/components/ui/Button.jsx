@@ -16,8 +16,8 @@ export default function Button({
   const base = 'font-heading text-micro uppercase tracking-widest px-8 py-4 transition-all duration-200 border cursor-pointer inline-flex items-center gap-2 rounded-[8px]'
 
   const variants = {
-    primary:     'bg-midnight border-midnight text-white hover:bg-humanRed hover:border-humanRed',
-    secondary:   'bg-white border-surface-border text-text-secondary hover:bg-surface hover:text-text-primary',
+    primary: 'bg-humanRed border-humanRed text-white hover:opacity-90',
+    secondary: 'bg-surface border-surface-border text-slate-300 hover:bg-slate-700 hover:text-white',
     destructive: 'border-red-signal text-red-signal hover:bg-red-dim',
   }
 

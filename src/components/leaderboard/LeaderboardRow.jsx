@@ -11,7 +11,7 @@ const RANK_COLORS = {
 export default function LeaderboardRow({ entry, rank, isCurrentPlayer, index }) {
   const shouldReduce = useReducedMotion()
 
-  const rankColor     = RANK_COLORS[rank] || '#C9A96E'
+  const rankColor     = RANK_COLORS[rank] || '#E11D48'
   const isTop3        = rank <= 3
   const scoreFontSize = rank === 1 ? '32px' : rank === 2 ? '28px' : rank === 3 ? '24px' : '20px'
 
@@ -27,12 +27,12 @@ export default function LeaderboardRow({ entry, rank, isCurrentPlayer, index }) 
         alignItems:     'center',
         gap:            '12px',
         padding:        isTop3 ? '14px 16px' : '10px 14px',
-        background:     isCurrentPlayer ? 'rgba(201,169,110,0.08)' : 'transparent',
-        border:         `1px solid ${isCurrentPlayer ? 'rgba(201,169,110,0.20)' : 'rgba(255,255,255,0.05)'}`,
-        borderLeft:     isCurrentPlayer ? '2px solid #C9A96E' : '2px solid transparent',
+        background:     isCurrentPlayer ? 'rgba(225,29,72,0.08)' : 'transparent',
+        border:         `1px solid ${isCurrentPlayer ? 'rgba(225,29,72,0.20)' : 'rgba(255,255,255,0.05)'}`,
+        borderLeft:     isCurrentPlayer ? '2px solid #E11D48' : '2px solid transparent',
         borderRadius:   '4px',
         marginBottom:   '4px',
-        boxShadow:      isCurrentPlayer ? '0 0 12px rgba(201,169,110,0.06)' : 'none',
+        boxShadow:      isCurrentPlayer ? '0 0 12px rgba(225,29,72,0.06)' : 'none',
         transition:     shouldReduce ? 'none' : 'background 200ms',
       }}
       role="listitem"
@@ -83,7 +83,7 @@ export default function LeaderboardRow({ entry, rank, isCurrentPlayer, index }) 
           className="font-display"
           style={{
             fontSize:   scoreFontSize,
-            color:      isTop3 ? rankColor : '#C9A96E',
+            color:      isTop3 ? rankColor : '#E11D48',
             fontWeight: 600,
             lineHeight: 1,
           }}

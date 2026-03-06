@@ -74,7 +74,7 @@ export default function BadgeSelector({ earnedIds = [], onChange }) {
                 cursor:      'pointer',
                 padding:     0,
                 flexShrink:  0,
-                outline:     isOn ? '1px solid rgba(201,169,110,0.35)' : 'none',
+                outline:     isOn ? '1px solid rgba(225,29,72,0.35)' : 'none',
                 borderRadius:'6px',
               }}
               title={isOn ? `Remove ${badge.name}` : `Add ${badge.name}`}

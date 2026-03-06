@@ -22,22 +22,20 @@ body,
 }
 
 body {
-  background-color: #FFFFFF;
-  color: #0F172A;
+  background-color: #0F172A; /* midnight */
+  color: #F8FAFC; /* surface */
   font-family: 'Inter', 'system-ui', sans-serif;
   font-size: 14px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Background grid texture — barely visible on white */
-  background-image:
-    linear-gradient(rgba(241, 245, 249, 0.8) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(241, 245, 249, 0.8) 1px, transparent 1px);
-  background-size: 60px 60px;
+  /* Dot grid texture */
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
 }
 
-/* Subtle ambient gradient — very low opacity */
+/* Ambient corner colour washes — subdued for dark mode */
 body::after {
   content: '';
   position: fixed;
@@ -45,8 +43,10 @@ body::after {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 15% 15%, rgba(201, 169, 110, 0.03) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 85% 85%, rgba(74, 127, 165, 0.03) 0%, transparent 60%);
+    radial-gradient(ellipse 55% 45% at 0% 0%,   rgba(225, 29, 72, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 100% 0%,  rgba(0,  200, 150, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 0% 100%,  rgba(232, 168,  48, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 50% at 100% 100%, rgba(225, 29,  72, 0.12) 0%, transparent 65%);
 }
 
 /* Ensure app content sits above atmosphere */
@@ -55,25 +55,25 @@ body::after {
   z-index: 1;
 }
 
-/* Scrollbar — light themed */
+/* Scrollbar — dark themed */
 ::-webkit-scrollbar {
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #0F172A;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #334155;
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #475569;
 }
 
 /* Selection */
 ::selection {
-  background: rgba(201, 169, 110, 0.15);
-  color: #0F172A;
+  background: rgba(225, 29, 72, 0.3); /* Human Red */
+  color: #FFFFFF;
 }
 
 /* Remove default button styles */
@@ -88,9 +88,9 @@ button {
   min-width: 44px;
 }
 
-/* Keyboard focus ring — midnight blue, 2px, 4px offset */
+/* Keyboard focus ring — human red, 2px, 4px offset */
 :focus-visible {
-  outline: 2px solid #0F172A;
+  outline: 2px solid #E11D48;
   outline-offset: 4px;
   border-radius: 4px;
 }

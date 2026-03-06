@@ -11,6 +11,7 @@ export default function GameCard({
   accentColor,   // hex
   completed,
   score,
+  image,         // illustration URL for right-side panel
   onPlay,
 }) {
   const [hovered, setHovered] = useState(false)
@@ -20,14 +21,16 @@ export default function GameCard({
     <motion.div
       className="relative cursor-pointer select-none"
       style={{
-        background:   '#FFFFFF',
-        border:       'none',
+        background: '#FFFFFF',
+        border: hovered && !shouldReduce
+          ? `2px solid ${accentColor}`
+          : `2px solid ${accentColor}55`,
         borderRadius: '16px',
-        overflow:     'hidden',
-        boxShadow:    hovered && !shouldReduce
-          ? '0 20px 40px -8px rgba(15, 23, 42, 0.14), 0 8px 16px -4px rgba(15, 23, 42, 0.08)'
-          : '0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.03)',
-        transition:   'box-shadow 0.28s ease',
+        overflow: 'hidden',
+        boxShadow: hovered && !shouldReduce
+          ? `0 20px 40px -8px rgba(15, 23, 42, 0.14), 0 8px 16px -4px rgba(15, 23, 42, 0.08), 0 0 0 4px ${accentColor}22`
+          : `0 10px 15px -3px rgba(15, 23, 42, 0.06), 0 4px 6px -2px rgba(15, 23, 42, 0.04), 0 0 0 0px ${accentColor}00`,
+        transition: 'box-shadow 0.28s ease, border-color 0.28s ease',
       }}
       animate={shouldReduce ? {} : { y: hovered ? -8 : 0 }}
       transition={{ type: 'spring', stiffness: 320, damping: 26 }}
@@ -39,64 +42,87 @@ export default function GameCard({
       aria-label={`${title} — ${completed ? 'Completed, score ' + score + '. Play again' : 'Play now'}`}
       onKeyDown={(e) => e.key === 'Enter' && onPlay?.()}
     >
-      {/* Header gradient + art section */}
+      {/* Accent top bar */}
       <div
+        aria-hidden="true"
         style={{
-          position:   'relative',
-          background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 100%)',
-          padding:    '28px 40px 0 40px',
-          minHeight:  '72px',
+          height: '4px',
+          background: `linear-gradient(90deg, ${accentColor} 0%, ${accentColor}55 100%)`,
+          position: 'relative',
+          zIndex: 2,
         }}
-      >
-        {/* Game tag */}
-        <p
-          style={{
-            fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
-            fontSize:      '10px',
-            fontWeight:    600,
-            letterSpacing: '2.5px',
-            textTransform: 'uppercase',
-            color:         accentColor,
-            margin:        0,
-          }}
-        >
-          Game {String(gameNumber).padStart(2, '0')}
-        </p>
+      />
 
-        {/* Domain art — absolute, top-right, overlay blend */}
-        {domain && (
+      {/* Image panel — starts at 30% from left, fades in with white overlay */}
+      {image && (
+        <>
+          <img
+            src={image}
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              left: '30%',
+              top: 0,
+              right: '2%',
+              bottom: 0,
+              width: '68%',
+              height: '100%',
+              objectFit: 'contain',
+              objectPosition: 'right bottom',
+              zIndex: 0,
+            }}
+          />
+          {/* White gradient fade — covers leftmost 10% of the image */}
           <div
             aria-hidden="true"
             style={{
-              position:  'absolute',
-              top:       '16px',
-              right:     '28px',
-              fontSize:  '52px',
-              lineHeight: 1,
-              mixBlendMode: 'overlay',
-              opacity:   0.85,
-              userSelect: 'none',
+              position: 'absolute',
+              left: '30%',
+              top: 0,
+              bottom: 0,
+              width: '7%',   // 10% of the 70% image area
+              background: 'linear-gradient(90deg, #FFFFFF 0%, rgba(255,255,255,0) 100%)',
+              zIndex: 1,
             }}
-          >
-            {domain}
-          </div>
-        )}
-      </div>
+          />
+        </>
+      )}
 
-      {/* Body */}
-      <div style={{ padding: '12px 40px 32px' }}>
+      {/* Domain emoji fallback when no image */}
+      {!image && domain && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '20px',
+            fontSize: '44px',
+            lineHeight: 1,
+            mixBlendMode: 'overlay',
+            opacity: 0.85,
+            userSelect: 'none',
+            zIndex: 1,
+          }}
+        >
+          {domain}
+        </div>
+      )}
+
+      {/* Body — content constrained to left ~58% so it stays clear of the image */}
+      <div style={{ padding: '16px 24px 20px', position: 'relative', zIndex: 2, maxWidth: image ? '62%' : '100%' }}>
 
         {/* Completed badge */}
         {completed && (
           <div style={{ marginBottom: '8px' }}>
             <span
+              className="font-mono"
               style={{
-                fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
-                fontSize:      '10px',
-                fontWeight:    600,
+                fontSize: '10px',
+                fontWeight: 600,
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase',
-                color:         accentColor,
+                color: accentColor,
               }}
             >
               ✓ Done
@@ -106,14 +132,14 @@ export default function GameCard({
 
         {/* Title — Inter Tight, 800, -0.04em tracking */}
         <h3
+          className="font-heading-tight"
           style={{
-            fontFamily:    '"Inter Tight", Inter, system-ui, sans-serif',
-            fontSize:      '32px',
-            fontWeight:    800,
-            lineHeight:    '1.05',
+            fontSize: '26px',
+            fontWeight: 800,
+            lineHeight: '1.05',
             letterSpacing: '-0.04em',
-            color:         '#0F172A',
-            margin:        '0 0 10px 0',
+            color: '#0F172A',
+            margin: '0 0 8px 0',
           }}
         >
           {title}
@@ -121,13 +147,13 @@ export default function GameCard({
 
         {/* Description — Inter body */}
         <p
+          className="font-heading"
           style={{
-            fontFamily:   'Inter, system-ui, sans-serif',
-            fontSize:     '13px',
-            fontWeight:   400,
-            lineHeight:   '1.6',
-            color:        '#475569',
-            margin:       '0 0 18px 0',
+            fontSize: '13px',
+            fontWeight: 400,
+            lineHeight: '1.5',
+            color: '#475569',
+            margin: '0 0 12px 0',
           }}
         >
           {description}
@@ -137,26 +163,26 @@ export default function GameCard({
         {metaPills?.length > 0 && (
           <div
             style={{
-              display:   'flex',
-              flexWrap:  'wrap',
-              gap:       '6px',
-              marginBottom: '20px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '6px',
+              marginBottom: '16px',
             }}
           >
             {metaPills.map((pill, i) => (
               <span
                 key={i}
+                className="font-mono"
                 style={{
-                  fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
-                  fontSize:      '10px',
-                  fontWeight:    600,
+                  fontSize: '10px',
+                  fontWeight: 600,
                   letterSpacing: '0.5px',
                   textTransform: 'uppercase',
-                  color:         accentColor,
-                  background:    accentColor + '14',
-                  border:        `1px solid ${accentColor}30`,
-                  padding:       '3px 9px',
-                  borderRadius:  '4px',
+                  color: accentColor,
+                  background: accentColor + '14',
+                  border: `1px solid ${accentColor}30`,
+                  padding: '3px 9px',
+                  borderRadius: '4px',
                 }}
               >
                 {pill}
@@ -169,35 +195,35 @@ export default function GameCard({
         {completed && score !== undefined && (
           <div
             style={{
-              display:      'flex',
-              alignItems:   'baseline',
-              gap:          '8px',
-              marginBottom: '20px',
-              padding:      '10px 14px',
-              background:   accentColor + '0E',
-              border:       `1px solid ${accentColor}24`,
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: '8px',
+              marginBottom: '16px',
+              padding: '8px 12px',
+              background: accentColor + '0E',
+              border: `1px solid ${accentColor}24`,
               borderRadius: '8px',
             }}
           >
             <span
+              className="font-display"
               style={{
-                fontFamily:  '"Playfair Display", Georgia, serif',
-                fontSize:    '38px',
-                fontWeight:  900,
-                fontStyle:   'italic',
-                color:       accentColor,
-                lineHeight:  1,
+                fontSize: '38px',
+                fontWeight: 900,
+                fontStyle: 'italic',
+                color: accentColor,
+                lineHeight: 1,
               }}
             >
               {score}
             </span>
             <span
+              className="font-mono"
               style={{
-                fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
-                fontSize:      '10px',
-                fontWeight:    600,
+                fontSize: '10px',
+                fontWeight: 600,
                 letterSpacing: '2px',
-                color:         '#94A3B8',
+                color: '#94A3B8',
               }}
             >
               PTS
@@ -214,26 +240,26 @@ export default function GameCard({
             }}
             transition={{ duration: 0.22, ease: 'easeInOut' }}
             style={{
-              display:       'flex',
-              alignItems:    'center',
-              gap:           '8px',
-              padding:       '10px 20px',
-              borderRadius:  '8px',
-              border:        'none',
-              cursor:        'pointer',
-              minHeight:     '44px',
-              minWidth:      'unset',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 20px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              minHeight: '44px',
+              minWidth: 'unset',
               backgroundColor: hovered ? '#E11D48' : '#0F172A',
             }}
           >
             <span
+              className="font-mono"
               style={{
-                fontFamily:    '"JetBrains Mono", "DM Mono", monospace',
-                fontSize:      '11px',
-                fontWeight:    600,
+                fontSize: '11px',
+                fontWeight: 600,
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase',
-                color:         '#FFFFFF',
+                color: '#FFFFFF',
               }}
             >
               {completed ? 'Play again' : 'Play now'}

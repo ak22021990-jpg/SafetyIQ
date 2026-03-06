@@ -26,7 +26,7 @@ export default function Leaderboard({ navigate }) {
 
   return (
     <ScreenWrapper>
-      <Topbar gameName="Leaderboard" accentColor="#C9A96E" />
+      <Topbar gameName="Leaderboard" accentColor="#E11D48" />
       <SafeZoneWrapper hasTopbar>
         <div className="w-full h-full overflow-y-auto" style={{ padding: '24px 16px' }}>
 
@@ -44,8 +44,8 @@ export default function Leaderboard({ navigate }) {
               <div
                 style={{
                   padding:    '8px 14px',
-                  background: 'rgba(201,169,110,0.10)',
-                  border:     '1px solid rgba(201,169,110,0.25)',
+                  background: 'rgba(225,29,72,0.10)',
+                  border:     '1px solid rgba(225,29,72,0.25)',
                   borderRadius:'4px',
                 }}
               >
@@ -104,7 +104,7 @@ export default function Leaderboard({ navigate }) {
                     index={idx}
                   />
                   {idx === 2 && board.length > 3 && (
-                    <div style={{ height: '1px', background: 'rgba(201,169,110,0.25)', margin: '4px 0' }} />
+                    <div style={{ height: '1px', background: 'rgba(225,29,72,0.25)', margin: '4px 0' }} />
                   )}
                 </div>
               ))}
@@ -117,8 +117,8 @@ export default function Leaderboard({ navigate }) {
             className="w-full font-mono uppercase tracking-widest transition-colors mt-6"
             style={{
               fontSize: '10px', letterSpacing: '2px', padding: '12px',
-              background: 'transparent', color: '#C9A96E',
-              border: '1px solid #C9A96E', borderRadius: '4px',
+              background: 'transparent', color: '#E11D48',
+              border: '1px solid #E11D48', borderRadius: '4px',
               cursor: 'pointer',
             }}
           >

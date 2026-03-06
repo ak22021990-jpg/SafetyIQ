@@ -5,11 +5,12 @@ const BASE_URL = import.meta.env.BASE_URL
 
 export default function Topbar({
   gameName    = '',
-  accentColor = '#C9A96E',
+  accentColor = '#E11D48',
   score       = null,
   gamesCompleted = 0,
   timerSlot   = null,        // inject <TimerRing /> here
   onLogoTap   = null,        // 5-tap to open staff panel (Phase 15)
+  onHomePress = null,        // show home button when provided
 }) {
   // Logo tap counter for staff panel (Phase 15)
   let tapCount = 0
@@ -86,7 +87,7 @@ export default function Topbar({
                 height:       '6px',
                 borderRadius: '100px',
                 background:   i < gamesCompleted
-                  ? 'rgba(201,169,110,0.6)'
+                  ? 'rgba(225,29,72,0.6)'
                   : 'rgba(255,255,255,0.15)',
               }}
               aria-label={i < gamesCompleted ? `Game ${i + 1} complete` : `Game ${i + 1} pending`}
@@ -95,7 +96,7 @@ export default function Topbar({
         </div>
       </div>
 
-      {/* Right: Score + timer */}
+      {/* Right: Score + timer + home */}
       <div className="flex items-center gap-4">
         {score !== null && (
           <div className="flex flex-col items-end">
@@ -111,6 +112,30 @@ export default function Topbar({
           <div aria-live="polite" aria-atomic="true">
             {timerSlot}
           </div>
+        )}
+        {onHomePress && (
+          <button
+            onClick={onHomePress}
+            aria-label="Go to home screen"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px',
+              padding: '6px 12px',
+              background: 'rgba(255,255,255,0.08)',
+              border: '1px solid rgba(255,255,255,0.15)',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              color: 'rgba(255,255,255,0.75)',
+              fontFamily: 'monospace',
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '1px',
+              textTransform: 'uppercase',
+            }}
+          >
+            ⌂ Home
+          </button>
         )}
       </div>
     </div>

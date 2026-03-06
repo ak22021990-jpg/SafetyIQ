@@ -128,7 +128,7 @@ export default function SelfieCamera({ playerName = '', onCapture, onFallback })
             className="font-mono uppercase tracking-widest"
             style={{
               fontSize: '11px', letterSpacing: '2px', padding: '14px 36px',
-              background: capturing ? 'rgba(201,169,110,0.5)' : '#C9A96E',
+              background: capturing ? 'rgba(225,29,72,0.5)' : '#E11D48',
               color: '#07101C', fontWeight: 700,
               border: 'none', borderRadius: '4px', cursor: capturing ? 'default' : 'pointer',
             }}

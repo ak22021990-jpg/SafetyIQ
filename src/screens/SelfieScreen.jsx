@@ -189,8 +189,8 @@ export default function SelfieScreen({ navigate }) {
                 transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
                 style={{
                   width: '40px', height: '40px',
-                  border: '3px solid rgba(201,169,110,0.2)',
-                  borderTop: '3px solid #C9A96E',
+                  border: '3px solid rgba(225,29,72,0.2)',
+                  borderTop: '3px solid #E11D48',
                   borderRadius: '50%',
                 }}
               />

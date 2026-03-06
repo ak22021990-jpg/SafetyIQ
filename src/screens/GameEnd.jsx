@@ -10,10 +10,10 @@ import { evaluateBadges } from '../utils/badgeEngine'
 import { SCREENS } from '../constants/screens'
 
 const GAME_META = {
-  grayRoom: { name: 'The Gray Room',     accent: '#C9A96E', maxScore: 160 },
-  drawLine: { name: 'Draw the Line',     accent: '#4A7FA5', maxScore: 50  },
-  threat:   { name: 'Threat Surface',    accent: '#E8A830', maxScore: 48  },
-  redTeam:  { name: 'Red Team Roulette', accent: '#00C896', maxScore: 60  },
+  grayRoom: { name: 'The Gray Room',     accent: '#fd7183', maxScore: 100 },
+  drawLine: { name: 'Draw the Line',     accent: '#4A7FA5', maxScore: 100 },
+  threat:   { name: 'Threat Surface',    accent: '#c7468d', maxScore: 100 },
+  redTeam:  { name: 'Red Team Roulette', accent: '#00C896', maxScore: 100 },
 }
 
 const GAME_SCREEN = {
@@ -31,7 +31,7 @@ export default function GameEnd({ navigate, game }) {
   const [phase,         setPhase]         = useState('reveal')
   const [statsComplete, setStatsComplete] = useState(false)
 
-  const meta      = GAME_META[game] || { name: 'Game', accent: '#C9A96E', maxScore: 100 }
+  const meta      = GAME_META[game] || { name: 'Game', accent: '#E11D48', maxScore: 100 }
   const scoreData = scores[game]
   const score     = scoreData?.score ?? 0
 

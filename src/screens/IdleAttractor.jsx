@@ -39,7 +39,7 @@ function HighlightedText({ text, highlight }) {
     <>
       {parts.map((part, i) => {
         if (part === `**${highlight}**`) {
-          return <span key={i} style={{ color: '#C9A96E' }}>{highlight}</span>
+          return <span key={i} style={{ color: '#E11D48' }}>{highlight}</span>
         }
         // Strip remaining ** markers
         return <span key={i}>{part.replace(/\*\*/g, '')}</span>

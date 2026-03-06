@@ -9,7 +9,7 @@ export default function Slider({
   disabled = false,
   leftLabel = 'Low',
   rightLabel = 'High',
-  accentColor = '#C9A96E',
+  accentColor = '#E11D48',
 }) {
   const [hovered, setHovered] = useState(false)
   const [dragging, setDragging] = useState(false)
@@ -132,7 +132,7 @@ export default function Slider({
             height:         thumbActive ? '24px' : '20px',
             borderRadius:  '50%',
             background:     accentColor,
-            boxShadow:      thumbActive ? `0 0 0 4px rgba(201,169,110,0.20), 0 2px 8px rgba(0,0,0,0.5)` : '0 2px 6px rgba(0,0,0,0.4)',
+            boxShadow:      thumbActive ? `0 0 0 4px rgba(225,29,72,0.20), 0 2px 8px rgba(0,0,0,0.5)` : '0 2px 6px rgba(0,0,0,0.4)',
             transition:     shouldReduce ? 'none' : 'width 120ms ease, height 120ms ease, left 30ms linear, box-shadow 150ms',
             pointerEvents:  'none',
           }}

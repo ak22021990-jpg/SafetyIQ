@@ -148,7 +148,7 @@ export const GAME_CARDS = [
     domainIcon: "🧠",
     description: "You're Head of Trust & Safety for a global platform. 8 real cases. 90 seconds each. No case is ever simple — and every call has consequences.",
     metaPills: ["8 Cases", "90s Each", "Decision Sim"],
-    accentColor: "#C9A96E",
+    accentColor: "#E11D48",
     estimatedTime: "4–5 min"
   },
   {
@@ -840,19 +840,6 @@ export const THREAT_VECTORS = [
     damageBusinessImpact: "Platform safety reputation damage · Staff welfare liability · Media scrutiny",
     damageAmount: "$2.8M in legal and PR costs"
   },
-  {
-    id: "ts-api-abuse",
-    name: "API Abuse & Data Scraping",
-    description: "Automated exploitation of platform APIs to extract user data, harvest content for AI training, scrape contact information for spamming, and map social graphs for targeting. Increasingly common as AI training data demand grows.",
-    riskLevel: "Medium",
-    riskColor: "#4A7FA5",
-    icon: "🔌",
-    minRecommended: 1000000,
-    breachThreshold: 600000,
-    damageIfBreached: "140M user profiles partially scraped",
-    damageBusinessImpact: "GDPR regulatory exposure · Competitive data loss · User trust damage",
-    damageAmount: "$14.2M potential regulatory fine"
-  }
 ]
 
 // ─────────────────────────────────────────────────────────────────────

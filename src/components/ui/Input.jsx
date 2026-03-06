@@ -27,7 +27,7 @@ export default function Input({
       {label && (
         <label
           htmlFor={inputId}
-          className="font-heading text-micro uppercase tracking-widest text-text-secondary font-semibold"
+          className="font-heading text-micro uppercase tracking-widest text-slate-600 font-semibold"
         >
           {label}{required && <span className="text-humanRed ml-1">*</span>}
         </label>
@@ -42,11 +42,11 @@ export default function Input({
         autoComplete={autoComplete}
         className={`
           w-full bg-white border ${borderClass} ${shadowClass}
-          font-heading text-body-m text-text-primary
+          font-heading text-body-m text-midnight
           px-4 py-3
           outline-none
           transition-all duration-150
-          placeholder:text-text-muted
+          placeholder:text-slate-400
           rounded-[8px]
         `}
       />

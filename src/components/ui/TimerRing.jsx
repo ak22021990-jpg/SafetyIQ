@@ -12,7 +12,7 @@ export default function TimerRing({ seconds, maxSeconds, onExpire }) {
   const progress    = Math.max(0, seconds / maxSeconds)
   const dashOffset  = CIRCUMFERENCE * (1 - progress)
   const isUrgent    = seconds <= 10
-  const strokeColor = isUrgent ? '#E8192C' : '#C9A96E'
+  const strokeColor = isUrgent ? '#E8192C' : '#E11D48'
   const size        = RADIUS * 2 + STROKE_WIDTH * 2
 
   useEffect(() => {

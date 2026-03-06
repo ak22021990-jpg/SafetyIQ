@@ -25,9 +25,9 @@ export default function ProgressDots({ total, current, completed = [] }) {
               height:       '6px',
               borderRadius: '100px',
               background:   isDone
-                ? 'rgba(201,169,110,0.60)'
+                ? 'rgba(225,29,72,0.60)'
                 : isActive
-                  ? '#C9A96E'
+                  ? '#E11D48'
                   : 'rgba(255,255,255,0.15)',
             }}
             aria-label={

@@ -14,14 +14,13 @@ class ErrorBoundary extends Component {
       return (
         <div style={{
           position: 'fixed', inset: 0, display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: 'center',
-          background: '#07101C', color: '#E8EDF5', fontFamily: 'monospace',
+          background: '#07101C', color: '#E8EDF5',
           padding: '40px', gap: '16px',
         }}>
-          <p style={{ fontSize: '11px', letterSpacing: '3px', color: '#C9A96E', textTransform: 'uppercase' }}>
+          <p style={{ fontSize: '11px', letterSpacing: '3px', color: '#E11D48', textTransform: 'uppercase' }}>
             App Error — check browser console
           </p>
-          <pre style={{ fontSize: '12px', color: '#E8192C', whiteSpace: 'pre-wrap', maxWidth: '600px' }}>
+          <pre className="font-mono" style={{ fontSize: '12px', color: '#E8192C', whiteSpace: 'pre-wrap', maxWidth: '600px' }}>
             {this.state.error.message}
           </pre>
         </div>

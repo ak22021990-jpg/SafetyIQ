@@ -10,16 +10,16 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
   const isOnline = useOnlineStatus()
 
   // 'uploading' | 'success' | 'offline' | 'error'
-  const [uploadStatus,  setUploadStatus]  = useState('uploading')
+  const [uploadStatus, setUploadStatus] = useState('uploading')
   const [cloudinaryUrl, setCloudinaryUrl] = useState(null)
-  const [qrDataUrl,     setQrDataUrl]     = useState(null)
-  const [progress,      setProgress]      = useState(0)
+  const [qrDataUrl, setQrDataUrl] = useState(null)
+  const [progress, setProgress] = useState(0)
   const downloadRef = useRef(null)
 
   // Animate upload progress bar (visual feedback — actual upload is binary)
   useEffect(() => {
     if (uploadStatus !== 'uploading') return
-    const start  = Date.now()
+    const start = Date.now()
     const target = 3200 // ms to reach 90%
     const id = setInterval(() => {
       const elapsed = Date.now() - start
@@ -43,7 +43,7 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
         setProgress(100)
         setUploadStatus('offline')
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blob])
 
   // Generate QR once we have the Cloudinary URL
@@ -52,19 +52,19 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
     QRCode.toDataURL(cloudinaryUrl, {
       width: 160, margin: 1,
       color: { dark: '#E8EDF5', light: '#07101C' },
-    }).then(setQrDataUrl).catch(() => {})
+    }).then(setQrDataUrl).catch(() => { })
   }, [cloudinaryUrl])
 
   const blobUrl = blob ? URL.createObjectURL(blob) : null
 
-  const whatsappText  = encodeURIComponent(
+  const whatsappText = encodeURIComponent(
     cloudinaryUrl
       ? `Here's my Safety IQ Summit Card! ${cloudinaryUrl}`
       : "I just completed the Signal & Noise Safety IQ Challenge at the Sutherland booth!"
   )
-  const whatsappUrl   = `https://api.whatsapp.com/send?text=${whatsappText}`
+  const whatsappUrl = `https://api.whatsapp.com/send?text=${whatsappText}`
   const mailtoSubject = encodeURIComponent('Your Safety IQ Summit Card')
-  const mailtoBody    = encodeURIComponent(
+  const mailtoBody = encodeURIComponent(
     cloudinaryUrl
       ? `View your Summit Card here:\n${cloudinaryUrl}`
       : `Download your Summit Card from the link above.\n\n- Signal & Noise · Sutherland`
@@ -73,26 +73,25 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
 
   const BTN = {
     base: {
-      fontFamily:    'DM Mono, monospace',
-      fontSize:      '10px',
+      fontSize: '10px',
       letterSpacing: '2px',
       textTransform: 'uppercase',
-      padding:       '13px',
-      border:        '1px solid #CBD5E1',
-      borderRadius:  '4px',
-      cursor:        'pointer',
-      width:         '100%',
-      background:    'transparent',
-      color:         '#0F172A',
-      display:       'block',
-      textAlign:     'center',
-      textDecoration:'none',
+      padding: '13px',
+      border: '1px solid #CBD5E1',
+      borderRadius: '4px',
+      cursor: 'pointer',
+      width: '100%',
+      background: 'transparent',
+      color: '#0F172A',
+      display: 'block',
+      textAlign: 'center',
+      textDecoration: 'none',
     },
     primary: {
-      background: '#C9A96E',
-      color:      '#07101C',
-      fontWeight:  700,
-      border:     'none',
+      background: '#E11D48',
+      color: '#07101C',
+      fontWeight: 700,
+      border: 'none',
     },
   }
 
@@ -103,22 +102,22 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
       <div className="w-full">
         <p className="font-mono text-text-muted text-center mb-2" style={{ fontSize: '9px', letterSpacing: '2px' }}>
           {uploadStatus === 'uploading' && 'Creating your Summit Card…'}
-          {uploadStatus === 'success'   && 'Summit Card ready'}
-          {uploadStatus === 'offline'   && 'Ready for download'}
-          {uploadStatus === 'error'     && 'Ready for download'}
+          {uploadStatus === 'success' && 'Summit Card ready'}
+          {uploadStatus === 'offline' && 'Ready for download'}
+          {uploadStatus === 'error' && 'Ready for download'}
         </p>
         <div
           style={{
-            height:       '3px',
-            background:   '#E2E8F0',
+            height: '3px',
+            background: '#E2E8F0',
             borderRadius: '2px',
-            overflow:     'hidden',
+            overflow: 'hidden',
           }}
         >
           <motion.div
             animate={{ width: `${progress}%` }}
             transition={{ ease: 'easeOut', duration: 0.3 }}
-            style={{ height: '100%', background: '#C9A96E', borderRadius: '2px' }}
+            style={{ height: '100%', background: '#E11D48', borderRadius: '2px' }}
           />
         </div>
       </div>
@@ -146,14 +145,14 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
 
       {/* WhatsApp — online + cloudinary success */}
       {isOnline && uploadStatus === 'success' && (
-        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" style={{ ...BTN.base, ...BTN.primary }}>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="font-mono" style={{ ...BTN.base, ...BTN.primary }}>
           Share via WhatsApp →
         </a>
       )}
 
       {/* Email */}
       {playerEmail && (
-        <a href={mailtoUrl} style={{ ...BTN.base }}>
+        <a href={mailtoUrl} className="font-mono" style={{ ...BTN.base }}>
           Send to {playerEmail}
         </a>
       )}
@@ -164,6 +163,7 @@ export default function DeliveryOptions({ blob, playerEmail = '', playerName = '
           ref={downloadRef}
           href={blobUrl}
           download={`safety-iq-${playerName.replace(/\s+/g, '-').toLowerCase() || 'card'}.png`}
+          className="font-mono"
           style={{ ...BTN.base }}
         >
           Download PNG

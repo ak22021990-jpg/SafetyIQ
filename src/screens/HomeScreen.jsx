@@ -1,6 +1,6 @@
 // src/screens/HomeScreen.jsx
 import { useState, useEffect } from 'react'
-import { Volume2, VolumeX } from 'lucide-react'
+import { Volume2, VolumeX, Trophy, X } from 'lucide-react'
 import ScreenWrapper from '../components/layout/ScreenWrapper'
 import SafeZoneWrapper from '../components/layout/SafeZoneWrapper'
 import Topbar from '../components/layout/Topbar'
@@ -11,46 +11,57 @@ import { useGame } from '../context/GameContext'
 import { getLeaderboard } from '../utils/storageEngine'
 import { SCREENS } from '../constants/screens'
 
+// Drop generated game illustrations into src/assets/images/games/ and import them here.
+// e.g. import grayRoomImg from '../assets/images/games/gray-room.png'
+import grayRoomImg   from '../assets/images/games/gray-room.png'
+import drawLineImg   from '../assets/images/games/draw-line.png'
+import threatImg     from '../assets/images/games/threat-surface.png'
+import redTeamImg    from '../assets/images/games/red-team-roulette.png'
+
 const GAMES = [
   {
-    id:          'grayRoom',
-    gameNumber:  1,
-    title:       'The Gray Room',
-    domain:      '⚖️',
-    description: "You're Head of Trust & Safety for a global platform. 8 real cases. 90 seconds each. No case is ever simple — and every call has consequences.",
-    metaPills:   ['8 Cases', '90 Sec Each', 'Content Moderation'],
-    accentColor: '#C9A96E',
-    screen:      SCREENS.GRAY_ROOM,
+    id: 'grayRoom',
+    gameNumber: 1,
+    title: 'The Gray Room',
+    domain: '⚖️',
+    description: "You're Head of Trust & Safety for a global platform. 5 real cases. 90 seconds each. No case is ever simple — and every call has consequences.",
+    metaPills: ['5 Cases', '90 Sec Each', 'Content Moderation'],
+    accentColor: '#fd7183',
+    image: grayRoomImg,
+    screen: SCREENS.GRAY_ROOM,
   },
   {
-    id:          'drawLine',
-    gameNumber:  2,
-    title:       'Draw the Line',
-    domain:      '📐',
+    id: 'drawLine',
+    gameNumber: 2,
+    title: 'Draw the Line',
+    domain: '📐',
     description: "We give you a platform policy. You tune it. Then we throw 5 adversarial real-world scenarios at it. No configuration survives everything.",
-    metaPills:   ['5 Stress Tests', 'Policy Tuning', 'Trade-offs'],
-    accentColor: '#4A7FA5',
-    screen:      SCREENS.DRAW_LINE,
-  },
-  {
-    id:          'threat',
-    gameNumber:  3,
-    title:       'Threat Surface',
-    domain:      '🛡',
-    description: "You have $10M to defend your platform against 6 simultaneous threat vectors. Allocate. Then watch the attack wave hit.",
-    metaPills:   ['$10M Budget', '6 Threat Vectors', 'Risk Allocation'],
-    accentColor: '#E8A830',
-    screen:      SCREENS.THREAT,
-  },
-  {
-    id:          'redTeam',
-    gameNumber:  4,
-    title:       'Red Team Roulette',
-    domain:      '🎯',
-    description: "6 AI-generated outputs. Some violated policy. Some didn't. Flag the violations before 90 seconds runs out.",
-    metaPills:   ['6 Outputs', '90 Sec Timer', 'AI Detection'],
+    metaPills: ['5 Stress Tests', 'Policy Tuning', 'Trade-offs'],
     accentColor: '#00C896',
-    screen:      SCREENS.RED_TEAM,
+    image: redTeamImg,
+    screen: SCREENS.DRAW_LINE,
+  },
+  {
+    id: 'threat',
+    gameNumber: 3,
+    title: 'Threat Surface',
+    domain: '🛡',
+    description: "You have $10M to defend your platform against 5 simultaneous threat vectors. Allocate. Then watch the attack wave hit.",
+    metaPills: ['$10M Budget', '5 Threat Vectors', 'Risk Allocation'],
+    accentColor: '#c7468d',
+    image: threatImg,
+    screen: SCREENS.THREAT,
+  },
+  {
+    id: 'redTeam',
+    gameNumber: 4,
+    title: 'Red Team Roulette',
+    domain: '🎯',
+    description: "5 AI-generated outputs. Some violated policy. Some didn't. Flag the violations before 90 seconds runs out.",
+    metaPills: ['5 Outputs', '90 Sec Timer', 'AI Detection'],
+    accentColor: '#4A7FA5',
+    image: drawLineImg,
+    screen: SCREENS.RED_TEAM,
   },
 ]
 
@@ -67,11 +78,11 @@ function LeaderboardSidebar({ currentSessionId, navigate }) {
     <div
       className="flex flex-col h-full"
       style={{
-        background:   '#FFFFFF',
-        border:       '1px solid #E2E8F0',
+        background: '#FFFFFF',
+        border: '1px solid #E2E8F0',
         borderRadius: '12px',
-        padding:      '20px',
-        boxShadow:    '0 4px 12px rgba(0,0,0,0.06)',
+        padding: '20px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
       }}
     >
       <p
@@ -83,7 +94,7 @@ function LeaderboardSidebar({ currentSessionId, navigate }) {
 
       {board.length === 0 ? (
         <div className="flex-1 flex flex-col gap-3">
-          <p className="font-mono text-text-muted" style={{ fontSize: '13px' }}>
+          <p className="font-mono text-slate-500" style={{ fontSize: '13px' }}>
             Be the first to claim the top spot.
           </p>
           {[1, 2, 3, 4].map(i => (
@@ -104,9 +115,9 @@ function LeaderboardSidebar({ currentSessionId, navigate }) {
                 className="flex items-center justify-between"
                 style={{
                   borderBottom: '1px solid #F1F5F9',
-                  background:   isMe ? 'rgba(201,169,110,0.07)' : 'transparent',
-                  outline:      isMe ? '1px solid rgba(201,169,110,0.30)' : 'none',
-                  padding:      isMe ? '10px 8px' : '10px 0',
+                  background: isMe ? 'rgba(225,29,72,0.07)' : 'transparent',
+                  outline: isMe ? '1px solid rgba(225,29,72,0.30)' : 'none',
+                  padding: isMe ? '10px 8px' : '10px 0',
                 }}
               >
                 <div className="flex items-center gap-2">
@@ -120,13 +131,13 @@ function LeaderboardSidebar({ currentSessionId, navigate }) {
                     {i + 1}
                   </span>
                   <div>
-                    <p className="font-heading font-bold text-text-primary" style={{ fontSize: '12px' }}>
+                    <p className="font-heading font-bold text-midnight" style={{ fontSize: '12px' }}>
                       {entry.name}
                       {isMe && (
                         <span className="text-gold ml-2 font-mono" style={{ fontSize: '9px' }}>YOU</span>
                       )}
                     </p>
-                    <p className="font-mono text-text-muted" style={{ fontSize: '11px' }}>
+                    <p className="font-mono text-slate-500" style={{ fontSize: '11px' }}>
                       {entry.company}
                     </p>
                   </div>
@@ -143,7 +154,7 @@ function LeaderboardSidebar({ currentSessionId, navigate }) {
       {/* Full leaderboard link */}
       <button
         onClick={() => navigate(SCREENS.LEADERBOARD)}
-        className="font-mono uppercase text-text-muted hover:text-text-primary transition-colors mt-4"
+        className="font-mono uppercase text-slate-500 hover:text-midnight transition-colors mt-4"
         style={{ fontSize: '10px', letterSpacing: '1.5px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
       >
         View full leaderboard →
@@ -155,9 +166,10 @@ function LeaderboardSidebar({ currentSessionId, navigate }) {
 export default function HomeScreen({ navigate }) {
   const { player, scores, gamesCompleted, totalScore, sessionId } = useSession()
   const { muted, setMuted } = useGame()
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false)
 
   const allComplete = gamesCompleted === 4
-  const firstName   = player?.name?.split(' ')[0] || 'Player'
+  const firstName = player?.name?.split(' ')[0] || 'Player'
 
   const handlePlay = (game) => {
     navigate(game.screen)
@@ -172,7 +184,7 @@ export default function HomeScreen({ navigate }) {
       />
 
       <SafeZoneWrapper>
-        <div className="w-full h-full flex overflow-hidden">
+        <div className="w-full h-full flex overflow-hidden relative">
 
           {/* Main content */}
           <div className="flex-1 flex flex-col overflow-auto px-8 py-6">
@@ -197,21 +209,37 @@ export default function HomeScreen({ navigate }) {
                 </p>
               </div>
 
-              {/* Mute toggle */}
-              <button
-                onClick={() => setMuted(m => !m)}
-                className="flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary transition-colors"
-                style={{
-                  width:      '44px',
-                  height:     '44px',
-                  background: '#F8FAFC',
-                  border:     '1px solid #E2E8F0',
-                  flexShrink: 0,
-                }}
-                aria-label={muted ? 'Unmute sounds' : 'Mute sounds'}
-              >
-                {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-              </button>
+              {/* Header Actions */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsLeaderboardOpen(true)}
+                  className="flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary transition-colors hover:bg-slate-100"
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    flexShrink: 0,
+                  }}
+                  aria-label="Open leaderboard"
+                >
+                  <Trophy size={18} />
+                </button>
+                <button
+                  onClick={() => setMuted(m => !m)}
+                  className="flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary transition-colors hover:bg-slate-100"
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    flexShrink: 0,
+                  }}
+                  aria-label={muted ? 'Unmute sounds' : 'Mute sounds'}
+                >
+                  {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                </button>
+              </div>
             </div>
 
             {/* 2×2 Game cards grid */}
@@ -225,6 +253,7 @@ export default function HomeScreen({ navigate }) {
                   description={game.description}
                   metaPills={game.metaPills}
                   accentColor={game.accentColor}
+                  image={game.image}
                   completed={!!scores[game.id]}
                   score={scores[game.id]?.score}
                   onPlay={() => handlePlay(game)}
@@ -246,9 +275,28 @@ export default function HomeScreen({ navigate }) {
             )}
           </div>
 
-          {/* Leaderboard sidebar */}
-          <div className="w-64 shrink-0 overflow-hidden m-4 ml-0">
-            <LeaderboardSidebar currentSessionId={sessionId} navigate={navigate} />
+          {/* Backdrop */}
+          {isLeaderboardOpen && (
+            <div
+              className="absolute inset-0 bg-slate-900/20 z-40 transition-opacity"
+              onClick={() => setIsLeaderboardOpen(false)}
+            />
+          )}
+
+          {/* Leaderboard Sidebar Overlay */}
+          <div
+            className={`absolute top-0 right-0 h-full w-[300px] sm:w-[340px] p-4 transition-transform duration-300 z-50 flex flex-col ${isLeaderboardOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          >
+            <div className="flex-1 relative shadow-2xl rounded-xl">
+              <button
+                onClick={() => setIsLeaderboardOpen(false)}
+                className="absolute top-4 right-4 text-slate-400 hover:text-slate-800 z-10 p-1 bg-white/80 rounded-full hover:bg-slate-100 transition-colors"
+                aria-label="Close leaderboard"
+              >
+                <X size={20} />
+              </button>
+              <LeaderboardSidebar currentSessionId={sessionId} navigate={navigate} />
+            </div>
           </div>
 
         </div>

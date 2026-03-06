@@ -14,8 +14,8 @@ import { useSession } from '../context/SessionContext'
 import { useSound } from '../hooks/useSound'
 import { SCREENS } from '../constants/screens'
 
-const ACCENT       = '#E8A830'
-const POINTS_PER_BLOCK = 8
+const ACCENT       = '#c7468d'
+const POINTS_PER_BLOCK = 20
 
 export default function ThreatSurface({ navigate }) {
   const { updateScore } = useSession()
@@ -59,7 +59,7 @@ export default function ThreatSurface({ navigate }) {
 
   return (
     <ScreenWrapper>
-      <Topbar gameName="Threat Surface" accentColor={ACCENT} />
+      <Topbar gameName="Threat Surface" accentColor={ACCENT} onHomePress={() => navigate(SCREENS.HOME)} />
       <SafeZoneWrapper hasTopbar>
         <div className="w-full h-full overflow-y-auto" style={{ padding: '24px 20px' }}>
 
@@ -83,7 +83,7 @@ export default function ThreatSurface({ navigate }) {
                   </h2>
                   <p className="font-mono text-text-secondary" style={{ fontSize: '13px', lineHeight: '1.65' }}>
                     You have <strong style={{ color: ACCENT }}>$10M</strong> in trust & safety budget. Allocate it across
-                    6 threat vectors. Each vector has a minimum threshold to block the attack — underfund it and it
+                    5 threat vectors. Each vector has a minimum threshold to block the attack — underfund it and it
                     breaks through.
                   </p>
                 </div>

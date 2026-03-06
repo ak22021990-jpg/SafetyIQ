@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Background layers — light studio palette
-        studio:  '#FFFFFF',
-        canvas:  '#FBFCFD',
-        surface: { DEFAULT: '#F8FAFC', raised: '#F1F5F9', border: '#E2E8F0' },
+        // Background layers — dark studio palette
+        studio:  '#020617',
+        canvas:  '#0F172A',
+        surface: { DEFAULT: '#1E293B', raised: '#334155', border: '#475569' },
 
         // Legacy aliases kept for backwards compatibility
-        abyss:   '#FFFFFF',
-        navy:    { DEFAULT: '#F8FAFC', panel: '#FFFFFF', elevated: '#F1F5F9' },
+        abyss:   '#020617',
+        navy:    { DEFAULT: '#0F172A', panel: '#1E293B', elevated: '#334155' },
 
         // Primary brand — Midnight Blue
         midnight: '#0F172A',
@@ -19,14 +19,14 @@ export default {
         // Human Red — CTAs and urgent elements
         humanRed: { DEFAULT: '#E11D48', dim: 'rgba(225,29,72,0.08)', border: 'rgba(225,29,72,0.25)' },
 
-        // Gold accent — kept for game scoring UI
+        // Gold accent — remapped to Human Red
         gold: {
-          DEFAULT: '#C9A96E',
+          DEFAULT: '#E11D48',
           signal:  '#E8C84A',
-          dim:     'rgba(201,169,110,0.12)',
-          ghost:   'rgba(201,169,110,0.05)',
-          border:  'rgba(201,169,110,0.30)',
-          strong:  'rgba(201,169,110,0.60)',
+          dim:     'rgba(225,29,72,0.12)',
+          ghost:   'rgba(225,29,72,0.05)',
+          border:  'rgba(225,29,72,0.30)',
+          strong:  'rgba(225,29,72,0.60)',
         },
 
         // Functional — game states only
@@ -34,17 +34,17 @@ export default {
         green:  { signal: '#00C896', dim: 'rgba(0,200,150,0.10)' },
         amber:  { warm:   '#E8A830', dim: 'rgba(232,168,48,0.10)' },
 
-        // Text — dark on white
+        // Text — light on dark
         text: {
-          primary:   '#0F172A',
-          secondary: '#475569',
+          primary:   '#F8FAFC',
+          secondary: '#CBD5E1',
           muted:     '#94A3B8',
-          inverse:   '#FFFFFF',
+          inverse:   '#0F172A',
         },
 
         // Badge categories
         badge: {
-          gold:    '#C9A96E',
+          gold:    '#E11D48',
           blue:    '#4A7FA5',
           teal:    '#3A8B7A',
           mauve:   '#8B6B8A',
@@ -104,13 +104,13 @@ export default {
         subtle: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04)',
         medium: '0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.04)',
         deep:   '0 25px 50px -12px rgba(0,0,0,0.12)',
-        glow:   '0 0 20px rgba(201,169,110,0.15)',
+        glow:   '0 0 20px rgba(225,29,72,0.15)',
         card:   '0 10px 15px -3px rgba(0,0,0,0.05)',
       },
 
       // Per-game topbar accent colours
       borderColor: {
-        'game-gray':   '#C9A96E',
+        'game-gray':   '#E11D48',
         'game-policy': '#4A7FA5',
         'game-threat': '#E8A830',
         'game-red':    '#00C896',

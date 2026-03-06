@@ -14,15 +14,14 @@ import { SCREENS } from '../constants/screens'
 
 const ACCENT        = '#00C896'
 const TIMER_SECONDS = 90
-const CORRECT_PTS   = 10
-const PENALTY_PTS   = 5
+const POINTS_PER_CARD = 20  // 5 cards × 20 = 100 max
 
-// Build session card set: both video cards + 4 random non-video cards
+// Build session card set: both video cards + 3 random non-video cards = 5 total
 function buildCardSet() {
   const videos   = RED_TEAM_OUTPUTS.filter(c => c.type === 'video')
   const nonVideo = RED_TEAM_OUTPUTS.filter(c => c.type !== 'video')
   const shuffled = [...nonVideo].sort(() => Math.random() - 0.5)
-  return [...shuffled.slice(0, 4), ...videos].sort(() => Math.random() - 0.5)
+  return [...shuffled.slice(0, 3), ...videos].sort(() => Math.random() - 0.5)
 }
 
 // Compact collapsible live leaderboard panel — top 5
@@ -82,8 +81,8 @@ function LiveLeaderboardPanel({ sessionId }) {
                   style={{
                     padding: '6px 8px', borderRadius: '4px',
                     marginBottom: idx < board.length - 1 ? '2px' : 0,
-                    background:   entry.sessionId === sessionId ? 'rgba(201,169,110,0.08)' : 'transparent',
-                    borderLeft:   entry.sessionId === sessionId ? '2px solid #C9A96E' : '2px solid transparent',
+                    background:   entry.sessionId === sessionId ? 'rgba(225,29,72,0.08)' : 'transparent',
+                    borderLeft:   entry.sessionId === sessionId ? '2px solid #E11D48' : '2px solid transparent',
                   }}
                 >
                   <span
@@ -168,17 +167,19 @@ export default function RedTeamRoulette({ navigate }) {
     return () => clearTimeout(t)
   }, [phase, revealedCount, cards.length, shouldReduce])
 
-  // ── Score ─────────────────────────────────────────────────────────
+  // ── Score — each correctly assessed card (flag violation OR pass clean) = 20pts, max 100 ──
   const computeScore = () => {
-    let correctFlags = 0, missed = 0, falsePositives = 0
+    let correctFlags = 0, missed = 0, falsePositives = 0, correctPasses = 0
     cards.forEach(card => {
       const flagged = flags[card.id] || false
-      if (card.isViolation && flagged)  correctFlags++
-      if (card.isViolation && !flagged) missed++
-      if (!card.isViolation && flagged) falsePositives++
+      if (card.isViolation && flagged)   correctFlags++
+      if (card.isViolation && !flagged)  missed++
+      if (!card.isViolation && flagged)  falsePositives++
+      if (!card.isViolation && !flagged) correctPasses++
     })
+    const correctTotal = correctFlags + correctPasses
     return {
-      score: Math.max(0, correctFlags * CORRECT_PTS - missed * PENALTY_PTS - falsePositives * PENALTY_PTS),
+      score: correctTotal * POINTS_PER_CARD,
       correctFlags,
       missed,
       falsePositives,
@@ -203,6 +204,7 @@ export default function RedTeamRoulette({ navigate }) {
       <Topbar
         gameName="Red Team Roulette"
         accentColor={ACCENT}
+        onHomePress={() => navigate(SCREENS.HOME)}
         timerSlot={
           phase === 'playing'
             ? <TimerRing seconds={timeLeft} total={TIMER_SECONDS} accentColor={ACCENT} onExpire={triggerReveal} />
@@ -229,7 +231,7 @@ export default function RedTeamRoulette({ navigate }) {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <p className="font-mono uppercase font-bold text-text-secondary mb-0.5" style={{ fontSize: '11px', letterSpacing: '1.5px' }}>
-                      6 AI Outputs — Flag violations
+                      5 AI Outputs — Flag violations
                     </p>
                     <p
                       className="font-mono font-semibold"
@@ -248,14 +250,22 @@ export default function RedTeamRoulette({ navigate }) {
                   </div>
                 </div>
 
-                {/* 6-card list */}
-                <div className="flex flex-col gap-4 mb-6">
+                {/* 5-card 2-column grid — looks like social media posts */}
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '14px',
+                    marginBottom: '24px',
+                  }}
+                >
                   {cards.map((card, idx) => (
                     <motion.div
                       key={card.id}
                       initial={shouldReduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: shouldReduce ? 0 : idx * 0.06, duration: 0.25 }}
+                      style={idx === 4 ? { gridColumn: '1 / -1', maxWidth: '50%', margin: '0 auto', width: '100%' } : {}}
                     >
                       <OutputCard
                         cardData={card}
@@ -317,8 +327,15 @@ export default function RedTeamRoulette({ navigate }) {
                   </div>
                 </div>
 
-                {/* Staggered card reveals */}
-                <div className="flex flex-col gap-4 mb-6">
+                {/* Staggered card reveals — 2-column grid */}
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '14px',
+                    marginBottom: '24px',
+                  }}
+                >
                   {cards.map((card, idx) =>
                     idx < revealedCount ? (
                       <motion.div
@@ -326,6 +343,7 @@ export default function RedTeamRoulette({ navigate }) {
                         initial={shouldReduce ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.25 }}
+                        style={idx === 4 ? { gridColumn: '1 / -1', maxWidth: '50%', margin: '0 auto', width: '100%' } : {}}
                       >
                         <OutputCard
                           cardData={card}
@@ -344,6 +362,7 @@ export default function RedTeamRoulette({ navigate }) {
                           background: '#F8FAFC',
                           border: '1px solid #E2E8F0',
                           borderRadius: '10px',
+                          ...(idx === 4 ? { gridColumn: '1 / -1', maxWidth: '50%', margin: '0 auto', width: '100%' } : {}),
                         }}
                       />
                     )

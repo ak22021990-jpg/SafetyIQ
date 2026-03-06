@@ -18,8 +18,8 @@ import { SCREENS } from '../constants/screens'
 const ACCENT = '#4A7FA5'
 const TIMER_SECONDS = 120
 const MAX_HINTS = 2
-const HINT_PENALTY = 5
-const STRESS_POINTS = 10
+const HINT_PENALTY = 10
+const STRESS_POINTS = 20
 
 // Hints per policy (index matches policy array index)
 const POLICY_HINTS = [
@@ -197,6 +197,7 @@ export default function DrawTheLine({ navigate }) {
       <Topbar
         gameName="Draw the Line"
         accentColor={ACCENT}
+        onHomePress={() => navigate(SCREENS.HOME)}
         timerSlot={
           phase === 'configure'
             ? <TimerRing seconds={timeLeft} total={TIMER_SECONDS} accentColor={ACCENT} onExpire={handleLockConfig} />
